@@ -1,0 +1,112 @@
+<template>
+    <div class="flex flex-col items-center w-full">
+        <ul class="grid gap-4 w-full" style="grid-template-columns: repeat(auto-fill, minmax(305px, 1fr))">
+            <li
+                class="relative flex flex-col gap-2 w-full p-4 border border-neutral-500 border-opacity-10 shadow-nr15"
+                :class="[item.soldOut ? 'opacity-70' : '']"
+                :style="`margin-top: ${options.imageMargin / 4}rem; background-color: ${options.bgMainColor}; border-radius: ${options.cornerRadius}px;`"
+                v-for="(item, i) in items"
+                @click="openMenuDetails(item)"
+            >
+                <span
+                    class="relative w-full aspect-square rounded-lg"
+                    :style="`margin-top: -${options.imageMargin / 4}rem;
+                    background-color: ${options.bgSecondaryColor}; border-radius: ${options.cornerRadius}px;`"
+                >
+                    <img
+                        class="w-full aspect-square object-cover"
+                        :style="`border-radius: ${options.cornerRadius}px;`"
+                        :src="item.images[0]"
+                        alt=""
+                        loading="lazy"
+                        v-if="item.images[0]"
+                    />
+                    <div class="absolute bottom-3 start-3 flex items-center gap-1">
+                        <span
+                            class="p-1 px-3 text-sm border border-neutral-500 border-opacity-20 shadow-nr10"
+                            :style="`background-color: ${options.accentColor}; color: ${options.textColor}; border-radius: ${options.cornerRadius}px;`"
+                            v-if="item.showAsNew"
+                        >
+                            {{ $t("NEW") }}
+                        </span>
+                        <span
+                            class="p-1 px-3 text-sm border border-neutral-500 border-opacity-20 shadow-nr10"
+                            :style="`background-color: ${options.accentColor}; color: ${options.textColor}; border-radius: ${options.cornerRadius}px;`"
+                            v-if="item.specialDaysList?.includes(weekday[today])"
+                        >
+                            {{ $t("Today's Special") }}
+                        </span>
+                    </div>
+                </span>
+                <h3 class="text-lg/none font-semibold mt-2" :style="`color: ${options.textColor};`">
+                    {{ item.translation?.[locale]?.name || item.name }}
+                </h3>
+                <p class="text-xs opacity-75 grow" :style="`color: ${options.textColor};`">
+                    {{ item.translation?.[locale]?.description || item.description }}
+                </p>
+                <hr class="w-full opacity-10 my-0.5" :style="`border-color: ${options.textColor};`" />
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex items-end gap-1 text-base/none">
+                        <div class="flex flex-col gap-1">
+                            <div class="relative flex flex-wrap items-center" v-if="item.discountActive">
+                                <small class="line-through line text-sm" :style="`color: ${options.textColor};`">
+                                    {{ Intl.NumberFormat(locale).format(item.price) }}
+                                </small>
+                                <span class="absolute -end-3 text-xs bg-rose-400 bg-opacity-75 px-1 rounded-md">{{ item.discountPercentage }} %</span>
+                            </div>
+                            <b class="text-2xl/none" :style="`color: ${options.accentColor};`">
+                                {{ Intl.NumberFormat(locale).format(item.price * (1 - (item.discountActive ? item.discountPercentage : 0) / 100)) }}
+                            </b>
+                        </div>
+                        <span class="text-xs opacity-75" :style="`color: ${options.textColor};`">
+                            {{ restaurantInfo.brand.currency }}
+                        </span>
+                    </div>
+                    <button
+                        class="flex items-center justify-center w-8 h-8 p-1 rounded-full shadow-nr15 transition-all hover:scale-125 shrink-0"
+                        :style="`background-color: ${options.primaryColor};`"
+                    >
+                        <Icon class="w-5 h-5 shrink-0" :style="`background-color: ${options.textColor};`" name="plus.svg" folder="icons/tabler" size="18px" />
+                    </button>
+                </div>
+                <b
+                    id="sold-out"
+                    class="absolute end-4 -rotate-[30deg] p-2 px-4 rounded-xl text-4xl opacity-75 w-9/12 text-center"
+                    :style="`top: calc(6rem - ${options.imageMargin / 4}rem);
+                    background-color: ${options.textColor}; color: ${options.bgMainColor}; border-radius: ${options.cornerRadius}px;`"
+                    v-if="item.soldOut"
+                >
+                    {{ $t("Sold Out") }}
+                </b>
+            </li>
+        </ul>
+        <p
+            class="p-0.5 px-4 text-sm shadow-mr5"
+            :style="`background-color: ${options.bgSecondaryColor}; color: ${options.accentColor}; border-radius: ${options.cornerRadius}px;`"
+            v-if="items.length === 0"
+        >
+            {{ $t("This category has no items yet") }}!
+        </p>
+    </div>
+</template>
+
+<script setup>
+const props = defineProps({
+    restaurantInfo: { type: Object },
+    options: { type: Object },
+    items: { type: Object },
+});
+
+const { locale } = useI18n();
+const localePath = useLocalePath();
+const route = useRoute();
+const router = useRouter();
+
+const today = new Date().getDay();
+const weekday = ["sundays", "mondays", "tuesdays", "wednesdays", "thursdays", "fridays", "saturdays"];
+
+const openMenuDetails = (item) => {
+    localStorage.setItem("item", JSON.stringify(item));
+    router.push(localePath(`/${route.params.brand_id}/item-details?i=${item._id}`));
+};
+</script>

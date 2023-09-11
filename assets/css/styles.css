@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    scrollbar-color: theme("colors.zinc.600") theme("colors.zinc.800") !important;
+    scrollbar-width: thin !important;
+}
+
+*::-webkit-scrollbar { margin-inline-start: 0.25em; width: 5px; height: 5px; margin: auto 2px; border-radius: 5px; box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.01); }
+*::-webkit-scrollbar-track { background-color: theme("colors.zinc.900"); border-radius: 5px; box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.01); }
+*::-webkit-scrollbar-thumb { background: theme("colors.bgSecondary"); border-radius: 5px; box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.1); }
+
+/* good for text */
+@font-face { font-family: "Shabnam"; src: url("../fonts/Shabnam-FD.woff2") format('woff2'); font-display: swap; }
+
+/* good for text & title */
+@font-face { font-family: "Estedad"; src: url("../fonts/Estedad-Regular.woff2") format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Estedad"; src: url("../fonts/Estedad-Bold.woff2") format('woff2'); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Estedad"; src: url("../fonts/Estedad-ExtraBold.woff2") format('woff2'); font-weight: 800; font-display: swap; }
+
+*, html { scroll-behavior: smooth; }
+
+body {
+    background-color: theme("colors.bgPrimary");
+    font-family: "Poppins", "Shabnam", sans-serif;
+    display: flex; flex-direction: column;
+    margin: 0; padding: 0;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+nav, nav ul, .scroll-thin { scrollbar-width: thin; }
+nav::-webkit-scrollbar, nav ul::-webkit-scrollbar, .scroll-thin::-webkit-scrollbar { width: 4px; height: 4px; }
+
+*:is(h1, h2, h3, h4, h5, h6) { font-family: "Inter", "Estedad"; }
+
+.f-inter { font-family: "Inter", "Estedad" !important; }
+.f-poppins { font-family: "Poppins", "Shabnam" !important; }
+
+.z-1 { z-index: 1; }
+.z-2 { z-index: 2; }
+.z-3 { z-index: 3; }
+.z-4 { z-index: 4; }
+.z-5 { z-index: 5; }
+.z-6 { z-index: 6; }
+.z-7 { z-index: 7; }
+.z-8 { z-index: 8; }
+
+.gradient { background-image: linear-gradient(90deg, theme("colors.secondary") 0%, theme("colors.primary") 100%); }
+.gradient-re { background-image: linear-gradient(90deg, theme("colors.primary") 0%, theme("colors.secondary") 100%); }
+.gradient-text {
+    background: linear-gradient(90deg, theme("colors.primary") 0%, theme("colors.secondary") 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.page-enter-active { transition: all 0.3s; }
+.page-leave-active { transition: all 0.3s; }
+.page-enter-from { opacity: 0;  }
+.page-leave-to { opacity: 0;  }
+
+.slide-up-enter-active { transition: all 0.2s ease; }
+.slide-up-leave-active { transition: all 0.2s ease; }
+.slide-up-enter-from, .slide-up-leave-to { opacity: 0; transform: translateY(-10%); }
+
+.slide-down-enter-active { transition: all 0.2s ease; }
+.slide-down-leave-active { transition: all 0.2s ease; }
+.slide-down-enter-from, .slide-down-leave-to { opacity: 0; transform: translateY(50%); }
+
+.slide-left-enter-active { transition: all 0.2s ease; }
+.slide-left-leave-active { transition: all 0.2s ease; }
+.slide-left-enter-from, .slide-left-leave-to { opacity: 0; transform: translateX(-100%); }
+
+.fade-enter-active { transition: all 0.2s ease; }
+.fade-leave-active { transition: all 0.2s ease; }
+.fade-enter-from, .fade-leave-to { opacity: 0; }
+
+/* ===================================================================== */
+
+.skeleton {
+    background: linear-gradient(90deg, #ffffff22 0%, #99999988 50%, #ffffff22 100%);
+    background-size: 200% 200%;
+    animation: shimmer_skeleton 2s infinite;
+}
+@keyframes shimmer_skeleton {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 150% -150%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* .Vue-Toastification =================================== */
+.Vue-Toastification__toast--default { background-color: theme("colors.dolphin") !important; }
+.Vue-Toastification__toast--info { background-color: theme("colors.cyan.900") !important; }
+.Vue-Toastification__toast--success { background-color: theme("colors.emerald.900") !important; }
+.Vue-Toastification__toast--error { background-color: theme("colors.red.900") !important; }
+.Vue-Toastification__toast--warning { background-color: theme("colors.yellow.900") !important; }
+.Vue-Toastification__icon {
+    margin: 0 !important;
+    padding: 1rem !important;
+    width: 3rem !important; height: 3rem !important;
+    background-color: rgba(45, 45, 45, .4) !important;
+    border-radius: .5rem;
+}
+.Vue-Toastification__toast {
+    align-items: center; padding: .5rem !important;
+    padding-bottom: 1rem !important;
+    gap: 1rem; font-size: .75rem !important;
+    box-shadow: 0px 5px 15px -5px rgba(0,0,0,.4) !important;
+    font-family: "Poppins", "Inter", "IranyekanRegular" !important;
+}
+/* .Vue-Toastification =================================== */
+
+/* splash screen animations ========================================= */
+@keyframes SPLASH_opacity-swing {
+    100% {
+        opacity: 0;
+    }
+}
+@keyframes SPLASH_slide-up {
+    100% {
+        transform: translateY(-100%);
+    }
+}
+@keyframes SPLASH_slide-left {
+    100% {
+        transform: translateX(-100%);
+    }
+}
+@keyframes SPLASH_fall {
+    100% {
+        transform: translate(100%, 150%) rotate(60deg);
+    }
+}
+@keyframes SPLASH_zoom-fade {
+    100% {
+        opacity: 0;
+        transform: scale(3, 3);
+    }
+}
+/* splash screen animations ========================================= */
+
+@keyframes text-pass-ltr {
+    0% {
+        transform: translateX(30%);
+    }
+    100% {
+        transform: translateX(-30%);
+    }
+}
+@keyframes text-pass-rtl {
+    0% {
+        transform: translateX(-30%);
+    }
+    100% {
+        transform: translateX(30%);
+    }
+}

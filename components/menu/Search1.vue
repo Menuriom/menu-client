@@ -1,0 +1,74 @@
+<template>
+    <div class="sticky top-0 flex items-center gap-2 w-full p-2" :style="`background-color: ${baseColors.bgMainColor};`" v-if="options.active">
+        <nuxt-link
+            class="flex items-center justify-center p-2.5 border border-neutral-500 border-opacity-10 rounded-lg shadow-nr35"
+            title="Show All Categories"
+            :style="`background-color: ${options.bgMainColor};`"
+            :to="localePath(`/${route.params.brand_id}/categories`)"
+        >
+            <Icon class="w-5 h-5 shrink-0" :style="`background-color: ${options.textColor};`" name="layout-2.svg" folder="icons/tabler" size="20px" />
+        </nuxt-link>
+        <form
+            class="flex items-center gap-1 w-full p-2.5 rounded-lg shadow-nr10"
+            :style="`background-color: ${options.bgSecondaryColor};`"
+            @submit.prevent="search()"
+        >
+            <button class="p-0.5">
+                <Icon class="w-5 h-5 shrink-0" :style="`background-color: ${options.textColor};`" name="search.svg" folder="icons/tabler" size="20px" />
+            </button>
+            <input
+                class="w-full p-0.5 text-sm outline-none"
+                :style="`background-color: ${options.bgSecondaryColor}; color: ${options.textColor};`"
+                :placeholder="$t('Search')"
+                v-model="searchQuery"
+            />
+            <button class="flex items-center justify-center p-1 rounded-lg bg-white bg-opacity-20" type="button" @click="clear()" v-if="searchQuery">
+                <Icon class="w-4 h-4 rotate-45" :style="`background-color: ${options.textColor};`" name="plus.svg" folder="icons/tabler" size="16px" />
+            </button>
+        </form>
+    </div>
+</template>
+
+<script setup>
+import { useItemsStore } from "@/stores/items";
+import { storeToRefs } from "pinia";
+
+const props = defineProps({
+    restaurantInfo: { type: Object },
+    baseColors: { type: Object },
+    options: { type: Object },
+});
+
+const emit = defineEmits(["filter:items"]);
+
+const { locale } = useI18n();
+const route = useRoute();
+const localePath = useLocalePath();
+const itemsStore = useItemsStore();
+
+const resultIsFiltered = ref(false);
+const searchQuery = ref("");
+const orginalMenuItems = structuredClone(toRaw(itemsStore.menuItems));
+
+const search = () => {
+    if (!searchQuery.value) {
+        clear();
+        return;
+    }
+    for (let i = 0; i < itemsStore.menuItems.length; i++) {
+        itemsStore.menuItems[i].items = orginalMenuItems[i].items.filter((item) => {
+            const name = (item.translation?.[locale.value]?.name || item.name || "").toLowerCase();
+            const description = (item.translation?.[locale.value]?.description || item.description || "").toLowerCase();
+            return name.includes(searchQuery.value.toLowerCase()) || description.includes(searchQuery.value.toLowerCase());
+        });
+    }
+    resultIsFiltered.value = true;
+};
+const clear = () => {
+    if (resultIsFiltered.value) {
+        for (let i = 0; i < itemsStore.menuItems.length; i++) itemsStore.menuItems[i].items = orginalMenuItems[i].items;
+    }
+    resultIsFiltered.value = false;
+    searchQuery.value = "";
+};
+</script>
