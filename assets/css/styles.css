@@ -159,3 +159,20 @@ nav::-webkit-scrollbar, nav ul::-webkit-scrollbar, .scroll-thin::-webkit-scrollb
         transform: translateX(30%);
     }
 }
+
+@keyframes text-scroll-ltr {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-35%);
+    }
+}
+@keyframes text-scroll-rtl {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(35%);
+    }
+}

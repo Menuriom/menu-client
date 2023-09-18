@@ -24,7 +24,7 @@ export const useInfoStore = defineStore("info", () => {
             telephoneNumbers: String[];
             gallery: String[];
             translation: any;
-        };
+        }[];
     }> = ref({});
 
     const resetInfo = () => {

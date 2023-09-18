@@ -6,6 +6,7 @@ export default {
     Search: "Search",
     Categories: "Categories",
     "All Categories": "All Categories",
+    "Select a different branch": "Select a different branch",
 
     Waiter: "Waiter",
     "Store Info": "Store Info",

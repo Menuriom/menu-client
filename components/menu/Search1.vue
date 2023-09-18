@@ -30,8 +30,7 @@
 </template>
 
 <script setup>
-import { useItemsStore } from "@/stores/items";
-import { storeToRefs } from "pinia";
+import { useItemsFilterStore } from "@/stores/itemsFilter";
 
 const props = defineProps({
     restaurantInfo: { type: Object },
@@ -41,34 +40,22 @@ const props = defineProps({
 
 const emit = defineEmits(["filter:items"]);
 
-const { locale } = useI18n();
 const route = useRoute();
 const localePath = useLocalePath();
-const itemsStore = useItemsStore();
+const itemsFilterStore = useItemsFilterStore();
 
-const resultIsFiltered = ref(false);
 const searchQuery = ref("");
-const orginalMenuItems = structuredClone(toRaw(itemsStore.menuItems));
 
 const search = () => {
     if (!searchQuery.value) {
         clear();
         return;
     }
-    for (let i = 0; i < itemsStore.menuItems.length; i++) {
-        itemsStore.menuItems[i].items = orginalMenuItems[i].items.filter((item) => {
-            const name = (item.translation?.[locale.value]?.name || item.name || "").toLowerCase();
-            const description = (item.translation?.[locale.value]?.description || item.description || "").toLowerCase();
-            return name.includes(searchQuery.value.toLowerCase()) || description.includes(searchQuery.value.toLowerCase());
-        });
-    }
-    resultIsFiltered.value = true;
+    itemsFilterStore.searchQuery = searchQuery.value;
+    itemsFilterStore.filter();
 };
 const clear = () => {
-    if (resultIsFiltered.value) {
-        for (let i = 0; i < itemsStore.menuItems.length; i++) itemsStore.menuItems[i].items = orginalMenuItems[i].items;
-    }
-    resultIsFiltered.value = false;
+    itemsFilterStore.clearSearch();
     searchQuery.value = "";
 };
 </script>

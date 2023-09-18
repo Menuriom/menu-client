@@ -6,6 +6,7 @@ export default {
     Search: "جستجو",
     Categories: "دسته‌بندی ها",
     "All Categories": "همه دسته‌بندی ها",
+    "Select a different branch": "انتخاب شعبه دیگر",
 
     Waiter: "گارسون",
     "Store Info": "اطلاعات رستوران",

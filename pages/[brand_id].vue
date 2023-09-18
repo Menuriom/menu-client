@@ -82,6 +82,7 @@
 import { useStylesStore } from "@/stores/styles";
 import { useInfoStore } from "@/stores/info";
 import { useItemsStore } from "@/stores/items";
+import { useItemsFilterStore } from "@/stores/itemsFilter";
 import { storeToRefs } from "pinia";
 
 useHead({ title: `menu title here` }); // TODO : change this
@@ -114,15 +115,16 @@ const navbars = {
 
 const route = useRoute();
 const router = useRouter();
-
 const stylesStore = useStylesStore();
-const { styles } = storeToRefs(stylesStore);
-
 const infoStore = useInfoStore();
-const { restaurantInfo } = storeToRefs(infoStore);
-
 const itemsStore = useItemsStore();
+const itemsFilterStore = useItemsFilterStore();
+
+const { styles } = storeToRefs(stylesStore);
+const { restaurantInfo } = storeToRefs(infoStore);
 const { menuItems } = storeToRefs(itemsStore);
+
+itemsFilterStore.filter();
 
 const _initialCategorySelector = (queryC) => {
     if (queryC && !isNaN(queryC)) {
@@ -135,6 +137,10 @@ const _initialCategorySelector = (queryC) => {
 
 onMounted(() => {
     _initialCategorySelector(route.query.c);
+
+    // setTimeout(() => {
+    //     console.log({ dd: itemsStore.menuItemsOG });
+    // }, 2000);
 });
 onBeforeRouteUpdate((to, from, next) => {
     _initialCategorySelector(to.query.c);

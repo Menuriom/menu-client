@@ -1,47 +1,47 @@
 import { defineStore } from "pinia";
 
+export interface MenuItemsInterface {
+    branches: String[];
+    icon: String;
+    name: String;
+    description: String;
+    order: Number;
+    showAsNew: Boolean;
+    translation: Object;
+    items: {
+        branches: String[];
+        category: String;
+        order: Number;
+        images: String[];
+        name: String;
+        description: String;
+        price: Number;
+        discountPercentage: Number;
+        discountActive: Boolean;
+        variants: { name: String; price: Number; translation: Object }[];
+        hidden: Boolean;
+        pinned: Boolean;
+        soldOut: Boolean;
+        showAsNew: Boolean;
+        specialDaysList: String[];
+        specialDaysActive: Boolean;
+        tags: String[];
+        sideItems: {
+            name: String;
+            description: String;
+            items: { name: String; price: Number; translation: Object }[];
+            maxNumberUserCanChoose: Number;
+            translation: Object;
+        }[];
+        likes: Number;
+        translation: any;
+    }[];
+}
+
 export const useItemsStore = defineStore("items", () => {
     const dataIsLoaded: Ref<Boolean> = ref(false);
     const loading: Ref<Boolean> = ref(false);
-    const menuItems: Ref<
-        {
-            branches: String[];
-            icon: String;
-            name: String;
-            description: String;
-            order: Number;
-            showAsNew: Boolean;
-            translation: Object;
-            items: {
-                branches: String[];
-                category: String;
-                order: Number;
-                images: String[];
-                name: String;
-                description: String;
-                price: Number;
-                discountPercentage: Number;
-                discountActive: Boolean;
-                variants: { name: String; price: Number; translation: Object }[];
-                hidden: Boolean;
-                pinned: Boolean;
-                soldOut: Boolean;
-                showAsNew: Boolean;
-                specialDaysList: String[];
-                specialDaysActive: Boolean;
-                tags: String[];
-                sideItems: {
-                    name: String;
-                    description: String;
-                    items: { name: String; price: Number; translation: Object }[];
-                    maxNumberUserCanChoose: Number;
-                    translation: Object;
-                }[];
-                likes: Number;
-                translation: Object;
-            }[];
-        }[]
-    > = ref([]);
+    const menuItems: Ref<MenuItemsInterface[]> = ref([]);
 
     const resetInfo = () => {
         menuItems.value = [];
