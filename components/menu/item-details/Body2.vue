@@ -42,7 +42,7 @@
                 <h1 class="text-xl/tight font-semibold" :style="`color: ${options.textColor};`">
                     {{ item.translation?.[locale]?.name || item.name }}
                 </h1>
-                <p class="text-sm opacity-75 grow" :style="`color: ${options.textColor};`">
+                <p class="text-xs opacity-75 grow" :style="`color: ${options.textColor};`">
                     {{ item.translation?.[locale]?.description || item.description }}
                 </p>
             </div>
@@ -79,7 +79,7 @@
                     :style="`width: auto; background-color: ${options.bgSecondaryColor}; border-radius: ${options.cornerRadius}px;`"
                     v-for="(image, i) in item.images"
                 >
-                    <img class="w-56 aspect-square object-cover" :style="`border-radius: ${options.cornerRadius}px;`" :src="image" alt="" />
+                    <img class="w-64 aspect-square object-cover" :style="`border-radius: ${options.cornerRadius}px;`" :src="image" alt="" />
                 </SwiperSlide>
             </Swiper>
         </div>

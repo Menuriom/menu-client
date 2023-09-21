@@ -15,4 +15,8 @@ export default {
     toppingMaxCount: "{n} item maximum",
     Free: "Free",
     "Select from available languages": "Select from available languages",
+
+    "Call The Waiter": "Call The Waiter",
+    "Enter your table number in order to call the waiter": "Enter your table number in order to call the waiter",
+    "Table Number": "Table Number",
 };

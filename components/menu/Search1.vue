@@ -47,15 +47,11 @@ const itemsFilterStore = useItemsFilterStore();
 const searchQuery = ref("");
 
 const search = () => {
-    if (!searchQuery.value) {
-        clear();
-        return;
-    }
     itemsFilterStore.searchQuery = searchQuery.value;
     itemsFilterStore.filter();
 };
 const clear = () => {
-    itemsFilterStore.clearSearch();
     searchQuery.value = "";
+    itemsFilterStore.filter();
 };
 </script>

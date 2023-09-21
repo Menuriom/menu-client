@@ -3,14 +3,20 @@
         class="sticky bottom-2 flex items-center gap-8 py-3 px-6 rounded-lg shadow-nr35"
         :style="`background-color: ${options.bgMainColor}; border-radius: ${options.radius}px;`"
     >
-        <button class="flex flex-col items-center justify-center gap-1 rounded-full transition-all hover:scale-125 hover:rotate-6">
+        <nuxt-link
+            class="flex flex-col items-center justify-center gap-1 rounded-full transition-all hover:scale-125 hover:rotate-6"
+            :to="localePath(`/${route.params.brand_id}/server-call`)"
+        >
             <Icon class="w-7 h-7 shrink-0" :style="`background-color: ${options.textColor};`" name="bell-ringing.svg" folder="icons/tabler" size="28px" />
             <small class="text-xxs opacity-75 -mb-1" :style="`color: ${options.textColor};`" v-if="options.withText">{{ $t("Waiter") }}</small>
-        </button>
-        <button class="flex flex-col items-center justify-center gap-1 rounded-full transition-all hover:scale-125 hover:-rotate-6">
+        </nuxt-link>
+        <nuxt-link
+            class="flex flex-col items-center justify-center gap-1 rounded-full transition-all hover:scale-125 hover:-rotate-6"
+            :to="localePath(`/${route.params.brand_id}/store-info`)"
+        >
             <Icon class="w-7 h-7 shrink-0" :style="`background-color: ${options.primaryColor};`" name="building-store.svg" folder="icons/tabler" size="28px" />
             <small class="text-xxs opacity-75 -mb-1" :style="`color: ${options.textColor};`" v-if="options.withText">{{ $t("Store Info") }}</small>
-        </button>
+        </nuxt-link>
         <button class="relative flex flex-col items-center justify-center gap-1 rounded-full transition-all hover:scale-125 hover:rotate-6">
             <Icon class="w-7 h-7 shrink-0" :style="`background-color: ${options.textColor};`" name="receipt-2.svg" folder="icons/tabler" size="28px" />
             <small class="text-xxs opacity-75 -mb-1" :style="`color: ${options.textColor};`" v-if="options.withText">{{ $t("Orders") }}</small>
@@ -23,4 +29,7 @@
 const props = defineProps({
     options: { type: Object },
 });
+
+const route = useRoute();
+const localePath = useLocalePath();
 </script>

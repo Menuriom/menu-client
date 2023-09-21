@@ -137,10 +137,6 @@ const _initialCategorySelector = (queryC) => {
 
 onMounted(() => {
     _initialCategorySelector(route.query.c);
-
-    // setTimeout(() => {
-    //     console.log({ dd: itemsStore.menuItemsOG });
-    // }, 2000);
 });
 onBeforeRouteUpdate((to, from, next) => {
     _initialCategorySelector(to.query.c);

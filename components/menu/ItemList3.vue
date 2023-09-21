@@ -50,7 +50,7 @@
                     <h3 class="text-base font-semibold" :style="`color: ${options.textColor};`">
                         {{ item.translation?.[locale]?.name || item.name }}
                     </h3>
-                    <p class="text-xs opacity-75 grow" :style="`color: ${options.textColor};`">
+                    <p class="text-xs opacity-75 max-h-8 overflow-hidden text-ellipsis grow" :style="`color: ${options.textColor};`">
                         {{ item.translation?.[locale]?.description || item.description }}
                     </p>
                     <hr class="w-full opacity-20 mt-auto" :style="`border-color: ${options.textColor};`" />

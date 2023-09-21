@@ -24,7 +24,6 @@ import { useItemsStore } from "@/stores/items";
 import { storeToRefs } from "pinia";
 
 useHead({ title: `menu title here` }); // TODO : change this
-// definePageMeta({ middleware: ["fetcher"] });
 
 const route = useRoute();
 

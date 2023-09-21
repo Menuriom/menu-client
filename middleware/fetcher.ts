@@ -28,8 +28,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         await itemsStore.getMenuItems(to.params.brand_id.toString()).catch((err) => {
             if (process.server) console.error({ err });
         });
-        // itemsFilterStore.menuItemsOG = itemsStore.menuItems;
-        itemsFilterStore.menuItemsOG = structuredClone(toRaw(itemsStore.menuItems));
+        itemsFilterStore.menuItemsOG = itemsStore.menuItems;
     }
 
     // check if locale is one of brand languages... if not then set the locale the first item of brand's languages
