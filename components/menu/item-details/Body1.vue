@@ -100,15 +100,15 @@
             >
                 <SwiperSlide
                     tag="li"
-                    class="flex flex-col gap-2 p-1.5 px-3 border border-neutral-500 border-opacity-20 cursor-pointer shadow-nr15"
-                    :style="`width: auto; background-color: ${selectedType == j ? options.primaryColor : options.bgMainColor};
+                    class="flex flex-col gap-2 p-1.5 px-3 text-sm border border-neutral-500 border-opacity-20 cursor-pointer shadow-nr15"
+                    :style="`width: auto; background-color: ${selectedType._id == variant._id ? options.primaryColor : options.bgMainColor};
                     border-radius: ${options.cornerRadius}px;`"
                     v-for="(variant, j) in item.variants"
-                    @click="selectType(j)"
+                    @click="selectType(variant)"
                 >
                     <h3
-                        class="text-sm"
-                        :style="`color: ${selectedType == j ? options.bgMainColor : options.textColor}; border-radius: ${options.cornerRadius}px;`"
+                        :style="`color: ${selectedType._id == variant._id ? options.bgMainColor : options.textColor};
+                        border-radius: ${options.cornerRadius}px;`"
                     >
                         {{ variant.translation?.[locale]?.name || variant.name }}
                     </h3>
@@ -130,15 +130,11 @@
                     ></span>
                 </div>
                 <ul id="toppings" class="flex flex-col items-start gap-2 w-full">
-                    <li
-                        class="flex items-center gap-2 w-full cursor-pointer"
-                        v-for="(topping, j) in sideItem.items"
-                        @click="selectedTopings.has(topping) ? selectedTopings.delete(topping) : selectedTopings.add(topping)"
-                    >
+                    <li class="flex items-center gap-2 w-full cursor-pointer" v-for="(topping, j) in sideItem.items" @click="selectTopping(topping)">
                         <span
                             class="rounded opacity-80 border-2"
                             :style="`
-                            background-color: ${selectedTopings.has(topping) ? options.primaryColor : options.bgMainColor};
+                            background-color: ${selectedTopings[topping._id] ? options.primaryColor : options.bgMainColor};
                             border-color: ${options.primaryColor};
                             `"
                         >
@@ -177,19 +173,39 @@
                         </span>
                     </div>
                 </div>
-                <button
-                    class="flex items-center justify-center gap-2 px-4 py-2 rounded-full shadow-nr35 shrink-0"
-                    :style="`background-color: ${options.primaryColor}; border-radius: ${options.cornerRadius - 10}px;`"
-                >
-                    <span class="text-sm" :style="`color: ${options.bgMainColor};`">{{ $t("Add To Orders") }}</span>
-                    <Icon class="w-5 h-5 shrink-0" :style="`background-color: ${options.bgMainColor};`" name="plus.svg" folder="icons/tabler" size="24px" />
-                </button>
+                <div class="flex items-center gap-2" :style="`color: ${options.textColor};`">
+                    <button
+                        class="flex items-center justify-center gap-2 p-2 rounded-full shadow-nr35 shrink-0"
+                        :style="`background-color: ${options.primaryColor}; border-radius: ${options.cornerRadius - 10}px;`"
+                        @click="subItem(item)"
+                        v-if="inOrders"
+                    >
+                        <Icon
+                            class="w-5 h-5 shrink-0"
+                            :style="`background-color: ${options.bgMainColor};`"
+                            :name="`${inOrderCount > 1 ? 'minus' : 'trash'}.svg`"
+                            folder="icons/tabler"
+                            size="24px"
+                        />
+                    </button>
+                    <span class="text-2xl w-5 text-center" v-if="inOrders">{{ Intl.NumberFormat(locale).format(inOrderCount) }}</span>
+                    <button
+                        class="flex items-center justify-center gap-2 py-2 rounded-full shadow-nr35 shrink-0"
+                        :class="[inOrders ? 'px-2' : 'px-4']"
+                        :style="`background-color: ${options.primaryColor}; border-radius: ${options.cornerRadius - 10}px;`"
+                        @click="addItem(item)"
+                    >
+                        <span class="text-sm" :style="`color: ${options.bgMainColor};`" v-if="!inOrders">{{ $t("Add To Orders") }}</span>
+                        <Icon class="w-5 h-5 shrink-0" :style="`background-color: ${options.bgMainColor};`" name="plus.svg" folder="icons/tabler" size="24px" />
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
+import { useOrdersStore } from "@/stores/orders";
 import { Pagination } from "swiper/modules";
 
 const props = defineProps({
@@ -201,20 +217,50 @@ const props = defineProps({
 const emit = defineEmits(["innerAction"]);
 
 const { locale } = useI18n();
+const ordersStore = useOrdersStore();
 
-const selectedType = ref(-1);
-const selectedTopings = ref(new Set());
+const selectedType = ref({});
+const selectedTopings = ref({});
 
 const today = new Date().getDay();
 const weekday = ["sundays", "mondays", "tuesdays", "wednesdays", "thursdays", "fridays", "saturdays"];
 
-const selectType = (typeIndex) => (selectedType.value = selectedType.value === typeIndex ? -1 : typeIndex);
+const selectType = (variant) => {
+    selectedType.value = selectedType.value._id === variant._id ? {} : variant;
+    ordersStore.updateOrderItem({ item: props.item, variant: selectedType.value, sideItems: new Set(Object.values(selectedTopings.value)) });
+};
+const selectTopping = (topping) => {
+    if (selectedTopings.value[topping._id]) delete selectedTopings.value[topping._id];
+    else selectedTopings.value[topping._id] = topping;
+    ordersStore.updateOrderItem({ item: props.item, variant: selectedType.value, sideItems: new Set(Object.values(selectedTopings.value)) });
+};
 
 const price = computed(() => {
-    let itemPrice = props.item.variants?.[selectedType.value]?.price ?? props.item.price;
-    for (const topping of selectedTopings.value) itemPrice += topping.price;
+    let itemPrice = selectedType.value.price ?? props.item.price;
+    for (const [i, topping] in selectedTopings.value) itemPrice += topping.price || 0;
     return itemPrice;
 });
+
+// Item manipulation ---------------------
+const inOrders = computed(() => {
+    return ordersStore.orderItems.has(props.item._id);
+});
+const inOrderCount = computed(() => {
+    return ordersStore.orderItems.get(props.item._id)?.count || 0;
+});
+const addItem = (item) => {
+    ordersStore.addOrderItem({ item: item, variant: selectedType.value, sideItems: new Set(Object.values(selectedTopings.value)) });
+};
+const subItem = (item) => {
+    ordersStore.removeOrderItem({ item: item });
+};
+if (inOrders.value) {
+    selectedType.value = ordersStore.orderItems.get(props.item._id)?.variant || {};
+    if (ordersStore.orderItems.get(props.item._id)?.sideItems) {
+        for (const sideItem of ordersStore.orderItems.get(props.item._id)?.sideItems) selectedTopings.value[sideItem._id] = sideItem;
+    }
+}
+// ---------------------
 
 const scrolling = (e) => {
     e.preventDefault();

@@ -6,7 +6,7 @@
             <h1 class="font-bold">{{ $t("Select a different branch") }}</h1>
             <ul class="flex flex-col gap-4 w-full overflow-auto select-none" style="max-height: calc(100vh - 14rem)" @scroll="scrolling($event)">
                 <li
-                    class="flex items-center gap-4 w-full p-4 border border-neutral-500 border-opacity-10 cursor-pointer shadow-nr10"
+                    class="flex items-center gap-4 w-full p-3 md:p-4 border border-neutral-500 border-opacity-10 cursor-pointer shadow-nr10"
                     :style="`background-color: ${
                         itemsFilterStore.selectedBranch._id == branch._id
                             ? styles.mainMenuStyleOptions?.categoriesOptions?.primaryColor
@@ -17,11 +17,18 @@
                     @click="selectOption(branch, i)"
                 >
                     <span
-                        class="p-2 border border-neutral-500 border-opacity-30"
+                        class="flex items-center justify-center w-20 h-20 border border-neutral-500 border-opacity-25 shrink-0"
                         :style="`background-color: ${styles.mainMenuStyleOptions?.categoriesOptions?.bgMainColor};
                         border-radius: ${styles.mainMenuStyleOptions?.categoriesOptions?.cornerRadius - 4}px;`"
                     >
-                        <Icon class="w-7 h-7 shrink-0 bg-red-400" name="map-pin-filled.svg" folder="icons/tabler" size="28px" />
+                        <img
+                            class="w-full aspect-square object-cover"
+                            :src="branch.gallery[0]"
+                            :style="`background-color: ${styles.mainMenuStyleOptions?.categoriesOptions?.bgMainColor};
+                            border-radius: ${styles.mainMenuStyleOptions?.categoriesOptions?.cornerRadius - 8}px;`"
+                            v-if="branch.gallery[0]"
+                        />
+                        <Icon class="w-10 h-10 bg-red-400 opacity-80" name="map-pin-filled.svg" folder="icons/tabler" size="40px" v-else />
                     </span>
                     <div class="flex flex-col gap-1.5">
                         <h2 class="rounded-full text-base/none font-bold" :style="`color: ${styles.mainMenuStyleOptions?.categoriesOptions?.textColor};`">

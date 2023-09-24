@@ -1,12 +1,12 @@
 import { defineStore } from "pinia";
-import { useItemsStore, MenuItemsInterface } from "@/stores/items";
+import { useItemsStore, MenuCategoryInterface } from "@/stores/items";
 
 export const useItemsFilterStore = defineStore("itemsFilter", () => {
     const nuxtApp = useNuxtApp();
     const itemsStore = useItemsStore();
 
-    let ogCopy: MenuItemsInterface[] = [];
-    const menuItemsOG: Ref<MenuItemsInterface[]> = ref([]);
+    let ogCopy: MenuCategoryInterface[] = [];
+    const menuItemsOG: Ref<MenuCategoryInterface[]> = ref([]);
 
     const searchQuery: Ref<String> = ref("");
     const selectedBranch: Ref<{

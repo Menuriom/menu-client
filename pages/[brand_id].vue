@@ -88,6 +88,8 @@ import { storeToRefs } from "pinia";
 useHead({ title: `menu title here` }); // TODO : change this
 definePageMeta({ middleware: ["fetcher"] });
 
+// TODO : add limitation of the brand into the menu
+
 const headers = {
     Header1: defineAsyncComponent(() => import("@/components/menu/Header1.vue")),
     Header2: defineAsyncComponent(() => import("@/components/menu/Header2.vue")),

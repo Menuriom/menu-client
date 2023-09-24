@@ -21,6 +21,7 @@
                 :style="`background-color: ${options.bgSecondaryColor}; color: ${options.textColor};`"
                 :placeholder="$t('Search')"
                 v-model="searchQuery"
+                inputmode="search"
             />
             <button class="flex items-center justify-center p-1 rounded-lg bg-white bg-opacity-20" type="button" @click="clear()" v-if="searchQuery">
                 <Icon class="w-4 h-4 rotate-45" :style="`background-color: ${options.textColor};`" name="plus.svg" folder="icons/tabler" size="16px" />

@@ -75,12 +75,16 @@
                             class="flex items-center justify-center w-7 h-7 p-1 rounded-full shadow-nr15 transition-all hover:scale-125 shrink-0"
                             :style="`background-color: ${options.primaryColor};`"
                         >
+                            <span class="inline-block text-sm/none" v-if="ordersStore.orderItems.get(item._id)?.count > 0">
+                                {{ Intl.NumberFormat(locale).format(ordersStore.orderItems.get(item._id)?.count) }}
+                            </span>
                             <Icon
                                 class="w-5 h-5 shrink-0"
-                                :style="`background-color: ${options.bgMainColor};`"
+                                :style="`background-color: ${options.textColor};`"
                                 name="plus.svg"
                                 folder="icons/tabler"
                                 size="18px"
+                                v-else
                             />
                         </button>
                     </div>
@@ -98,6 +102,8 @@
 </template>
 
 <script setup>
+import { useOrdersStore } from "@/stores/orders";
+
 const props = defineProps({
     restaurantInfo: { type: Object },
     options: { type: Object },
@@ -108,6 +114,7 @@ const { locale } = useI18n();
 const localePath = useLocalePath();
 const route = useRoute();
 const router = useRouter();
+const ordersStore = useOrdersStore();
 
 const today = new Date().getDay();
 const weekday = ["sundays", "mondays", "tuesdays", "wednesdays", "thursdays", "fridays", "saturdays"];

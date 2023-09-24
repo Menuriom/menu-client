@@ -27,7 +27,11 @@
                 size="28px"
             />
         </nuxt-link>
-        <button class="relative flex items-center justify-center w-10 h-10 rounded-full group" :style="`background-color: ${options.bgSecondaryColor};`">
+        <nuxt-link
+            class="relative flex items-center justify-center w-10 h-10 rounded-full group"
+            :style="`background-color: ${options.bgSecondaryColor};`"
+            :to="localePath(`/${route.params.brand_id}/orders`)"
+        >
             <Icon
                 class="w-7 h-7 shrink-0 transition-all group-hover:scale-125 group-hover:rotate-6"
                 :style="`background-color: ${options.textColor};`"
@@ -35,17 +39,23 @@
                 folder="icons/tabler"
                 size="28px"
             />
-            <span class="absolute top-0 -start-1 flex items-center justify-center w-4 h-4 bg-rose-500 text-white rounded-full text-xxs shadow-nr15"> 5 </span>
-        </button>
+            <span class="absolute top-0 -start-1 flex items-center justify-center w-4 h-4 bg-rose-500 text-white rounded-full text-xxs shadow-nr15">
+                {{ Intl.NumberFormat(locale).format(ordersStore.orderItems.size) }}
+            </span>
+        </nuxt-link>
     </div>
 </template>
 
 <script setup>
+import { useOrdersStore } from "@/stores/orders";
+
 const props = defineProps({
     options: { type: Object },
     border: { type: Boolean, default: true },
 });
 
+const { locale } = useI18n();
 const route = useRoute();
 const localePath = useLocalePath();
+const ordersStore = useOrdersStore();
 </script>

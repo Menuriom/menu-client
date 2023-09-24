@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export interface MenuItemsInterface {
+export interface MenuCategoryInterface {
     branches: String[];
     icon: String;
     name: String;
@@ -8,40 +8,51 @@ export interface MenuItemsInterface {
     order: Number;
     showAsNew: Boolean;
     translation: Object;
-    items: {
-        branches: String[];
-        category: String;
-        order: Number;
-        images: String[];
-        name: String;
-        description: String;
-        price: Number;
-        discountPercentage: Number;
-        discountActive: Boolean;
-        variants: { name: String; price: Number; translation: Object }[];
-        hidden: Boolean;
-        pinned: Boolean;
-        soldOut: Boolean;
-        showAsNew: Boolean;
-        specialDaysList: String[];
-        specialDaysActive: Boolean;
-        tags: String[];
-        sideItems: {
-            name: String;
-            description: String;
-            items: { name: String; price: Number; translation: Object }[];
-            maxNumberUserCanChoose: Number;
-            translation: Object;
-        }[];
-        likes: Number;
-        translation: any;
-    }[];
+    items: FoodItemInterface[];
+}
+
+export interface FoodItemInterface {
+    _id: String;
+    branches: String[];
+    category: String;
+    order: Number;
+    images: String[];
+    name: String;
+    description: String;
+    price: Number;
+    discountPercentage: Number;
+    discountActive: Boolean;
+    variants: PojoItemInterface[];
+    hidden: Boolean;
+    pinned: Boolean;
+    soldOut: Boolean;
+    showAsNew: Boolean;
+    specialDaysList: String[];
+    specialDaysActive: Boolean;
+    tags: String[];
+    sideItems: SideItemInterface[];
+    likes: Number;
+    translation: any;
+}
+
+export interface SideItemInterface {
+    name: String;
+    description: String;
+    items: PojoItemInterface[];
+    maxNumberUserCanChoose: Number;
+    translation: Object;
+}
+
+export interface PojoItemInterface {
+    name: String;
+    price: Number;
+    translation: Object;
 }
 
 export const useItemsStore = defineStore("items", () => {
     const dataIsLoaded: Ref<Boolean> = ref(false);
     const loading: Ref<Boolean> = ref(false);
-    const menuItems: Ref<MenuItemsInterface[]> = ref([]);
+    const menuItems: Ref<MenuCategoryInterface[]> = ref([]);
 
     const resetInfo = () => {
         menuItems.value = [];

@@ -19,4 +19,7 @@ export default {
     "Call The Waiter": "درخواست گارسون",
     "Enter your table number in order to call the waiter": "برای درخواست گارسون لطفا شماره میز را وارد کنید",
     "Table Number": "شماره میز شما",
+
+    "Orders List": "لیست سفارش‌ها",
+    "Clear list": "خالی کردن لیست",
 };

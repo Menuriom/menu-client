@@ -19,6 +19,7 @@
                     type="text"
                     name="table"
                     :placeholder="$t('Table Number')"
+                    inputmode="numeric"
                 />
                 <button
                     class="p-3"

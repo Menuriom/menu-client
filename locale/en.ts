@@ -19,4 +19,7 @@ export default {
     "Call The Waiter": "Call The Waiter",
     "Enter your table number in order to call the waiter": "Enter your table number in order to call the waiter",
     "Table Number": "Table Number",
+
+    "Orders List": "Orders List",
+    "Clear list": "Clear list",
 };

@@ -50,7 +50,7 @@
                     <Icon class="w-5 h-5 rotate-45" :style="`background-color: ${options.textColor};`" name="plus.svg" folder="icons/tabler" size="20px" />
                 </button>
                 <span
-                    class="handle w-4/12 h-1.5 mt-4 -mb-4 rounded-full bg-neutral-300 bg-opacity-75 mix-blend-difference shrink-0"
+                    class="handle w-3/12 h-1.5 mt-4 -mb-4 rounded-full bg-neutral-300 bg-opacity-75 mix-blend-difference shrink-0"
                     v-else-if="!options.imageMargin || options.imageMargin == '0'"
                 ></span>
                 <slot />
@@ -65,6 +65,7 @@ const props = defineProps({
     actionLock: { type: Boolean, default: false },
     withX: { type: Boolean, default: false },
 });
+const { actionLock } = toRefs(props);
 
 const router = useRouter();
 const open = ref(true);
@@ -122,6 +123,13 @@ const release = (e) => {
         }
     } catch (e) {}
 };
+
+watch(actionLock, (v) => {
+    if(!v) return
+    drawer.value.style.top = `0px`;
+    grabbed.value = false;
+    movingStartingY = 0;
+});
 
 onMounted(() => {
     drawer.value.addEventListener("mouseup", release);
