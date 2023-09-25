@@ -22,4 +22,11 @@ export default {
 
     "Orders List": "لیست سفارش‌ها",
     "Clear list": "خالی کردن لیست",
+    "The List Is Empty": "لیست سفارش خالی است",
+
+    Total: "جمع کل",
+    Discount: "جمع تخفیفات",
+    "Tax and fees": "مالیات و دیگر خدمات",
+    "Payable Total": "مبلغ قابل پرداخت",
+    "Ordering online coming soon": "سفارش آنلاین به زودی",
 };

@@ -93,7 +93,6 @@ const grab = (e) => {
     grabbed.value = true;
     startingY = e.changedTouches?.[0].pageY || e.y;
     movingStartingY = e.changedTouches?.[0].pageY || e.y;
-    // console.log({ dd: drawerBox.value.clientHeight });
 };
 const move = (e) => {
     if (!grabbed.value || props.actionLock) return;

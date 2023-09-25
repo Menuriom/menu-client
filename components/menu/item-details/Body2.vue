@@ -166,7 +166,7 @@
                     </span>
                 </div>
             </div>
-            <div class="flex items-center gap-2" :style="`color: ${options.textColor};`">
+            <div class="flex items-center gap-2" :style="`color: ${options.textColor};`" v-if="!item.soldOut">
                 <button
                     class="flex items-center justify-center gap-2 p-2 rounded-full shadow-nr35 shrink-0"
                     :style="`background-color: ${options.primaryColor}; border-radius: ${options.cornerRadius - 10}px;`"
@@ -191,6 +191,13 @@
                     <span class="text-sm" :style="`color: ${options.bgMainColor};`" v-if="!inOrders">{{ $t("Add To Orders") }}</span>
                     <Icon class="w-5 h-5 shrink-0" :style="`background-color: ${options.bgMainColor};`" name="plus.svg" folder="icons/tabler" size="24px" />
                 </button>
+            </div>
+            <div
+                class="p-2 px-4 border-2 border-neutral-500 border-opacity-25"
+                :style="`color: ${options.primaryColor}; border-radius: ${options.cornerRadius - 10}px;`"
+                v-else
+            >
+                {{ $t("Sold Out") }}
             </div>
         </div>
     </div>
@@ -229,7 +236,7 @@ const selectTopping = (topping) => {
 
 const price = computed(() => {
     let itemPrice = selectedType.value.price ?? props.item.price;
-    for (const [i, topping] in selectedTopings.value) itemPrice += topping.price || 0;
+    for (const i in selectedTopings.value) itemPrice += selectedTopings.value[i].price || 0;
     return itemPrice;
 });
 
@@ -248,9 +255,10 @@ const subItem = (item) => {
 };
 if (inOrders.value) {
     selectedType.value = ordersStore.orderItems.get(props.item._id)?.variant || {};
-    for (const sideItem of ordersStore.orderItems.get(props.item._id)?.sideItems) selectedTopings.value[sideItem._id] = sideItem;
+    if (ordersStore.orderItems.get(props.item._id)?.sideItems) {
+        for (const sideItem of ordersStore.orderItems.get(props.item._id)?.sideItems) selectedTopings.value[sideItem._id] = sideItem;
+    }
 }
-
 // ---------------------
 
 const scrolling = (e) => {

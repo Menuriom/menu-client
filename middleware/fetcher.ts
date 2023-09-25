@@ -2,12 +2,14 @@ import { useStylesStore } from "@/stores/styles";
 import { useInfoStore } from "@/stores/info";
 import { useItemsStore } from "@/stores/items";
 import { useItemsFilterStore } from "@/stores/itemsFilter";
+import { useOrdersStore } from "@/stores/orders";
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
     const stylesStore = useStylesStore();
     const infoStore = useInfoStore();
     const itemsStore = useItemsStore();
     const itemsFilterStore = useItemsFilterStore();
+    const ordersStore = useOrdersStore();
     const nuxtApp = useNuxtApp();
     const { locale, setLocale, setLocaleCookie, defaultLocale } = nuxtApp.$i18n;
 
@@ -29,6 +31,15 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
             if (process.server) console.error({ err });
         });
         itemsFilterStore.menuItemsOG = itemsStore.menuItems;
+    }
+
+    if (!ordersStore.dataIsLoaded && process.client) {
+        ordersStore.dataIsLoaded = true;
+        const storedOrders: any = JSON.parse(localStorage.getItem(`orders`) || `{}`);
+        ordersStore.orderItems = new Map(storedOrders[to.params.brand_id.toString()] || []);
+        for (const [k, v] of ordersStore.orderItems.entries()) {
+            ordersStore.orderItems.set(k, { ...v, sideItems: new Set(v.sideItems || []) });
+        }
     }
 
     // check if locale is one of brand languages... if not then set the locale the first item of brand's languages

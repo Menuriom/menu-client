@@ -7,19 +7,19 @@
             :style="`color: ${styles.itemsDialogStyleOptions.textColor}`"
             @scroll="scrolling($event)"
         >
-            <header class="flex flex-wrap items-center justify-between gap-2 w-full">
+            <header class="flex flex-wrap items-center justify-between gap-2 w-full" v-if="orderItems.size">
                 <h1 class="font-bold">{{ $t("Orders List") }}</h1>
-                <button class="text-xxs underline underline-offset-2 opacity-75">
+                <button class="text-xxs underline underline-offset-2 opacity-75" @click="clearList()">
                     {{ $t("Clear list") }}
                 </button>
             </header>
-            <ul class="flex flex-col gap-2 w-full" :class="{ 'pe-1.5': orderItems.size > 2 }">
+            <ul class="flex flex-col gap-2 w-full" :class="{ 'pe-1.5': orderItems.size > 2 }" v-if="orderItems.size">
                 <li
                     class="relative flex items-start gap-3 w-full p-3 rounded-lg border border-neutral-500 border-opacity-10 shadow-nr15"
                     :style="`margin-top: ${styles.mainMenuStyleOptions?.itemListOptions.imageMargin / 8}rem;
                     background-color: ${styles.mainMenuStyleOptions?.itemListOptions.bgMainColor};
                     border-radius: ${styles.mainMenuStyleOptions?.itemListOptions.cornerRadius}px;`"
-                    v-for="([, { item, variant, sideItems }], i) in orderItems"
+                    v-for="([, { item, variant, sideItems, count }], i) in orderItems"
                 >
                     <span
                         class="relative w-16 aspect-square rounded-lg shrink-0"
@@ -85,12 +85,16 @@
                                 <div class="flex flex-col gap-1.5">
                                     <div class="relative flex flex-wrap items-center" v-if="item.discountActive">
                                         <small class="line-through line" :style="`color: ${styles.mainMenuStyleOptions?.itemListOptions.textColor};`">
-                                            {{ Intl.NumberFormat(locale).format(item.price) }}
+                                            {{ Intl.NumberFormat(locale).format(itemPrice(item, variant, sideItems) * count) }}
                                         </small>
                                         <b class="absolute -end-7 text-xs bg-rose-400 bg-opacity-75 px-1 rounded-md">{{ item.discountPercentage }} %</b>
                                     </div>
                                     <b class="text-lg/none" :style="`color: ${styles.mainMenuStyleOptions?.itemListOptions.accentColor};`">
-                                        {{ Intl.NumberFormat(locale).format(item.price * (1 - (item.discountActive ? item.discountPercentage : 0) / 100)) }}
+                                        {{
+                                            Intl.NumberFormat(locale).format(
+                                                itemPrice(item, variant, sideItems) * count * (1 - (item.discountActive ? item.discountPercentage : 0) / 100)
+                                            )
+                                        }}
                                     </b>
                                 </div>
                                 <span class="text-xs opacity-75" :style="`color: ${styles.mainMenuStyleOptions?.itemListOptions.textColor};`">
@@ -102,7 +106,58 @@
                 </li>
             </ul>
 
-            <hr class="w-full border-0 border-b-2 border-dashed border-neutral-500 bg-opacity-25" />
+            <div class="flex flex-col items-center gap-3 w-full" v-if="orderItems.size">
+                <hr class="w-full border-0 border-b-2 border-dashed border-neutral-500 border-opacity-50" />
+                <div class="flex flex-col gap-2 w-full">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <span class="text-xs opacity-75">{{ $t("Total") }}</span>
+                        <div class="flex items-baseline gap-1">
+                            <b class="text-sm opacity-80">{{ Intl.NumberFormat(locale).format(pricePack.total) }}</b>
+                            <span class="text-xs opacity-75" :style="`color: ${styles.mainMenuStyleOptions?.itemListOptions.textColor};`">
+                                {{ restaurantInfo.brand.currency }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <span class="text-xs opacity-75">{{ $t("Discount") }}</span>
+                        <div class="flex items-baseline gap-1">
+                            <b class="text-sm opacity-80">{{ Intl.NumberFormat(locale).format(pricePack.discount) }}</b>
+                            <span class="text-xs opacity-75" :style="`color: ${styles.mainMenuStyleOptions?.itemListOptions.textColor};`">
+                                {{ restaurantInfo.brand.currency }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <span class="text-xs opacity-75">{{ $t("Tax and fees") }}</span>
+                        <div class="flex items-baseline gap-1">
+                            <b class="text-sm opacity-80">{{ Intl.NumberFormat(locale).format(taxAndFees) }}</b>
+                            <span class="text-xs opacity-75" :style="`color: ${styles.mainMenuStyleOptions?.itemListOptions.textColor};`">
+                                {{ restaurantInfo.brand.currency }}
+                            </span>
+                        </div>
+                    </div>
+                    <hr class="w-full mt-1 border border-neutral-500 border-opacity-20" />
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <span>{{ $t("Payable Total") }}</span>
+                        <div class="flex items-baseline gap-1">
+                            <b class="text-lg" :style="`color: ${styles.mainMenuStyleOptions?.itemListOptions.accentColor};`">
+                                {{ Intl.NumberFormat(locale).format(pricePack.total + taxAndFees - pricePack.discount) }}
+                            </b>
+                            <span class="text-xs opacity-75" :style="`color: ${styles.mainMenuStyleOptions?.itemListOptions.textColor};`">
+                                {{ restaurantInfo.brand.currency }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <hr class="w-full border-0 border-b-2 border-dashed border-neutral-500 border-opacity-50" />
+                <h3>{{ $t("Ordering online coming soon") }}...</h3>
+            </div>
+
+            <div class="relative flex items-center justify-center flex-col gap-4 w-full my-6" v-if="!orderItems.size">
+                <img class="absolute w-60 mix-blend-difference opacity-10" src="~/assets/images/bg.svg" alt="" />
+                <img class="w-32 opacity-80" src="~/assets/images/note2.png" alt="" />
+                <p class="text-xl/none opacity-50 font-bold">{{ $t("The List Is Empty") }}</p>
+            </div>
         </div>
     </DrawerDialog>
 </template>
@@ -122,11 +177,26 @@ const { styles } = storeToRefs(stylesStore);
 const { restaurantInfo } = storeToRefs(infoStore);
 const { orderItems } = storeToRefs(ordersStore);
 
-// TODO : sold out items can not have add item button (they should show the sold out tag)
-// TODO : orders must be saved in local-storage base on the brand name (users may visit other places) (this must be time based for like 24 hours thing)
 // TODO : upon changing branches.. the items that are in orders and not in that branch must be deleted
-// TODO : placeholder for empty cart
-// TODO : total price calculation
+// TODO : count change in order list
+
+const itemPrice = (item, variant = {}, toppings = new Set()) => {
+    let itemPrice = variant.price ?? item.price;
+    console.log({ toppings });
+    for (const topping of toppings) itemPrice += topping.price || 0;
+    return itemPrice;
+};
+
+const pricePack = computed(() => {
+    return ordersStore.calculateTotal();
+});
+const taxAndFees = computed(() => {
+    return ordersStore.getTaxAndFees();
+});
+
+const clearList = () => {
+    ordersStore.resetOrders();
+};
 
 const actionLock = ref(false);
 let actionLockTimeout;

@@ -22,4 +22,11 @@ export default {
 
     "Orders List": "Orders List",
     "Clear list": "Clear list",
+    "The List Is Empty": "The List Is Empty",
+
+    Total: "Total",
+    Discount: "Discount",
+    "Tax and fees": "Tax and fees",
+    "Payable Total": "Payable Total",
+    "Ordering online coming soon": "Ordering online coming soon",
 };

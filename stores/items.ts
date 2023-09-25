@@ -19,8 +19,8 @@ export interface FoodItemInterface {
     images: String[];
     name: String;
     description: String;
-    price: Number;
-    discountPercentage: Number;
+    price: number;
+    discountPercentage: number;
     discountActive: Boolean;
     variants: PojoItemInterface[];
     hidden: Boolean;
@@ -45,7 +45,7 @@ export interface SideItemInterface {
 
 export interface PojoItemInterface {
     name: String;
-    price: Number;
+    price: number;
     translation: Object;
 }
 
