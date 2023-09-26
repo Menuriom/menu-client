@@ -69,18 +69,35 @@
                             </li>
                         </ul>
                         <div class="flex flex-wrap items-end justify-between gap-2 grow">
-                            <button
-                                class="flex items-center justify-center w-7 h-5 p-1 rounded-full shadow-nr15 transition-all hover:scale-125 shrink-0"
-                                :style="`background-color: ${styles.mainMenuStyleOptions?.itemListOptions.primaryColor};`"
-                            >
-                                <Icon
-                                    class="w-4 h-4 shrink-0"
-                                    :style="`background-color: ${styles.mainMenuStyleOptions?.itemListOptions.bgMainColor};`"
-                                    name="plus.svg"
-                                    folder="icons/tabler"
-                                    size="16px"
-                                />
-                            </button>
+                            <div class="flex items-center gap-2">
+                                <button
+                                    class="flex items-center justify-center w-7 h-7 p-1 rounded-full shadow-nr15 transition-all hover:scale-125 shrink-0"
+                                    :style="`background-color: ${styles.mainMenuStyleOptions?.itemListOptions.primaryColor};`"
+                                    @click="addItem(item, variant, sideItems)"
+                                >
+                                    <Icon
+                                        class="w-4 h-4 shrink-0"
+                                        :style="`background-color: ${styles.mainMenuStyleOptions?.itemListOptions.textColor};`"
+                                        name="plus.svg"
+                                        folder="icons/tabler"
+                                        size="16px"
+                                    />
+                                </button>
+                                <span class="text-lg w-3 text-center">{{ Intl.NumberFormat(locale).format(count) }}</span>
+                                <button
+                                    class="flex items-center justify-center w-7 h-7 p-1 rounded-full shadow-nr15 transition-all hover:scale-125 shrink-0"
+                                    :style="`background-color: ${styles.mainMenuStyleOptions?.itemListOptions.primaryColor};`"
+                                    @click="subItem(item)"
+                                >
+                                    <Icon
+                                        class="w-4 h-4 shrink-0"
+                                        :style="`background-color: ${styles.mainMenuStyleOptions?.itemListOptions.textColor};`"
+                                        :name="`${count > 1 ? 'minus' : 'trash'}.svg`"
+                                        folder="icons/tabler"
+                                        size="16px"
+                                    />
+                                </button>
+                            </div>
                             <div class="flex items-end gap-1 text-base/none">
                                 <div class="flex flex-col gap-1.5">
                                     <div class="relative flex flex-wrap items-center" v-if="item.discountActive">
@@ -178,11 +195,9 @@ const { restaurantInfo } = storeToRefs(infoStore);
 const { orderItems } = storeToRefs(ordersStore);
 
 // TODO : upon changing branches.. the items that are in orders and not in that branch must be deleted
-// TODO : count change in order list
 
 const itemPrice = (item, variant = {}, toppings = new Set()) => {
     let itemPrice = variant.price ?? item.price;
-    console.log({ toppings });
     for (const topping of toppings) itemPrice += topping.price || 0;
     return itemPrice;
 };
@@ -194,6 +209,12 @@ const taxAndFees = computed(() => {
     return ordersStore.getTaxAndFees();
 });
 
+const addItem = (item, variant, sideItems) => {
+    ordersStore.addOrderItem({ item: item, variant: variant, sideItems: sideItems });
+};
+const subItem = (item) => {
+    ordersStore.removeOrderItem({ item: item });
+};
 const clearList = () => {
     ordersStore.resetOrders();
 };

@@ -89,6 +89,8 @@ useHead({ title: `menu title here` }); // TODO : change this
 definePageMeta({ middleware: ["fetcher"] });
 
 // TODO : add limitation of the brand into the menu
+// TODO : add user like and comment functinality
+// TODO : any user must get a id as cookie when they open any menu... so that we know who they are
 
 const headers = {
     Header1: defineAsyncComponent(() => import("@/components/menu/Header1.vue")),
