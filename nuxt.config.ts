@@ -1,3 +1,5 @@
+const cacheAge = 60 * 60 * 24 * 365; // 1 year
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     devServer: { port: 3002 },
@@ -13,6 +15,16 @@ export default defineNuxtConfig({
         // "vue-toastification/dist/index.css",
         "~/assets/css/styles.css",
     ],
+
+    nitro: {
+        compressPublicAssets: true,
+        routeRules: {
+            "/flags/**": { headers: { "cache-control": `public, max-age=${cacheAge}, s-maxage=${cacheAge}` } },
+            "/icons/**": { headers: { "cache-control": `public, max-age=${cacheAge}, s-maxage=${cacheAge}` } },
+            "/patterns/**": { headers: { "cache-control": `public, max-age=${cacheAge}, s-maxage=${cacheAge}` } },
+            "/_nuxt/**": { headers: { "cache-control": `public, max-age=${cacheAge}, s-maxage=${cacheAge}` } },
+        },
+    },
 
     i18n: {
         strategy: "no_prefix",

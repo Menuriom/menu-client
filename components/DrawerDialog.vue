@@ -32,9 +32,7 @@
         @touchmove="move"
         ref="drawer"
     >
-        <Transition name="fade" appear>
-            <div class="backdrop fixed inset-0 bg-neutral-800 bg-opacity-50" @click="close()" v-if="open"></div>
-        </Transition>
+        <div class="backdrop fixed inset-0 bg-neutral-800 bg-opacity-50 backdrop-blur-sm" @click="close()"></div>
         <Transition name="slide-down" appear>
             <div
                 class="box relative flex flex-col items-center gap-4 shadow-mr15 w-full max-w-lg"
@@ -43,9 +41,17 @@
                 v-show="open"
                 ref="drawerBox"
             >
+                <button
+                    class="absolute -top-4 flex items-center justify-center p-2 rounded-full shadow-nr35 transition-all hover:scale-125 z-2"
+                    :style="`background-color: ${options.bgSecondaryColor};`"
+                    @click="close()"
+                    v-if="(!options.imageMargin || options.imageMargin == '0') && withX"
+                >
+                    <Icon class="w-5 h-5 rotate-45" :style="`background-color: ${options.textColor};`" name="plus.svg" folder="icons/tabler" size="20px" />
+                </button>
                 <span
-                    class="handle w-4/12 h-1.5 mt-4 -mb-4 rounded-full bg-neutral-300 bg-opacity-75 mix-blend-difference shrink-0"
-                    v-if="options.imageMargin == '0'"
+                    class="handle w-3/12 h-1.5 mt-4 -mb-4 rounded-full bg-neutral-300 bg-opacity-75 mix-blend-difference shrink-0"
+                    v-else-if="!options.imageMargin || options.imageMargin == '0'"
                 ></span>
                 <slot />
             </div>
@@ -57,7 +63,9 @@
 const props = defineProps({
     options: { type: Object },
     actionLock: { type: Boolean, default: false },
+    withX: { type: Boolean, default: false },
 });
+const { actionLock } = toRefs(props);
 
 const router = useRouter();
 const open = ref(true);
@@ -85,7 +93,6 @@ const grab = (e) => {
     grabbed.value = true;
     startingY = e.changedTouches?.[0].pageY || e.y;
     movingStartingY = e.changedTouches?.[0].pageY || e.y;
-    // console.log({ dd: drawerBox.value.clientHeight });
 };
 const move = (e) => {
     if (!grabbed.value || props.actionLock) return;
@@ -115,6 +122,13 @@ const release = (e) => {
         }
     } catch (e) {}
 };
+
+watch(actionLock, (v) => {
+    if(!v) return
+    drawer.value.style.top = `0px`;
+    grabbed.value = false;
+    movingStartingY = 0;
+});
 
 onMounted(() => {
     drawer.value.addEventListener("mouseup", release);

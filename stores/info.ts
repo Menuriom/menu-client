@@ -6,6 +6,7 @@ export const useInfoStore = defineStore("info", () => {
     const restaurantInfo: Ref<{
         brand?: {
             logo: String;
+            username: String;
             name: String;
             slogan: String;
             socials: {
@@ -24,7 +25,7 @@ export const useInfoStore = defineStore("info", () => {
             telephoneNumbers: String[];
             gallery: String[];
             translation: any;
-        };
+        }[];
     }> = ref({});
 
     const resetInfo = () => {

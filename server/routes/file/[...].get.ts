@@ -26,5 +26,7 @@ export default defineEventHandler(async (event) => {
         return res.end();
     }
 
+    res.setHeader("Cache-Control", `max-age=${60 * 60 * 12}`); // 12 hours
+
     return await sendStream(event, data);
 });

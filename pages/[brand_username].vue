@@ -82,10 +82,15 @@
 import { useStylesStore } from "@/stores/styles";
 import { useInfoStore } from "@/stores/info";
 import { useItemsStore } from "@/stores/items";
+import { useItemsFilterStore } from "@/stores/itemsFilter";
 import { storeToRefs } from "pinia";
 
 useHead({ title: `menu title here` }); // TODO : change this
 definePageMeta({ middleware: ["fetcher"] });
+
+// TODO : add limitation of the brand into the menu
+// TODO : add user like and comment functinality
+// TODO : any user must get a id as cookie when they open any menu... so that we know who they are
 
 const headers = {
     Header1: defineAsyncComponent(() => import("@/components/menu/Header1.vue")),
@@ -114,15 +119,16 @@ const navbars = {
 
 const route = useRoute();
 const router = useRouter();
-
 const stylesStore = useStylesStore();
-const { styles } = storeToRefs(stylesStore);
-
 const infoStore = useInfoStore();
-const { restaurantInfo } = storeToRefs(infoStore);
-
 const itemsStore = useItemsStore();
+const itemsFilterStore = useItemsFilterStore();
+
+const { styles } = storeToRefs(stylesStore);
+const { restaurantInfo } = storeToRefs(infoStore);
 const { menuItems } = storeToRefs(itemsStore);
+
+itemsFilterStore.filter();
 
 const _initialCategorySelector = (queryC) => {
     if (queryC && !isNaN(queryC)) {

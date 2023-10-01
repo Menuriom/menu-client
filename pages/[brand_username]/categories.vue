@@ -65,7 +65,7 @@ const shouldUseTextPass = (text) => {
 };
 
 const selectOption = (category, index) => {
-    router.push(`/${route.params.brand_id}?c=${index}`);
+    router.push(`/${route.params.brand_username}?c=${index}`);
     setTimeout(() => router.back(), 200);
 };
 

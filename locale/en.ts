@@ -6,6 +6,7 @@ export default {
     Search: "Search",
     Categories: "Categories",
     "All Categories": "All Categories",
+    "Select a different branch": "Select a different branch",
 
     Waiter: "Waiter",
     "Store Info": "Store Info",
@@ -14,4 +15,18 @@ export default {
     toppingMaxCount: "{n} item maximum",
     Free: "Free",
     "Select from available languages": "Select from available languages",
+
+    "Call The Waiter": "Call The Waiter",
+    "Enter your table number in order to call the waiter": "Enter your table number in order to call the waiter",
+    "Table Number": "Table Number",
+
+    "Orders List": "Orders List",
+    "Clear list": "Clear list",
+    "The List Is Empty": "The List Is Empty",
+
+    Total: "Total",
+    Discount: "Discount",
+    "Tax and fees": "Tax and fees",
+    "Payable Total": "Payable Total",
+    "Ordering online coming soon": "Ordering online coming soon",
 };

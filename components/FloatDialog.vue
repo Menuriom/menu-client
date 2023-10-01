@@ -11,8 +11,13 @@
 </style>
 
 <template>
-    <dialog aria-modal="true" class="dialog fixed inset-0 flex items-center justify-center w-full px-2">
+    <dialog aria-modal="true" class="dialog fixed inset-0 flex items-center justify-center w-full px-2 isolate">
         <div class="backdrop fixed inset-0 bg-neutral-800 bg-opacity-50 backdrop-blur-sm" @click="close()"></div>
+        <div
+            class="pattern-bg absolute -top-1/2 w-full max-w-screen-sm aspect-square pointer-events-none"
+            :style="`background-image: url('${options.bgImage}'); background-size: clamp(50px, ${options.bgImageSize}%, 360px); background-color: ${options.bgMainColor}; opacity: ${options.bgImageOpacity}%; rotate: ${options.bgImageRotation}deg;`"
+            v-if="options.withPattern"
+        ></div>
         <Transition name="slide-down" appear>
             <div
                 class="box flex flex-col items-center gap-4 shadow-mr25 w-full max-w-lg"
