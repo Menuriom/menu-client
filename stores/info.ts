@@ -6,6 +6,7 @@ export const useInfoStore = defineStore("info", () => {
     const restaurantInfo: Ref<{
         brand?: {
             logo: String;
+            username: String;
             name: String;
             slogan: String;
             socials: {

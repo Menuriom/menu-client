@@ -52,7 +52,7 @@ if (process.client && !item.value) {
     } catch {}
 }
 if (!item.value) {
-    const getMenuItem = await useFetch(`/api/v1/menu-info/menu-item/${route.query.i}`, { headers: { brand: route.params.brand_id }, immediate: true });
+    const getMenuItem = await useFetch(`/api/v1/menu-info/menu-item/${route.query.i}`, { headers: { brand: route.params.brand_username }, immediate: true });
     if (getMenuItem.error.value) console.error(getMenuItem.error.value);
     if (getMenuItem.data.value) item.value = getMenuItem.data.value;
 }

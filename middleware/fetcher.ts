@@ -14,20 +14,20 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     const { locale, setLocale, setLocaleCookie, defaultLocale } = nuxtApp.$i18n;
 
     if (!stylesStore.dataIsLoaded) {
-        await stylesStore.getMenuStyles(to.params.brand_id.toString()).catch((err) => {
+        await stylesStore.getMenuStyles(to.params.brand_username.toString()).catch((err) => {
             if (process.server) console.error({ err });
         });
     }
 
     if (!infoStore.dataIsLoaded) {
-        await infoStore.getRestaurantInfo(to.params.brand_id.toString()).catch((err) => {
+        await infoStore.getRestaurantInfo(to.params.brand_username.toString()).catch((err) => {
             if (process.server) console.error({ err });
         });
         itemsFilterStore.selectedBranch = infoStore.restaurantInfo?.branches?.[0] || {};
     }
 
     if (!itemsStore.dataIsLoaded) {
-        await itemsStore.getMenuItems(to.params.brand_id.toString()).catch((err) => {
+        await itemsStore.getMenuItems(to.params.brand_username.toString()).catch((err) => {
             if (process.server) console.error({ err });
         });
         itemsFilterStore.menuItemsOG = itemsStore.menuItems;
@@ -36,7 +36,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     if (!ordersStore.dataIsLoaded && process.client) {
         ordersStore.dataIsLoaded = true;
         const storedOrders: any = JSON.parse(localStorage.getItem(`orders`) || `{}`);
-        ordersStore.orderItems = new Map(storedOrders[to.params.brand_id.toString()] || []);
+        ordersStore.orderItems = new Map(storedOrders[to.params.brand_username.toString()] || []);
         for (const [k, v] of ordersStore.orderItems.entries()) {
             ordersStore.orderItems.set(k, { ...v, sideItems: new Set(v.sideItems || []) });
         }

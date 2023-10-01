@@ -3,7 +3,7 @@
         <nuxt-link
             class="flex items-center justify-center w-10 h-10 rounded-full group"
             :style="`background-color: ${options.bgSecondaryColor};`"
-            :to="localePath(`/${route.params.brand_id}/server-call`)"
+            :to="localePath(`/${route.params.brand_username}/server-call`)"
         >
             <Icon
                 class="w-7 h-7 shrink-0 transition-all group-hover:scale-125 group-hover:rotate-6"
@@ -17,7 +17,7 @@
             class="flex items-center justify-center rounded-full group"
             :class="[border ? 'w-16 h-16 border-4' : 'w-14 h-14']"
             :style="`background-color: ${options.bgSecondaryColor}; border-color: ${options.bgMainColor};`"
-            :to="localePath(`/${route.params.brand_id}/store-info`)"
+            :to="localePath(`/${route.params.brand_username}/store-info`)"
         >
             <Icon
                 class="w-7 h-7 shrink-0 transition-all group-hover:scale-125 group-hover:-rotate-6"
@@ -30,7 +30,7 @@
         <nuxt-link
             class="relative flex items-center justify-center w-10 h-10 rounded-full group"
             :style="`background-color: ${options.bgSecondaryColor};`"
-            :to="localePath(`/${route.params.brand_id}/orders`)"
+            :to="localePath(`/${route.params.brand_username}/orders`)"
         >
             <Icon
                 class="w-7 h-7 shrink-0 transition-all group-hover:scale-125 group-hover:rotate-6"

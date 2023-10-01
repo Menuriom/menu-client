@@ -121,6 +121,6 @@ const weekday = ["sundays", "mondays", "tuesdays", "wednesdays", "thursdays", "f
 
 const openMenuDetails = (item) => {
     localStorage.setItem("item", JSON.stringify(item));
-    router.push(localePath(`/${route.params.brand_id}/item-details?i=${item._id}`));
+    router.push(localePath(`/${route.params.brand_username}/item-details?i=${item._id}`));
 };
 </script>

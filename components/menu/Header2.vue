@@ -34,7 +34,7 @@
                     <nuxt-link
                         class="flex items-center gap-1.5 p-2 shadow-nr10 border border-neutral-200 border-opacity-10 rounded-md"
                         :style="`background-color: ${options.bgMainColor};`"
-                        :to="localePath(`/${route.params.brand_id}/branches`)"
+                        :to="localePath(`/${route.params.brand_username}/branches`)"
                     >
                         <Icon class="w-4 h-4 shrink-0 bg-red-400" name="map-pin-filled.svg" folder="icons/tabler" size="16px" />
                         <span class="w-20 text-xs whitespace-nowrap overflow-hidden" :style="`color: ${options.textColor};`">
@@ -44,7 +44,7 @@
                     <nuxt-link
                         class="flex flex-col items-center p-1 px-1.5 shadow-nr10 border border-neutral-200 border-opacity-10 rounded-md"
                         :style="`background-color: ${options.bgMainColor};`"
-                        :to="localePath(`/${route.params.brand_id}/language-switch`)"
+                        :to="localePath(`/${route.params.brand_username}/language-switch`)"
                     >
                         <img class="w-4" :src="`/flags/${locale}.png`" :alt="locale" />
                         <span class="text-xs" :style="`color: ${options.textColor};`">{{ locale.toLocaleUpperCase() }}</span>

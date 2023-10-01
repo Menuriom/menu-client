@@ -65,7 +65,7 @@ export const useOrdersStore = defineStore("orders", () => {
         for (const [k, v] of orderItems.value.entries()) {
             orders.push([k, { ...v, sideItems: Array.from(v.sideItems || []) }]);
         }
-        storedOrders[route.params.brand_id.toString()] = orders;
+        storedOrders[route.params.brand_username.toString()] = orders;
 
         localStorage.setItem(`orders`, JSON.stringify(storedOrders));
     };

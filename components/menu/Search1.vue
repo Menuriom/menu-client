@@ -4,7 +4,7 @@
             class="flex items-center justify-center p-2.5 border border-neutral-500 border-opacity-10 rounded-lg shadow-nr35"
             title="Show All Categories"
             :style="`background-color: ${options.bgMainColor};`"
-            :to="localePath(`/${route.params.brand_id}/categories`)"
+            :to="localePath(`/${route.params.brand_username}/categories`)"
         >
             <Icon class="w-5 h-5 shrink-0" :style="`background-color: ${options.textColor};`" name="layout-2.svg" folder="icons/tabler" size="20px" />
         </nuxt-link>
