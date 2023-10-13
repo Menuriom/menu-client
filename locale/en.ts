@@ -29,4 +29,6 @@ export default {
     "Tax and fees": "Tax and fees",
     "Payable Total": "Payable Total",
     "Ordering online coming soon": "Ordering online coming soon",
+
+    "Our Suggestions": "Our Suggestions",
 };

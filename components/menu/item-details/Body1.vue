@@ -44,7 +44,7 @@
 
         <div
             class="relative flex flex-col items-start gap-4 md:gap-6 w-full px-4 md:px-6 overflow-auto grow"
-            style="max-height: calc(100vh - 24rem)"
+            style="max-height: calc(100svh - 24rem)"
             @scroll="scrolling($event)"
         >
             <div id="details" class="flex items-start gap-4 w-full">

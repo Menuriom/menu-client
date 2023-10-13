@@ -30,6 +30,12 @@
             <!-- TODO : we can add restaurant details here -->
             <!-- TODO : add a section title "our picks/suggestions" and list pinned items here and rename "pin item" as "mark as suggestions" -->
             <component
+                name="suggestions"
+                :is="suggestions['Suggestions1']"
+                :restaurantInfo="restaurantInfo"
+                :baseColors="styles.baseColors"
+            />
+            <component
                 name="search"
                 class="z-2"
                 :is="searches[styles.mainMenuStyleOptions?.searchOptions?.component]"
@@ -95,6 +101,9 @@ definePageMeta({ middleware: ["fetcher"] });
 const headers = {
     Header1: defineAsyncComponent(() => import("@/components/menu/Header1.vue")),
     Header2: defineAsyncComponent(() => import("@/components/menu/Header2.vue")),
+};
+const suggestions = {
+    Suggestions1: defineAsyncComponent(() => import("@/components/menu/Suggestions1.vue")),
 };
 const searches = {
     Search1: defineAsyncComponent(() => import("@/components/menu/Search1.vue")),

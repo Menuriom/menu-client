@@ -4,7 +4,7 @@
     <div class="p-16">
         <nuxt-link
             class="flex items-center justify-center p-2 px-6 rounded-md bg-green-300 shadow-mr10 hover:shadow-mr15 transition-all"
-            :to="localePath('/RicosQuesos')"
+            :to="localePath('/Menuriom')"
         >
             menu
         </nuxt-link>

@@ -29,4 +29,6 @@ export default {
     "Tax and fees": "مالیات و دیگر خدمات",
     "Payable Total": "مبلغ قابل پرداخت",
     "Ordering online coming soon": "سفارش آنلاین به زودی",
+
+    "Our Suggestions": "پیشنهادهای ما",
 };

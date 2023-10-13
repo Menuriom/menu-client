@@ -52,7 +52,7 @@ const search = () => {
     itemsFilterStore.filter();
 };
 const clear = () => {
-    searchQuery.value = "";
+    itemsFilterStore.searchQuery = searchQuery.value = "";
     itemsFilterStore.filter();
 };
 </script>
