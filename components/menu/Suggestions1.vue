@@ -78,6 +78,11 @@
                     <Icon class="absolute w-12 h-12 bg-rose-500 shadow-mr35 shadow-rose-600 -z-10" name="tag.svg" folder="." size="48px" />
                     <span class="font-extrabold text-white">{{ item.discountPercentage }}%</span>
                 </div>
+                <!-- TODO -->
+                <!-- <div class="absolute top-0 start-0 flex items-center justify-center z-2 isolate" v-if="item.specialDaysActive">
+                    <Icon class="absolute w-12 h-12 bg-rose-500 shadow-mr35 shadow-rose-600 -z-10" name="tag.svg" folder="." size="48px" />
+                    <span class="font-extrabold text-white">{{ item.discountPercentage }}%</span>
+                </div> -->
                 <span class="flex items-center justify-center w-36 h-28 me-2 -ms-4 -mt-4 rounded-xl -rotate-[20deg] shrink-0">
                     <img class="w-full aspect-square rounded-xl object-cover shadow-nr15" :src="item.images[0]" />
                 </span>
