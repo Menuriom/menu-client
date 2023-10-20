@@ -26,7 +26,7 @@ export const useItemsFilterStore = defineStore("itemsFilter", () => {
         selectedBranch.value = {};
         filter();
     };
-    
+
     const clearSearch = () => {
         if (!filteredBySearch.value) return;
         filteredBySearch.value = false;

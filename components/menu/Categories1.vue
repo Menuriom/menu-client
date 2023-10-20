@@ -2,9 +2,6 @@
 .swiper {
     overflow: initial;
 }
-.swiper-wrapper {
-    height: auto !important;
-}
 .swiper-slide {
     width: auto;
     /* max-width: 4.5rem; */

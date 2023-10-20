@@ -25,6 +25,8 @@ import { storeToRefs } from "pinia";
 
 useHead({ title: `menu title here` }); // TODO : change this
 
+// TODO : items add button should have branch check on it - and only can be added if user is on that branch
+
 const route = useRoute();
 
 const frames = {
