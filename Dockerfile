@@ -8,6 +8,8 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install the application dependencies
+RUN npm config set registry https://registry.npmjs.org/
+RUN npm cache clean --force
 RUN npm ci
 
 # Copy the rest of the application code to the working directory
