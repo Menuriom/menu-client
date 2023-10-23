@@ -13,6 +13,7 @@ RUN npm ci --verbose
 
 # Copy the rest of the application code to the working directory
 COPY . .
+ENV GENERATE_SOURCEMAP=false
 
 # Build the Nuxt application
 RUN npm run build
