@@ -33,11 +33,13 @@ export default defineNuxtConfig({
         defaultDirection: "ltr",
         lazy: true,
         langDir: "locale",
-        detectBrowserLanguage: {
-            cookieKey: "i18n_redirected",
-            redirectOn: "root",
-            fallbackLocale: "fa",
-        },
+        detectBrowserLanguage: false,
+        // detectBrowserLanguage: {
+        //     alwaysRedirect: false,
+        //     cookieKey: "i18n_redirected",
+        //     redirectOn: "root",
+        //     fallbackLocale: "fa",
+        // },
         locales: [
             { code: "fa", name: "فارسی", iso: "fa-IR", files: ["fa.ts"], dir: "rtl" },
             { code: "en", name: "English", iso: "en-US", files: ["en.ts"], dir: "ltr" },
