@@ -29,6 +29,8 @@ import { useStylesStore } from "@/stores/styles";
 
 const stylesStore = useStylesStore();
 const localHead = useLocaleHead({ addDirAttribute: true, identifierAttribute: "id", addSeoAttributes: true });
+const i18n_redirected = useCookie("i18n_redirected");
+i18n_redirected.value = "fa";
 
 useHead({
     // title: t("layouts.title"),
