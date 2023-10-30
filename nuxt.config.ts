@@ -49,9 +49,9 @@ export default defineNuxtConfig({
 
     modules: [
         // ...
+        "@pinia/nuxt",
         "@nuxtjs/tailwindcss",
         "@nuxtjs/i18n",
         "nuxt-swiper",
-        "@pinia/nuxt",
     ],
 });
