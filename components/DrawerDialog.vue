@@ -2,6 +2,7 @@
 .dialog {
     z-index: 100;
     background: transparent;
+    user-select: initial;
 }
 .dialog > .box {
     max-height: calc(100vh - 2rem);
@@ -93,6 +94,7 @@ const grab = (e) => {
     grabbed.value = true;
     startingY = e.changedTouches?.[0].pageY || e.y;
     movingStartingY = e.changedTouches?.[0].pageY || e.y;
+    drawer.value.style.userSelect = "none";
 };
 const move = (e) => {
     if (!grabbed.value || props.actionLock) return;
@@ -104,6 +106,8 @@ const move = (e) => {
 const release = (e) => {
     if (props.actionLock) return;
     grabbed.value = false;
+
+    drawer.value.style.userSelect = "initial";
 
     const currentY = e.changedTouches?.[0].pageY || e.y;
     const pos = currentY - movingStartingY > 0 ? currentY - movingStartingY : 0;
@@ -124,7 +128,7 @@ const release = (e) => {
 };
 
 watch(actionLock, (v) => {
-    if(!v) return
+    if (!v) return;
     drawer.value.style.top = `0px`;
     grabbed.value = false;
     movingStartingY = 0;

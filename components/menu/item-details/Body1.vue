@@ -116,7 +116,7 @@
             </Swiper>
             <div
                 class="flex flex-col gap-1 w-full -mt-2 p-2 px-3 border border-neutral-500 border-opacity-10 shadow-mr15"
-                :style="`background-color: ${options.bgSecondaryColor}; border-radius: ${options.cornerRadius - 10}px;`"
+                :style="`border-radius: ${options.cornerRadius - 10}px;`"
                 v-for="(sideItem, i) in item.sideItems"
             >
                 <div class="flex flex-wrap items-center gap-1" :style="`color: ${options.textColor};`">

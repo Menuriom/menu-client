@@ -34,6 +34,7 @@
                 :is="suggestions['Suggestions1']"
                 :restaurantInfo="restaurantInfo"
                 :baseColors="styles.baseColors"
+                :options="styles.mainMenuStyleOptions?.suggestionsOptions"
             />
             <component
                 name="search"
