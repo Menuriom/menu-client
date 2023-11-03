@@ -31,4 +31,16 @@ export default {
     "Ordering online coming soon": "Ordering online coming soon",
 
     "Our Suggestions": "Our Suggestions",
+
+    "Working Hours": "Working Hours",
+    saturday: "Saturday",
+    sunday: "Sunday",
+    monday: "Monday",
+    tuesday: "Tuesday",
+    wednesday: "Wednesday",
+    thursday: "Thursday",
+    friday: "Friday",
+
+    Open: "Open",
+    Close: "Close",
 };

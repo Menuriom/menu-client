@@ -26,6 +26,11 @@ export const useInfoStore = defineStore("info", () => {
             gallery: String[];
             translation: any;
         }[];
+        workingHours?: {
+            [key: string]: {
+                [key: string]: { days: String[]; clock: String; open: Boolean };
+            };
+        };
     }> = ref({});
 
     const resetInfo = () => {

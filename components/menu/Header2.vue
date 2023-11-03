@@ -21,7 +21,7 @@
             >
                 <img class="w-full h-full object-cover" :style="`border-radius: ${options.logoRadius - 6}px;`" :src="restaurantInfo.brand?.logo" alt="" />
             </div>
-            <div class="flex flex-wrap items-start justify-between w-full">
+            <div class="flex items-center justify-between w-full -mt-5">
                 <div class="flex flex-col gap-1">
                     <h2 class="font-bold text-lg/none" :style="`color: ${options.textColor};`">
                         {{ restaurantInfo.brand?.translation?.[locale]?.name || restaurantInfo.brand?.name }}
@@ -30,7 +30,15 @@
                         {{ restaurantInfo.brand?.translation?.[locale]?.slogan || restaurantInfo.brand?.slogan }}
                     </small>
                 </div>
-                <div class="flex flex-wrap items-end justify-between gap-2 ms-auto mt-0 2sm:mt-3">
+                <div class="flex flex-col items-end justify-between gap-2 ms-auto mt-0 2sm:mt-3">
+                    <nuxt-link
+                        class="flex flex-col items-center p-1 px-1.5 shadow-nr10 border border-neutral-200 border-opacity-10 rounded-md"
+                        :style="`background-color: ${options.bgMainColor};`"
+                        :to="localePath(`/${route.params.brand_username}/language-switch`)"
+                    >
+                        <img class="w-4" :src="`/flags/${locale}.png`" :alt="locale" />
+                        <span class="text-xs" :style="`color: ${options.textColor};`">{{ locale.toLocaleUpperCase() }}</span>
+                    </nuxt-link>
                     <nuxt-link
                         class="flex items-center gap-1.5 p-2 shadow-nr10 border border-neutral-200 border-opacity-10 rounded-md"
                         :style="`background-color: ${options.bgMainColor};`"
@@ -40,14 +48,6 @@
                         <span class="w-20 text-xs whitespace-nowrap overflow-hidden" :style="`color: ${options.textColor};`">
                             {{ itemsFilterStore.selectedBranch?.translation?.[locale]?.name || itemsFilterStore.selectedBranch?.name }}
                         </span>
-                    </nuxt-link>
-                    <nuxt-link
-                        class="flex flex-col items-center p-1 px-1.5 shadow-nr10 border border-neutral-200 border-opacity-10 rounded-md"
-                        :style="`background-color: ${options.bgMainColor};`"
-                        :to="localePath(`/${route.params.brand_username}/language-switch`)"
-                    >
-                        <img class="w-4" :src="`/flags/${locale}.png`" :alt="locale" />
-                        <span class="text-xs" :style="`color: ${options.textColor};`">{{ locale.toLocaleUpperCase() }}</span>
                     </nuxt-link>
                 </div>
             </div>

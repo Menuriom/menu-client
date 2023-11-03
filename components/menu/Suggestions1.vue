@@ -88,7 +88,7 @@
                     <span class="font-extrabold text-white">{{ item.discountPercentage }}%</span>
                 </div> -->
                 <span class="flex items-center justify-center w-36 h-28 me-2 -ms-4 -mt-4 -mb-1 rounded-xl -rotate-[20deg] shrink-0">
-                    <img class="w-full h-full rounded-xl object-cover shadow-nr15" :src="item.images[0]" />
+                    <img class="w-full h-full rounded-xl object-cover shadow-nr15" :style="`background-color: ${options.textColor};`" :src="item.images[0]" />
                 </span>
                 <div class="flex flex-col items-start gap-2 w-full max-w-screen-2xs">
                     <h3 class="relative flex items-start rounded-full text-xl/tight font-bold" :style="`color: ${options.textColor};`">
