@@ -31,9 +31,10 @@
             <!-- TODO : add a section title "our picks/suggestions" and list pinned items here and rename "pin item" as "mark as suggestions" -->
             <component
                 name="suggestions"
-                :is="suggestions['Suggestions1']"
+                :is="suggestions[styles.mainMenuStyleOptions?.suggestionsOptions?.component]"
                 :restaurantInfo="restaurantInfo"
                 :baseColors="styles.baseColors"
+                :options="styles.mainMenuStyleOptions?.suggestionsOptions"
             />
             <component
                 name="search"
@@ -91,7 +92,14 @@ import { useItemsStore } from "@/stores/items";
 import { useItemsFilterStore } from "@/stores/itemsFilter";
 import { storeToRefs } from "pinia";
 
-useHead({ title: `menu title here` }); // TODO : change this
+const route = useRoute();
+const router = useRouter();
+const stylesStore = useStylesStore();
+const infoStore = useInfoStore();
+const itemsStore = useItemsStore();
+const itemsFilterStore = useItemsFilterStore();
+
+useHead({ title: `${infoStore.restaurantInfo.brand.name}` }); // TODO : change this
 definePageMeta({ middleware: ["fetcher"] });
 
 // TODO : add limitation of the brand into the menu
@@ -125,13 +133,6 @@ const navbars = {
     Navbar2: defineAsyncComponent(() => import("@/components/menu/Navbar2.vue")),
     Navbar3: defineAsyncComponent(() => import("@/components/menu/Navbar3.vue")),
 };
-
-const route = useRoute();
-const router = useRouter();
-const stylesStore = useStylesStore();
-const infoStore = useInfoStore();
-const itemsStore = useItemsStore();
-const itemsFilterStore = useItemsFilterStore();
 
 const { styles } = storeToRefs(stylesStore);
 const { restaurantInfo } = storeToRefs(infoStore);

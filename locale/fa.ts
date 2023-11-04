@@ -31,4 +31,16 @@ export default {
     "Ordering online coming soon": "سفارش آنلاین به زودی",
 
     "Our Suggestions": "پیشنهادهای ما",
+
+    "Working Hours": "ساعات کاری",
+    saturday: "شنبه",
+    sunday: "یک شنبه",
+    monday: "دو شنبه",
+    tuesday: "سه شنبه",
+    wednesday: "چهار شنبه",
+    thursday: "پنج شنبه",
+    friday: "جمعه",
+
+    Open: "باز",
+    Close: "بسته",
 };

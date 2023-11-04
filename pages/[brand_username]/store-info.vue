@@ -22,7 +22,7 @@ import { useStylesStore } from "@/stores/styles";
 import { useInfoStore } from "@/stores/info";
 import { storeToRefs } from "pinia";
 
-useHead({ title: `brand info title` }); // TODO : change this
+useHead({ title: `Store Info` }); // TODO : change this
 
 const frames = {
     Frame1: defineAsyncComponent(() => import("@/components/FloatDialog.vue")),
