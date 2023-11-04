@@ -1,6 +1,7 @@
 import axios from "axios";
 import { H3Event } from "h3";
 import { IncomingMessage } from "node:http";
+import { checkCsrf } from "./csrf";
 
 export const handleRequest = async (event: H3Event, url: string) => {
     const { req } = event.node;
@@ -11,6 +12,11 @@ export const handleRequest = async (event: H3Event, url: string) => {
 
     let resStatus = 499;
     let resData = {};
+
+    if (isMethod(event, ["PATCH", "POST", "PUT"]) && !checkCsrf(event, getCookie(event, "XSRF-TOKEN") || "")) {
+        resStatus = 419;
+        return { resStatus, resData };
+    }
 
     // const data = req.readable ? await read(req) : null;
     const data = isMethod(event, ["PATCH", "POST", "PUT"]) ? await readRawBody(event) : null;

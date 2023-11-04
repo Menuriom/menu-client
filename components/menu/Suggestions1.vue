@@ -52,7 +52,7 @@
             <!-- :style="`background: linear-gradient(180deg, ${baseColors.primaryColor} 0%, ${baseColors.accentColor} 100%);`" -->
             <SwiperSlide
                 tag="li"
-                class="relative flex items-center justify-center gap-4 p-4 my-5 shadow-nr10 mx-2 isolate shrink-0"
+                class="relative flex items-center justify-center gap-4 p-4 my-5 shadow-nr10 me-2 ms-2 isolate shrink-0"
                 :style="`background: ${options.accentColor}; border-radius: ${options.cornerRadius}px;`"
                 v-for="(item, i) in suggestedItems"
                 @click="openMenuDetails(item)"

@@ -1,11 +1,11 @@
 <style scoped>
-*::-webkit-scrollbar {
+/* *::-webkit-scrollbar {
     width: 0px;
     height: 0px;
 }
 * {
     scrollbar-width: none;
-}
+} */
 
 .swiper-slide {
     width: auto;
@@ -22,7 +22,7 @@
 </style>
 
 <template>
-    <div class="flex flex-col items-center justify-evenly gap-8 w-full h-full p-6 mt-6 isolate">
+    <div class="flex flex-col items-center justify-start gap-8 w-full h-full overflow-auto p-6 mt-6 isolate" @scroll="scrolling">
         <div class="absolute bottom-0 w-[110%] max-w-lg h-full overflow-hidden">
             <div
                 class="pattern-bg absolute bottom-0 -z-10 w-full aspect-square pointer-events-none"
@@ -57,7 +57,7 @@
             </div>
         </div>
 
-        <Swiper class="w-auto max-w-full h-auto" wrapper-tag="ul" :auto-height="true" slides-per-view="auto" :dir="localeProperties.dir">
+        <Swiper class="w-auto max-w-full h-auto shrink-0" wrapper-tag="ul" :auto-height="true" slides-per-view="auto" :dir="localeProperties.dir">
             <SwiperSlide
                 tag="li"
                 class="flex items-center gap-1 p-2 mx-1.5 shadow-nr15 border-2 rounded-md"
@@ -74,8 +74,8 @@
         </Swiper>
 
         <div
-            class="flex flex-col items-center gap-3 w-full max-w-sm p-3 rounded-lg border border-neutral-500 border-opacity-20 backdrop-blur-sm"
-            :style="`background-color: ${options.primaryColor}; border-radius: ${options.cornerRadius > 16 ? 16 : options.cornerRadius}px;`"
+            class="flex flex-col items-center gap-3 w-full max-w-sm p-2 rounded-lg border border-neutral-500 border-opacity-20 backdrop-blur-sm"
+            :style="`border-radius: ${options.cornerRadius > 16 ? 16 : options.cornerRadius}px;`"
         >
             <h3 class="flex items-center gap-1 w-full">
                 <span class="bg-white bg-opacity-20 w-0.5 h-0.5 grow"></span>
@@ -93,17 +93,22 @@
                 <b :style="`color: ${options.bgSecondaryColor};`">9:00</b> AM - <b :style="`color: ${options.bgSecondaryColor};`">12:00</b> PM
             </span> -->
 
-            <div class="flex flex-col items-start gap-1 w-full" :style="`color: ${options.textColor};`" v-for="(group, i) in workingHours" :key="i">
-                <div class="flex flex-wrap items-center gap-1 text-xs">
+            <div
+                class="flex flex-col items-center gap-1 w-full p-2"
+                :style="`background-color: ${options.primaryColor}; color: ${options.textColor};
+                border-radius: ${options.cornerRadius > 10 ? 10 : options.cornerRadius}px;`"
+                v-for="(group, i) in workingHours"
+                :key="i"
+                v-show="group.open"
+            >
+                <div class="flex flex-wrap items-center justify-center gap-1 text-xs">
                     <span class="bg-black bg-opacity-20 p-1 px-1.5 rounded-md" v-for="day in group.days">{{ $t(day) }}</span>
                 </div>
 
-                <div class="flex items-baseline gap-2 font-bold" :style="`color: ${options.bgMainColor};`" dir="ltr">
-                    <span class="flex items-baseline gap-1">
-                        {{ group.open ? $t("Open") : $t("Close") }}
-                        <i class="w-2.5 h-2.5 rounded-full" :style="`background-color: ${options.accentColor};`"></i>
-                    </span>
+                <div class="flex items-center justify-center gap-1 w-full font-bold" :style="`color: ${options.bgMainColor};`" dir="ltr" v-if="group.clock">
+                    <i class="w-2.5 h-2.5 rounded-full" :style="`background-color: ${options.accentColor};`"></i>
                     {{ group.clock }}
+                    <i class="w-2.5 h-2.5 rounded-full" :style="`background-color: ${options.accentColor};`"></i>
                 </div>
             </div>
         </div>
