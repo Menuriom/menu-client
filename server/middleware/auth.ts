@@ -30,13 +30,16 @@ const generateAndSaveToken = async (event: H3Event, utkn: string | null) => {
 };
 
 export default defineEventHandler(async (event) => {
-    if (!isMethod(event, ["GET"])) return;
+    if (!process.server || event.node.req.url?.includes("/api/")) return;
 
     const utkn = getCookie(event, "utkn");
-    if (!utkn) generateAndSaveToken(event, utkn || null);
+    if (!utkn) await generateAndSaveToken(event, utkn || null);
 
     // TODO
     // post requests (such as like and comment) should send this token to back
     // back should check if the token exists and if they do continue with request
-    // and if the token does not exist -> 401
+    // and if the token does not exist or its not valid then remove the token and return 401
+
+    // TODO
+    // on every post request update the token in db and in the cookie
 });

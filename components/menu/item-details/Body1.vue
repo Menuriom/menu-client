@@ -74,11 +74,15 @@
                 </div>
                 <div class="flex flex-col items-end gap-2">
                     <button
-                        class="flex flex-col items-center gap-1 p-2 border border-neutral-500 border-opacity-20 shadow-nr15"
+                        class="p-2 border border-neutral-500 border-opacity-20 shadow-nr15"
                         :style="`background-color: ${options.bgSecondaryColor}; border-radius: ${options.cornerRadius}px;`"
+                        @click="likeItem(item)"
                     >
-                        <Icon class="w-5 h-5 bg-rose-400" name="heart.svg" folder="icons/tabler" size="20px" />
-                        <small class="text-xs" :style="`color: ${options.textColor};`">{{ item.likes }}</small>
+                        <div class="flex flex-col items-center gap-1" v-if="!liking">
+                            <Icon class="w-5 h-5 bg-rose-400" :name="liked ? `heart.svg` : `heart-filled.svg`" folder="icons/tabler" size="20px" />
+                            <small class="text-xs" :style="`color: ${options.textColor};`">{{ item.likes }}</small>
+                        </div>
+                        <Loading v-else />
                     </button>
                     <button
                         class="flex flex-col items-center gap-1 p-2 border border-neutral-500 border-opacity-20 shadow-nr15"
@@ -272,6 +276,18 @@ if (inOrders.value) {
     }
 }
 // ---------------------
+
+const liked = ref(false);
+const liking = ref(false);
+const likeItem = (item) => {
+    if (liking.value) return;
+    liking.value = true;
+
+    setTimeout(() => {
+        liked.value = true;
+        liking.value = false;
+    }, 2000);
+};
 
 const scrolling = (e) => {
     e.preventDefault();

@@ -104,7 +104,7 @@ const move = (e) => {
     setTimeout(() => (movingStartingY = e.changedTouches?.[0].pageY || e.y), 100);
 };
 const release = (e) => {
-    if (props.actionLock) return;
+    if (!grabbed.value || props.actionLock) return;
     grabbed.value = false;
 
     drawer.value.style.userSelect = "initial";
