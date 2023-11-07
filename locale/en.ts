@@ -43,4 +43,6 @@ export default {
 
     Open: "Open",
     Close: "Close",
+
+    Comments: "Comments",
 };

@@ -33,13 +33,5 @@ export default defineEventHandler(async (event) => {
     if (!process.server || event.node.req.url?.includes("/api/")) return;
 
     const utkn = getCookie(event, "utkn");
-    if (!utkn) await generateAndSaveToken(event, utkn || null);
-
-    // TODO
-    // post requests (such as like and comment) should send this token to back
-    // back should check if the token exists and if they do continue with request
-    // and if the token does not exist or its not valid then remove the token and return 401
-
-    // TODO
-    // on every post request update the token in db and in the cookie
+    await generateAndSaveToken(event, utkn || null);
 });

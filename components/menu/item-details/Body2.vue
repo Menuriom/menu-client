@@ -58,12 +58,13 @@
                     </div>
                     <!-- <Loading v-else /> -->
                 </button>
-                <button
+                <nuxt-link
                     class="flex flex-col items-center gap-1 p-2 border border-neutral-500 border-opacity-20 shadow-nr15"
                     :style="`background-color: ${options.bgSecondaryColor}; border-radius: ${options.cornerRadius}px;`"
+                    :to="localePath(`/${route.params.brand_username}/item-comments?i=${item._id}`)"
                 >
                     <Icon class="w-5 h-5" :style="`background-color: ${options.textColor};`" name="message.svg" folder="icons/tabler" size="20px" />
-                </button>
+                </nuxt-link>
             </div>
         </div>
 
@@ -222,6 +223,7 @@ const emit = defineEmits(["innerAction"]);
 
 const { locale } = useI18n();
 const route = useRoute();
+const localePath = useLocalePath();
 const ordersStore = useOrdersStore();
 
 const selectedType = ref({});
