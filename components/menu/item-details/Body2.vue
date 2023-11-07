@@ -50,7 +50,7 @@
                 <button
                     class="p-2 border border-neutral-500 border-opacity-20 shadow-nr15"
                     :style="`background-color: ${options.bgSecondaryColor}; border-radius: ${options.cornerRadius}px;`"
-                    @click="likeItem(item)"
+                    @click="likeItem()"
                 >
                     <div class="flex flex-col items-center gap-1">
                         <Icon class="w-5 h-5 bg-rose-400" :name="liked ? `heart-filled.svg` : `heart.svg`" folder="icons/tabler" size="20px" />
@@ -216,8 +216,10 @@ import { Pagination } from "swiper/modules";
 const props = defineProps({
     options: { type: Object },
     item: { type: Object },
+    liked: { type: Boolean },
     restaurantInfo: { type: Object },
 });
+const { liked } = toRefs(props);
 
 const emit = defineEmits(["innerAction"]);
 
@@ -270,9 +272,8 @@ if (inOrders.value) {
 // ---------------------
 
 // liking items ---------------------
-const liked = ref(false);
 const liking = ref(true);
-const likeItem = async (item) => {
+const likeItem = async () => {
     if (liking.value) return;
     liking.value = true;
 
@@ -294,20 +295,6 @@ const likeItem = async (item) => {
             }, 2000);
         });
 };
-
-// send a request to check if this user is like this item or not
-const handleError_getLikeResults = (err) => {
-    if (!err) return;
-    if (process.server) console.log(err);
-};
-const handleData_getLikeResults = (data) => {
-    if (!data) return;
-    liked.value = data.liked;
-};
-const getLikeResults = await useFetch(`/api/v1/menu/like/${route.query.i}`, { lazy: process.client });
-handleError_getLikeResults(getLikeResults.error.value);
-handleData_getLikeResults(getLikeResults.data.value);
-watch(getLikeResults.data, (data) => handleData_getLikeResults(data));
 // ---------------------
 
 const scrolling = (e) => {

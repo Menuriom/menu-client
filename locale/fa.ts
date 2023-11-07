@@ -44,5 +44,5 @@ export default {
     Open: "باز",
     Close: "بسته",
 
-    Comments: "نظرات",
+    "Customers Comments": "نظرات مشتریان",
 };

@@ -84,12 +84,13 @@
                         </div>
                         <!-- <Loading v-else /> -->
                     </button>
-                    <button
+                    <nuxt-link
                         class="flex flex-col items-center gap-1 p-2 border border-neutral-500 border-opacity-20 shadow-nr15"
                         :style="`background-color: ${options.bgSecondaryColor}; border-radius: ${options.cornerRadius}px;`"
+                        :to="localePath(`/${route.params.brand_username}/item-comments?i=${item._id}`)"
                     >
                         <Icon class="w-5 h-5" :style="`background-color: ${options.textColor};`" name="message.svg" folder="icons/tabler" size="20px" />
-                    </button>
+                    </nuxt-link>
                 </div>
             </div>
             <hr class="w-full border-neutral-500 opacity-25 -mb-1" v-if="item.variants.length" />
@@ -226,12 +227,16 @@ import { Pagination } from "swiper/modules";
 const props = defineProps({
     options: { type: Object },
     item: { type: Object },
+    liked: { type: Boolean },
     restaurantInfo: { type: Object },
 });
+const { liked } = toRefs(props);
 
 const emit = defineEmits(["innerAction"]);
 
 const { locale } = useI18n();
+const route = useRoute();
+const localePath = useLocalePath();
 const ordersStore = useOrdersStore();
 
 const selectedType = ref({});
@@ -278,9 +283,8 @@ if (inOrders.value) {
 // ---------------------
 
 // liking items ---------------------
-const liked = ref(false);
 const liking = ref(true);
-const likeItem = async (item) => {
+const likeItem = async () => {
     if (liking.value) return;
     liking.value = true;
 
@@ -302,20 +306,6 @@ const likeItem = async (item) => {
             }, 2000);
         });
 };
-
-// send a request to check if this user is like this item or not
-const handleError_getLikeResults = (err) => {
-    if (!err) return;
-    if (process.server) console.log(err);
-};
-const handleData_getLikeResults = (data) => {
-    if (!data) return;
-    liked.value = data.liked;
-};
-const getLikeResults = await useFetch(`/api/v1/menu/like/${route.query.i}`, { lazy: process.client });
-handleError_getLikeResults(getLikeResults.error.value);
-handleData_getLikeResults(getLikeResults.data.value);
-watch(getLikeResults.data, (data) => handleData_getLikeResults(data));
 // ---------------------
 
 const scrolling = (e) => {

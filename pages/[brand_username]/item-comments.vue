@@ -1,11 +1,39 @@
 <style scoped></style>
 
 <template>
-    <DrawerDialog :baseColors="styles.baseColors" :options="styles.itemsDialogStyleOptions" :actionLock="actionLock">
-        <div class="flex flex-col items-center gap-4 p-6 px-2 w-full" :style="`color: ${styles.itemsDialogStyleOptions.textColor}`">
-            <h1 class="font-bold">{{ $t("Comments") }}</h1>
-            <ul class="flex flex-col gap-4 w-full overflow-auto select-none px-2" style="max-height: calc(100vh - 14rem)" @scroll="scrolling($event)">
-                <li class="flex flex-col gap-2 w-full p-2.5 rounded-md border border-neutral-500 border-opacity-20" v-for="comment in sampleComments">
+    <FloatDialog :baseColors="styles.baseColors" :options="styles.itemsDialogStyleOptions" :actionLock="actionLock">
+        <div class="flex flex-col items-center gap-4 p-6 w-full" :style="`color: ${styles.itemsDialogStyleOptions.textColor}`">
+            <h1 class="font-bold text-lg">{{ $t("Customers Comments") }}</h1>
+            <!-- TODO : show a preview of menu item -->
+            <div
+                class="relative flex flex-wrap items-center gap-2 w-full p-4 border border-neutral-500 border-opacity-20 overflow-hidden isolate"
+                :style="`border-radius: ${styles.itemsDialogStyleOptions.cornerRadius}px;`"
+            >
+                <span class="absolute inset-0 rounded-lg -z-10 opacity-10" :style="`background-color: ${styles.baseColors.primaryColor};`"></span>
+                <div class="relative p-1 isolate">
+                    <span class="absolute inset-0 rounded-lg -z-10 opacity-40" :style="`background-color: ${styles.baseColors.bgSecondaryColor};`"></span>
+                    <img class="w-16" :src="item.images[0]" width="64" height="64" alt="" />
+                </div>
+                <h3 class="grow">{{ item.translation?.[locale]?.name || item.name }}</h3>
+                <div class="flex flex-col gap-1 text-base/none">
+                    <div class="flex flex-wrap items-center gap-1.5" :style="`color: ${styles.baseColors.textColor};`" v-if="item.discountActive">
+                        <small class="line-through line">
+                            {{ Intl.NumberFormat(locale).format(item.price) }}
+                        </small>
+                        <span class="text-xs bg-rose-400 bg-opacity-75 px-1 rounded-md">{{ item.discountPercentage }}%</span>
+                    </div>
+                    <div class="flex flex-wrap items-end gap-1">
+                        <b class="f-inter text-xl/none" :style="`color: ${styles.baseColors.accentColor};`">
+                            {{ Intl.NumberFormat(locale).format(item.price * (1 - (item.discountActive ? item.discountPercentage : 0) / 100)) }}
+                        </b>
+                        <span class="text-xs opacity-75" :style="`color: ${styles.baseColors.textColor};`">
+                            {{ restaurantInfo.brand.currency }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <ul class="flex flex-col gap-6 w-full overflow-auto select-none pe-4" style="max-height: calc(100vh - 18rem)" @scroll="scrolling($event)">
+                <li class="flex flex-col gap-2 w-full rounded-md" v-for="comment in sampleComments">
                     <div class="flex flex-wrap items-center justify-between gap-2 w-full">
                         <h4 class="text-sm p-1 px-2 rounded-md bg-white bg-opacity-10">{{ comment.name }}</h4>
                         <span class="w-0.5 h-0.5 opacity-20 grow" :style="`background-color: ${styles.baseColors.primaryColor};`"></span>
@@ -15,7 +43,7 @@
                 </li>
             </ul>
         </div>
-    </DrawerDialog>
+    </FloatDialog>
 </template>
 
 <script setup>
@@ -134,6 +162,24 @@ const { restaurantInfo } = storeToRefs(infoStore);
 
 const itemsStore = useItemsStore();
 const { menuItems } = storeToRefs(itemsStore);
+
+// get the item --------------------------------------------
+const item = ref();
+if (process.client && !item.value) {
+    try {
+        item.value = JSON.parse(localStorage.getItem("item"));
+    } catch {}
+}
+if (!item.value) {
+    const getMenuItem = await useFetch(`/api/v1/menu-info/menu-item/${route.query.i}`, {
+        headers: { brand: route.params.brand_username },
+        lazy: process.client,
+        immediate: true,
+    });
+    if (getMenuItem.error.value) console.error(getMenuItem.error.value);
+    if (getMenuItem.data.value) item.value = getMenuItem.data.value;
+}
+// -------------------------------------------------
 
 const actionLock = ref(false);
 let actionLockTimeout;
