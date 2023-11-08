@@ -74,18 +74,23 @@
                 </div>
                 <div class="flex flex-col items-end gap-2">
                     <button
-                        class="flex flex-col items-center gap-1 p-2 border border-neutral-500 border-opacity-20 shadow-nr15"
+                        class="p-2 border border-neutral-500 border-opacity-20 shadow-nr15"
                         :style="`background-color: ${options.bgSecondaryColor}; border-radius: ${options.cornerRadius}px;`"
+                        @click="likeItem(item)"
                     >
-                        <Icon class="w-5 h-5 bg-rose-400" name="heart.svg" folder="icons/tabler" size="20px" />
-                        <small class="text-xs" :style="`color: ${options.textColor};`">{{ item.likes }}</small>
+                        <div class="flex flex-col items-center gap-1">
+                            <Icon class="w-5 h-5 bg-rose-400" :name="liked ? `heart-filled.svg` : `heart.svg`" folder="icons/tabler" size="20px" />
+                            <small class="text-xs" :style="`color: ${options.textColor};`">{{ item.likes }}</small>
+                        </div>
+                        <!-- <Loading v-else /> -->
                     </button>
-                    <button
+                    <nuxt-link
                         class="flex flex-col items-center gap-1 p-2 border border-neutral-500 border-opacity-20 shadow-nr15"
                         :style="`background-color: ${options.bgSecondaryColor}; border-radius: ${options.cornerRadius}px;`"
+                        :to="localePath(`/${route.params.brand_username}/item-comments?i=${item._id}`)"
                     >
                         <Icon class="w-5 h-5" :style="`background-color: ${options.textColor};`" name="message.svg" folder="icons/tabler" size="20px" />
-                    </button>
+                    </nuxt-link>
                 </div>
             </div>
             <hr class="w-full border-neutral-500 opacity-25 -mb-1" v-if="item.variants.length" />
@@ -222,12 +227,16 @@ import { Pagination } from "swiper/modules";
 const props = defineProps({
     options: { type: Object },
     item: { type: Object },
+    liked: { type: Boolean },
     restaurantInfo: { type: Object },
 });
+const { liked } = toRefs(props);
 
 const emit = defineEmits(["innerAction"]);
 
 const { locale } = useI18n();
+const route = useRoute();
+const localePath = useLocalePath();
 const ordersStore = useOrdersStore();
 
 const selectedType = ref({});
@@ -271,6 +280,32 @@ if (inOrders.value) {
         for (const sideItem of ordersStore.orderItems.get(props.item._id)?.sideItems) selectedTopings.value[sideItem._id] = sideItem;
     }
 }
+// ---------------------
+
+// liking items ---------------------
+const liking = ref(true);
+const likeItem = async () => {
+    if (liking.value) return;
+    liking.value = true;
+
+    if (liked.value) props.item.likes--;
+    else props.item.likes++;
+
+    liked.value = !liked.value;
+
+    await axios
+        .post(`/api/v1/menu/like/${route.query.i}`)
+        .then((response) => {
+            liked.value = response.data.likeState;
+            props.item.likes = response.data.totalLikes;
+        })
+        .catch((err) => {})
+        .finally(() => {
+            setTimeout(() => {
+                liking.value = false;
+            }, 2000);
+        });
+};
 // ---------------------
 
 const scrolling = (e) => {

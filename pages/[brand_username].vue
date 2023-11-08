@@ -9,6 +9,14 @@
         class="flex items-center justify-center w-screen isolate"
         :style="`background-color: ${styles.baseColors?.bgMainColor}; color: ${styles.baseColors?.textColor};`"
     >
+        <SplashScreen
+            class="z-50"
+            :showSplashScreen="showSplashScreen"
+            :doTheAnimation="doTheAnimation"
+            :options="styles.splashScreenOptions"
+            :brand="restaurantInfo.brand"
+        />
+
         <div
             class="bg-pattern absolute bottom-0 flex items-center justify-center w-full -z-10 overflow-hidden"
             :style="`height: 65%; background-color: ${styles.baseColors?.bgMainColor};`"
@@ -28,7 +36,6 @@
                 :options="styles.mainMenuStyleOptions?.headerOptions"
             />
             <!-- TODO : we can add restaurant details here -->
-            <!-- TODO : add a section title "our picks/suggestions" and list pinned items here and rename "pin item" as "mark as suggestions" -->
             <component
                 name="suggestions"
                 :is="suggestions[styles.mainMenuStyleOptions?.suggestionsOptions?.component]"
@@ -149,8 +156,14 @@ const _initialCategorySelector = (queryC) => {
     }
 };
 
+const showSplashScreen = ref(true);
+const doTheAnimation = ref(false);
+
 onMounted(() => {
     _initialCategorySelector(route.query.c);
+
+    setTimeout(() => (doTheAnimation.value = true), 1000);
+    setTimeout(() => (showSplashScreen.value = false), 3000);
 });
 onBeforeRouteUpdate((to, from, next) => {
     _initialCategorySelector(to.query.c);

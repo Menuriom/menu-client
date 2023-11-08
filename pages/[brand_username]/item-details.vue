@@ -11,6 +11,7 @@
             :is="bodies[styles.itemsDialogStyleOptions?.bodyComponent]"
             :options="styles.itemsDialogStyleOptions"
             :item="item"
+            :liked="liked"
             :restaurantInfo="restaurantInfo"
             @innerAction="updateActionLock($event)"
         />
@@ -54,10 +55,30 @@ if (process.client && !item.value) {
     } catch {}
 }
 if (!item.value) {
-    const getMenuItem = await useFetch(`/api/v1/menu-info/menu-item/${route.query.i}`, { headers: { brand: route.params.brand_username }, immediate: true });
+    const getMenuItem = await useFetch(`/api/v1/menu-info/menu-item/${route.query.i}`, {
+        headers: { brand: route.params.brand_username },
+        lazy: process.client,
+        immediate: true,
+    });
     if (getMenuItem.error.value) console.error(getMenuItem.error.value);
     if (getMenuItem.data.value) item.value = getMenuItem.data.value;
 }
+
+// send a request to check if this user is like this item or not ------------------
+const handleError_getLikeResults = (err) => {
+    if (!err) return;
+    if (process.server) console.log(err);
+};
+const handleData_getLikeResults = (data) => {
+    if (!data) return;
+    liked.value = data.liked;
+};
+const liked = ref(false);
+const getLikeResults = await useFetch(`/api/v1/menu/like/${route.query.i}`, { lazy: process.client });
+handleError_getLikeResults(getLikeResults.error.value);
+handleData_getLikeResults(getLikeResults.data.value);
+watch(getLikeResults.data, (data) => handleData_getLikeResults(data));
+// ---------------------------------------------
 
 const actionLock = ref(false);
 let actionLockTimeout;
