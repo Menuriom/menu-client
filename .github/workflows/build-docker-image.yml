@@ -8,7 +8,7 @@ on:
 
 env:
     # ghcr.io | registry.gitlab.com
-    DOCKER_REGISTRY: registry.gitlab.com
+    DOCKER_REGISTRY: ghcr.io
 
     # gitlab registry
     # DOCKER_REPOSITORY: menuriom/menuriom-backend
