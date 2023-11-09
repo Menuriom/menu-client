@@ -45,9 +45,13 @@ jobs:
 
             - name: Get short SHA of last commit
               id: git
-              run: echo ::set-output name=short_sha::$(git rev-parse --short HEAD)
+              # run: echo ::set-output name=short_sha::$(git rev-parse --short HEAD) # old way
+              run: echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
-            - name: Build and push Docker image
+            - name: Set docker repository to lowercase
+              run: echo "DOCKER_REPOSITORY=${DOCKER_REPOSITORY,,}" >> ${GITHUB_ENV}
+
+            - name: Build and push docker image
               uses: docker/build-push-action@v5
               with:
                   context: .
