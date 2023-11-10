@@ -13,10 +13,9 @@ const generateAndSaveToken = async (event: H3Event, utkn: string | null) => {
             `${process.env.API_BASE_URL}/utkn`,
             { ip, userAgent, utkn },
             {
-                timeout: 15 * 1000,
-                headers: { ...req.headers, "accept-language": "en", "x-forwarded-for": ip, serversecret: process.env.SERVER_SECRET, tt: Date.now() },
-                maxBodyLength: Infinity,
-                maxContentLength: Infinity,
+                timeout: 5 * 1000,
+                // headers: { ...req.headers, "accept-language": "en", "x-forwarded-for": ip, serversecret: process.env.SERVER_SECRET, tt: Date.now() },
+                headers: { "accept-language": "en", "x-forwarded-for": ip, serversecret: process.env.SERVER_SECRET, tt: Date.now() },
             }
         )
         .then((response) => {
@@ -26,7 +25,7 @@ const generateAndSaveToken = async (event: H3Event, utkn: string | null) => {
             console.log({ err });
         });
 
-    setCookie(event, "utkn", token, { secure: true, path: "/", maxAge: 2_592_000 });
+    if (utkn) setCookie(event, "utkn", token, { secure: true, path: "/", maxAge: 2_592_000 });
 };
 
 export default defineEventHandler(async (event) => {
