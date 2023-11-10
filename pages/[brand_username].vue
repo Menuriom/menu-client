@@ -162,8 +162,8 @@ const doTheAnimation = ref(false);
 onMounted(() => {
     _initialCategorySelector(route.query.c);
 
-    setTimeout(() => (doTheAnimation.value = true), 1000);
-    setTimeout(() => (showSplashScreen.value = false), 3000);
+    setTimeout(() => (doTheAnimation.value = true), 100);
+    setTimeout(() => (showSplashScreen.value = false), 2100);
 });
 onBeforeRouteUpdate((to, from, next) => {
     _initialCategorySelector(to.query.c);
