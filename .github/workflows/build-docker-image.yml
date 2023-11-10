@@ -4,15 +4,11 @@ on:
     workflow_dispatch:
     push:
         branches:
-            - main
+            - master
 
 env:
     # ghcr.io | registry.gitlab.com
     DOCKER_REGISTRY: ghcr.io
-
-    # gitlab registry
-    # DOCKER_REPOSITORY: menuriom/menuriom-backend
-
     # github.repository as <account>/<repo>
     DOCKER_REPOSITORY: ${{ github.repository }}
 
@@ -45,7 +41,6 @@ jobs:
 
             - name: Get short SHA of last commit
               id: git
-              # run: echo ::set-output name=short_sha::$(git rev-parse --short HEAD) # old way
               run: echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
             - name: Set docker repository to lowercase
