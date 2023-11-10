@@ -7,6 +7,9 @@ const generateAndSaveToken = async (event: H3Event, utkn: string | null) => {
     const ip = req.headers["x-forwarded-for"]?.toString() || req.socket.remoteAddress || null;
     const userAgent = req.headers["user-agent"]?.toString() || "";
 
+    delete req.headers["content-length"];
+    delete req.headers["host"];
+
     let token = utkn || "";
     await axios
         .post(
@@ -14,8 +17,7 @@ const generateAndSaveToken = async (event: H3Event, utkn: string | null) => {
             { ip, userAgent, utkn },
             {
                 timeout: 5 * 1000,
-                // headers: { ...req.headers, "accept-language": "en", "x-forwarded-for": ip, serversecret: process.env.SERVER_SECRET, tt: Date.now() },
-                headers: { "accept-language": "en", "x-forwarded-for": ip, serversecret: process.env.SERVER_SECRET, tt: Date.now() },
+                headers: { ...req.headers, "accept-language": "en", "x-forwarded-for": ip, serversecret: process.env.SERVER_SECRET, tt: Date.now() },
             }
         )
         .then((response) => {
@@ -25,7 +27,7 @@ const generateAndSaveToken = async (event: H3Event, utkn: string | null) => {
             console.log({ err });
         });
 
-    if (utkn) setCookie(event, "utkn", token, { secure: true, path: "/", maxAge: 2_592_000 });
+    if (token) setCookie(event, "utkn", token, { secure: true, path: "/", maxAge: 2_592_000 });
 };
 
 export default defineEventHandler(async (event) => {
