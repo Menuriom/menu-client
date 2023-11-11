@@ -35,4 +35,6 @@ export default defineEventHandler(async (event) => {
 
     const utkn = getCookie(event, "utkn");
     await generateAndSaveToken(event, utkn || null);
+
+    // TODO : make it so that token check not run on every request
 });

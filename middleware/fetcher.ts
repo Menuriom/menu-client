@@ -13,26 +13,29 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     const nuxtApp = useNuxtApp();
     const { locale, setLocale, setLocaleCookie, defaultLocale } = nuxtApp.$i18n;
 
-    if (!stylesStore.dataIsLoaded) {
-        await stylesStore.getMenuStyles(to.params.brand_username.toString()).catch((err) => {
-            if (process.server) console.error({ err });
-        });
-    }
+    let getStyles = false,
+        getInfo = false,
+        getItems = false;
 
-    if (!infoStore.dataIsLoaded) {
-        await infoStore.getRestaurantInfo(to.params.brand_username.toString()).catch((err) => {
-            if (process.server) console.error({ err });
-        });
-        itemsFilterStore.selectedBranch = infoStore.restaurantInfo?.branches?.[0] || {};
-    }
+    if (!stylesStore.dataIsLoaded) getStyles = true;
+    if (!infoStore.dataIsLoaded) getInfo = true;
+    if (!itemsStore.dataIsLoaded) getItems = true;
 
-    if (!itemsStore.dataIsLoaded) {
-        await itemsStore.getMenuItems(to.params.brand_username.toString()).catch((err) => {
-            if (process.server) console.error({ err });
-        });
-        itemsFilterStore.menuItemsOG = itemsStore.menuItems;
-    }
+    const promiseResults = await Promise.allSettled([
+        getStyles ? stylesStore.getMenuStyles(to.params.brand_username.toString()) : null,
+        getInfo ? infoStore.getRestaurantInfo(to.params.brand_username.toString()) : null,
+        getItems ? itemsStore.getMenuItems(to.params.brand_username.toString()) : null,
+    ]);
 
+    if (promiseResults[1].status == "fulfilled") itemsFilterStore.selectedBranch = infoStore.restaurantInfo?.branches?.[0] || {};
+    else if (process.server) console.error({ err: promiseResults[1].reason });
+
+    if (promiseResults[2].status == "fulfilled") itemsFilterStore.menuItemsOG = itemsStore.menuItems;
+    else if (process.server) console.error({ err: promiseResults[2].reason });
+
+    // ----
+
+    // load order data for client
     if (!ordersStore.dataIsLoaded && process.client) {
         ordersStore.dataIsLoaded = true;
         const storedOrders: any = JSON.parse(localStorage.getItem(`orders`) || `{}`);

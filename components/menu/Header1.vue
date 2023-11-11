@@ -24,7 +24,7 @@
         ></div>
         <div class="flex items-center gap-1">
             <div
-                class="flex items-center justify-center w-12 h-12 p-1.5 shadow-nr25 shrink-0 overflow-hidden"
+                class="flex items-center justify-center w-12 h-12 p-1.5 shadow-mr15 shrink-0 overflow-hidden"
                 :style="`background-color: ${options.bgMainColor}; border-radius: ${options.logoRadius}px;`"
             >
                 <img class="w-full h-full object-cover" :style="`border-radius: ${options.logoRadius - 6}px;`" :src="restaurantInfo.brand?.logo" alt="" />

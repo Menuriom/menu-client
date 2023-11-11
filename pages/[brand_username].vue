@@ -2,6 +2,11 @@
 .bg-pattern {
     mask: linear-gradient(0deg, #000f 0%, #0000 100%);
 }
+
+.main{
+    min-height: 100vh;
+    min-height: 100dvh;
+}
 </style>
 
 <template>
@@ -18,8 +23,8 @@
         />
 
         <div
-            class="bg-pattern absolute bottom-0 flex items-center justify-center w-full -z-10 overflow-hidden"
-            :style="`height: 65%; background-color: ${styles.baseColors?.bgMainColor};`"
+            class="bg-pattern absolute flex items-center justify-center w-full -z-10 overflow-hidden"
+            :style="`bottom: -20%; height: 85%; background-color: ${styles.baseColors?.bgMainColor};`"
         >
             <div
                 class="absolute w-[120%] h-full aspect-square bg-repeat"
@@ -28,7 +33,7 @@
             ></div>
         </div>
 
-        <section class="flex flex-col gap-2 items-center w-full max-w-screen-lg overflow-clip" :title="restaurantInfo.brand?.name" id="list">
+        <section class="main flex flex-col gap-2 items-center w-full max-w-screen-lg overflow-clip" :title="restaurantInfo.brand?.name" id="list">
             <component
                 name="header"
                 :is="headers[styles.mainMenuStyleOptions?.headerOptions?.component]"
@@ -38,6 +43,7 @@
             <!-- TODO : we can add restaurant details here -->
             <component
                 name="suggestions"
+                class="-mb-4"
                 :is="suggestions[styles.mainMenuStyleOptions?.suggestionsOptions?.component]"
                 :restaurantInfo="restaurantInfo"
                 :baseColors="styles.baseColors"
@@ -45,7 +51,7 @@
             />
             <component
                 name="search"
-                class="z-2"
+                class="z-2 mt-4"
                 :is="searches[styles.mainMenuStyleOptions?.searchOptions?.component]"
                 :restaurantInfo="restaurantInfo"
                 :baseColors="styles.baseColors"
@@ -83,6 +89,7 @@
             </section>
             <component
                 name="navbar"
+                class="mb-4 mt-auto"
                 :is="navbars[styles.mainMenuStyleOptions?.navbarOptions?.component]"
                 :options="styles.mainMenuStyleOptions?.navbarOptions"
             />
@@ -106,7 +113,7 @@ const infoStore = useInfoStore();
 const itemsStore = useItemsStore();
 const itemsFilterStore = useItemsFilterStore();
 
-useHead({ title: `${infoStore.restaurantInfo.brand.name}` }); // TODO : change this
+useHead({ title: `${infoStore.restaurantInfo?.brand?.name}` }); // TODO : change this
 definePageMeta({ middleware: ["fetcher"] });
 
 // TODO : add limitation of the brand into the menu
@@ -162,8 +169,8 @@ const doTheAnimation = ref(false);
 onMounted(() => {
     _initialCategorySelector(route.query.c);
 
-    setTimeout(() => (doTheAnimation.value = true), 1000);
-    setTimeout(() => (showSplashScreen.value = false), 3000);
+    setTimeout(() => (doTheAnimation.value = true), 100);
+    setTimeout(() => (showSplashScreen.value = false), 2100);
 });
 onBeforeRouteUpdate((to, from, next) => {
     _initialCategorySelector(to.query.c);
