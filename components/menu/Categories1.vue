@@ -43,31 +43,46 @@
         >
             <SwiperSlide
                 tag="li"
-                class="flex items-center justify-center gap-3 border border-neutral-500 border-opacity-10 cursor-pointer overflow-hidden shadow-nr10 me-2 shrink-0"
-                :class="[options.orientation === 'col' ? 'flex-col p-3' : 'flex-row p-2']"
+                class="relative border border-neutral-500 border-opacity-10 cursor-pointer shadow-nr10 me-2 shrink-0"
                 :style="`max-width: ${options.orientation === 'col' && options.withIcon ? '4.5rem' : 'none'};
                 background-color: ${selectedCategory == i ? options.primaryColor : options.bgMainColor}; border-radius: ${options.cornerRadius}px;`"
                 v-for="(category, i) in menuItems"
                 @click="scrollTo(i, category.name)"
             >
                 <span
-                    class="flex items-center justify-center w-11 h-11 p-1 rounded-full shrink-0"
-                    :style="`background-color: ${options.bgSecondaryColor}; border-radius: ${options.cornerRadius}px;`"
-                    v-if="options.withIcon"
+                    class="absolute start-1 -top-1 rotate-12 px-1.5 rounded text-xs font-extralight isolate"
+                    :style="`background-color: ${options.accentColor}; color: ${options.textColor};`"
+                    v-if="category.showAsNew"
                 >
-                    <img class="w-full aspect-square object-contain" :src="category.icon" />
+                    <span class="absolute inset-0 -z-10 rounded animate-ping opacity-50" :style="`background-color: ${options.accentColor};`"></span>
+                    {{ $t("NEW") }}
                 </span>
-                <h3
-                    class="flex items-center rounded-full text-xs/none text-center whitespace-nowrap"
-                    :class="{ [`text-scroll-${localeProperties.dir}`]: shouldUseTextPass(category.translation?.[locale]?.name || category.name) }"
-                    :style="`color: ${options.textColor};`"
+                <div
+                    class="flex items-center justify-center gap-3 w-full overflow-hidden"
+                    :class="[options.orientation === 'col' ? 'flex-col p-3' : 'flex-row p-2']"
                 >
-                    <span> {{ category.translation?.[locale]?.name || category.name }} </span>
-                    <div class="flex items-center gap-4 whitespace-nowrap ps-4" v-if="shouldUseTextPass(category.translation?.[locale]?.name || category.name)">
+                    <span
+                        class="flex items-center justify-center w-11 h-11 p-1 rounded-full shrink-0"
+                        :style="`background-color: ${options.bgSecondaryColor}; border-radius: ${options.cornerRadius}px;`"
+                        v-if="options.withIcon"
+                    >
+                        <img class="w-full aspect-square object-contain" :src="category.icon" />
+                    </span>
+                    <h3
+                        class="flex items-center rounded-full text-xs/none text-center whitespace-nowrap"
+                        :class="{ [`text-scroll-${localeProperties.dir}`]: shouldUseTextPass(category.translation?.[locale]?.name || category.name) }"
+                        :style="`color: ${options.textColor};`"
+                    >
                         <span> {{ category.translation?.[locale]?.name || category.name }} </span>
-                        <span> {{ category.translation?.[locale]?.name || category.name }} </span>
-                    </div>
-                </h3>
+                        <div
+                            class="flex items-center gap-4 whitespace-nowrap ps-4"
+                            v-if="shouldUseTextPass(category.translation?.[locale]?.name || category.name)"
+                        >
+                            <span> {{ category.translation?.[locale]?.name || category.name }} </span>
+                            <span> {{ category.translation?.[locale]?.name || category.name }} </span>
+                        </div>
+                    </h3>
+                </div>
             </SwiperSlide>
         </Swiper>
     </div>

@@ -184,7 +184,7 @@
                 </div>
                 <div class="flex items-center gap-2" :style="`color: ${options.textColor};`" v-if="!item.soldOut">
                     <button
-                        class="flex items-center justify-center gap-2 p-2 rounded-full shadow-nr35 shrink-0"
+                        class="flex items-center justify-center gap-2 p-2 rounded-full shadow-mr35 shrink-0"
                         :style="`background-color: ${options.primaryColor}; border-radius: ${options.cornerRadius - 10}px;`"
                         @click="subItem(item)"
                         v-if="inOrders"
@@ -199,7 +199,7 @@
                     </button>
                     <span class="text-2xl w-5 text-center" v-if="inOrders">{{ Intl.NumberFormat(locale).format(inOrderCount) }}</span>
                     <button
-                        class="flex items-center justify-center gap-2 py-2 rounded-full shadow-nr35 shrink-0"
+                        class="flex items-center justify-center gap-2 py-2 rounded-full shadow-mr35 shrink-0"
                         :class="[inOrders ? 'px-2' : 'px-4']"
                         :style="`background-color: ${options.primaryColor}; border-radius: ${options.cornerRadius - 10}px;`"
                         @click="addItem(item)"

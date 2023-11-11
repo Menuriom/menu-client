@@ -1,5 +1,5 @@
 <template>
-    <div class="sticky bottom-4 flex items-center gap-5 px-1 mt-4 h-12 rounded-full shadow-nr35" :style="`background-color: ${options.bgMainColor};`">
+    <div class="sticky bottom-4 flex items-center gap-5 px-1 mt-4 h-12 rounded-full shadow-mr25" :style="`background-color: ${options.bgMainColor};`">
         <nuxt-link
             class="flex items-center justify-center w-10 h-10 rounded-full group"
             :style="`background-color: ${options.bgSecondaryColor};`"

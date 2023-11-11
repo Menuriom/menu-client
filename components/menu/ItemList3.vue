@@ -2,7 +2,7 @@
     <div class="flex flex-col items-center w-full">
         <ul class="grid gap-4 w-full" style="grid-template-columns: repeat(auto-fill, minmax(305px, 1fr))">
             <li
-                class="relative flex items-center gap-3 w-full p-3 rounded-lg border border-neutral-500 border-opacity-10 shadow-nr15"
+                class="relative flex items-center gap-3 w-full p-3 rounded-lg border border-neutral-500 border-opacity-10 shadow-mr10"
                 :class="[options.zigzag && i % 2 == 0 ? 'flex-row-reverse' : 'flex-row', item.soldOut ? 'opacity-70' : '']"
                 :style="`margin-top: ${options.imageMargin / 8}rem; background-color: ${options.bgMainColor}; border-radius: ${options.cornerRadius}px;`"
                 v-for="(item, i) in items"
@@ -33,10 +33,14 @@
                 <div class="flex flex-col gap-2 w-full h-full grow">
                     <div class="flex items-center gap-1 opacity-75">
                         <span
-                            class="p-0.5 px-2 text-xs border border-neutral-500 border-opacity-20 shadow-nr10"
+                            class="relative p-0.5 px-2 text-xs border border-neutral-500 border-opacity-20 shadow-nr10 isolate"
                             :style="`background-color: ${options.accentColor}; color: ${options.textColor}; border-radius: ${options.cornerRadius}px;`"
                             v-if="item.showAsNew"
                         >
+                            <span
+                                class="absolute inset-0 -z-10 rounded animate-ping opacity-50"
+                                :style="`background-color: ${options.accentColor}; border-radius: ${options.cornerRadius}px;`"
+                            ></span>
                             {{ $t("NEW") }}
                         </span>
                         <span

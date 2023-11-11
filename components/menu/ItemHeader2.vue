@@ -4,7 +4,7 @@
             <hr class="opacity-10 w-1 border grow" :style="`border-color: ${options.textColor};`" />
             <div class="flex flex-col items-center gap-2">
                 <span
-                    class="flex items-center justify-center w-8 h-8 p-1 rounded-full shadow-nr35 shrink-0"
+                    class="flex items-center justify-center w-8 h-8 p-1 rounded-full shadow-mr35 shrink-0"
                     :style="`background-color: ${options.bgSecondaryColor};  border-radius: ${options.cornerRadius}px;`"
                     v-if="options.withIcon"
                 >

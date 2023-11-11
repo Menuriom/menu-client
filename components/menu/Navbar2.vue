@@ -1,6 +1,6 @@
 <template>
     <div
-        class="sticky bottom-2 flex items-center gap-8 py-3 px-6 rounded-lg shadow-nr35"
+        class="sticky bottom-2 flex items-center gap-8 py-3 px-6 rounded-lg shadow-mr25"
         :style="`background-color: ${options.bgMainColor}; border-radius: ${options.radius}px;`"
     >
         <nuxt-link

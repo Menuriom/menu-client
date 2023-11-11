@@ -2,7 +2,7 @@
     <div class="flex flex-col items-center w-full">
         <ul class="grid gap-2 w-full" style="grid-template-columns: repeat(auto-fill, minmax(160px, 1fr))">
             <li
-                class="relative flex flex-col gap-2 w-full p-2.5 border border-neutral-500 border-opacity-10 shadow-nr15"
+                class="relative flex flex-col gap-2 w-full p-2.5 border border-neutral-500 border-opacity-10 shadow-mr10"
                 :class="[item.soldOut ? 'opacity-70' : '']"
                 :style="`margin-top: ${options.imageMargin / 4}rem; background-color: ${options.bgMainColor}; border-radius: ${options.cornerRadius}px;`"
                 v-for="(item, i) in items"
@@ -23,10 +23,14 @@
                     />
                     <div class="absolute bottom-1 start-1 flex items-center gap-1">
                         <span
-                            class="p-1 px-3 text-xs border border-neutral-500 border-opacity-20 shadow-nr10"
+                            class="relative p-1 px-3 text-xs border border-neutral-500 border-opacity-20 shadow-nr10 isolate"
                             :style="`background-color: ${options.accentColor}; color: ${options.textColor}; border-radius: ${options.cornerRadius}px;`"
                             v-if="item.showAsNew"
                         >
+                            <span
+                                class="absolute inset-0 -z-10 rounded animate-ping opacity-50"
+                                :style="`background-color: ${options.accentColor}; border-radius: ${options.cornerRadius}px;`"
+                            ></span>
                             {{ $t("NEW") }}
                         </span>
                         <span
@@ -63,7 +67,7 @@
                         </span>
                     </div>
                     <button
-                        class="flex items-center justify-center w-7 h-7 p-1 rounded-full shadow-nr35 transition-all hover:scale-125 shrink-0"
+                        class="flex items-center justify-center w-7 h-7 p-1 rounded-full shadow-mr35 transition-all hover:scale-125 shrink-0"
                         :style="`background-color: ${options.primaryColor};`"
                     >
                         <span class="inline-block text-sm/none" v-if="ordersStore.orderItems.get(item._id)?.count > 0">

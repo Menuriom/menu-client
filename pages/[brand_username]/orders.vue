@@ -83,7 +83,9 @@
                                         size="16px"
                                     />
                                 </button>
-                                <span class="text-lg w-3 text-center">{{ Intl.NumberFormat(locale).format(count) }}</span>
+                                <span class="text-lg w-3 text-center" :style="`color: ${styles.mainMenuStyleOptions?.itemListOptions.textColor};`">
+                                    {{ Intl.NumberFormat(locale).format(count) }}
+                                </span>
                                 <button
                                     class="flex items-center justify-center w-7 h-7 p-1 rounded-full shadow-nr15 transition-all hover:scale-125 shrink-0"
                                     :style="`background-color: ${styles.mainMenuStyleOptions?.itemListOptions.primaryColor};`"
@@ -130,7 +132,7 @@
                         <span class="text-xs opacity-75">{{ $t("Total") }}</span>
                         <div class="flex items-baseline gap-1">
                             <b class="text-sm opacity-80">{{ Intl.NumberFormat(locale).format(pricePack.total) }}</b>
-                            <span class="text-xs opacity-75" :style="`color: ${styles.mainMenuStyleOptions?.itemListOptions.textColor};`">
+                            <span class="text-xs opacity-75" :style="`color: ${styles.baseColors?.textColor};`">
                                 {{ restaurantInfo.brand.currency }}
                             </span>
                         </div>
@@ -139,7 +141,7 @@
                         <span class="text-xs opacity-75">{{ $t("Discount") }}</span>
                         <div class="flex items-baseline gap-1">
                             <b class="text-sm opacity-80">{{ Intl.NumberFormat(locale).format(pricePack.discount) }}</b>
-                            <span class="text-xs opacity-75" :style="`color: ${styles.mainMenuStyleOptions?.itemListOptions.textColor};`">
+                            <span class="text-xs opacity-75" :style="`color: ${styles.baseColors?.textColor};`">
                                 {{ restaurantInfo.brand.currency }}
                             </span>
                         </div>
@@ -148,7 +150,7 @@
                         <span class="text-xs opacity-75">{{ $t("Tax and fees") }}</span>
                         <div class="flex items-baseline gap-1">
                             <b class="text-sm opacity-80">{{ Intl.NumberFormat(locale).format(taxAndFees) }}</b>
-                            <span class="text-xs opacity-75" :style="`color: ${styles.mainMenuStyleOptions?.itemListOptions.textColor};`">
+                            <span class="text-xs opacity-75" :style="`color: ${styles.baseColors?.textColor};`">
                                 {{ restaurantInfo.brand.currency }}
                             </span>
                         </div>
@@ -160,7 +162,7 @@
                             <b class="text-lg" :style="`color: ${styles.mainMenuStyleOptions?.itemListOptions.accentColor};`">
                                 {{ Intl.NumberFormat(locale).format(pricePack.total + taxAndFees - pricePack.discount) }}
                             </b>
-                            <span class="text-xs opacity-75" :style="`color: ${styles.mainMenuStyleOptions?.itemListOptions.textColor};`">
+                            <span class="text-xs opacity-75" :style="`color: ${styles.baseColors?.textColor};`">
                                 {{ restaurantInfo.brand.currency }}
                             </span>
                         </div>

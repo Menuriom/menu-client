@@ -43,7 +43,7 @@
                 ref="drawerBox"
             >
                 <button
-                    class="absolute -top-4 flex items-center justify-center p-2 rounded-full shadow-nr35 transition-all hover:scale-125 z-2"
+                    class="absolute -top-4 flex items-center justify-center p-2 rounded-full shadow-mr35 transition-all hover:scale-125 z-2"
                     :style="`background-color: ${options.bgSecondaryColor};`"
                     @click="close()"
                     v-if="(!options.imageMargin || options.imageMargin == '0') && withX"

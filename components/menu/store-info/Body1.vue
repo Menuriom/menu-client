@@ -37,11 +37,11 @@
 
         <div class="flex flex-col items-center gap-4">
             <div
-                class="flex items-center justify-center w-28 h-28 p-4 shadow-nr25"
+                class="flex items-center justify-center w-28 h-28 p-4 shadow-mr25"
                 :style="`background-color: ${options.bgSecondaryColor}; border-radius: ${options.cornerRadius}px;`"
             >
                 <img
-                    class="w-full h-full object-contain shadow-nr15"
+                    class="w-full h-full object-contain shadow-mr15"
                     :style="`border-radius: ${options.cornerRadius}px;`"
                     :src="restaurantInfo.brand?.logo"
                     alt=""

@@ -117,7 +117,7 @@ nav::-webkit-scrollbar, nav ul::-webkit-scrollbar, .scroll-thin::-webkit-scrollb
 /* .Vue-Toastification =================================== */
 
 /* swiper =================================== */
-.swiper-autoheight .swiper-wrapper{ height: auto !important; }
+.swiper-autoheight .swiper-wrapper{ height: auto !important; align-items: initial !important; }
 /* swiper =================================== */
 
 /* splash screen animations ========================================= */

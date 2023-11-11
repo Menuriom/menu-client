@@ -1,7 +1,7 @@
 <template>
     <div class="sticky top-0 flex items-center gap-2 w-full p-2" :style="`background-color: ${baseColors.bgMainColor};`" v-if="options.active">
         <nuxt-link
-            class="flex items-center justify-center p-2.5 border border-neutral-500 border-opacity-10 rounded-lg shadow-nr35"
+            class="flex items-center justify-center p-2.5 border border-neutral-500 border-opacity-20 rounded-lg shadow-mr25"
             title="Show All Categories"
             :style="`background-color: ${options.bgMainColor};`"
             :to="localePath(`/${route.params.brand_username}/categories`)"
@@ -9,7 +9,7 @@
             <Icon class="w-5 h-5 shrink-0" :style="`background-color: ${options.textColor};`" name="layout-2.svg" folder="icons/tabler" size="20px" />
         </nuxt-link>
         <form
-            class="flex items-center gap-1 w-full p-2.5 rounded-lg shadow-nr10"
+            class="flex items-center gap-1 w-full p-2.5 rounded-lg"
             :style="`background-color: ${options.bgSecondaryColor};`"
             @submit.prevent="search()"
         >

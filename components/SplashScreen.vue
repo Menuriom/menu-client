@@ -25,7 +25,7 @@
         ></div>
 
         <div
-            class="flex items-center justify-center w-36 h-36 p-6 shadow-nr25"
+            class="flex items-center justify-center w-36 h-36 p-6 shadow-mr25"
             :style="`background-color: ${options.bgSecondaryColor}; border-radius: ${options.cornerRadius}px;`"
         >
             <img class="w-full h-full object-contain shadow-nr15" :style="`border-radius: ${options.cornerRadius - 10}px;`" :src="brand.logo" alt="" />
