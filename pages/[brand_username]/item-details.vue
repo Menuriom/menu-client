@@ -11,7 +11,7 @@
             :is="bodies[styles.itemsDialogStyleOptions?.bodyComponent]"
             :options="styles.itemsDialogStyleOptions"
             :item="item"
-            :liked="liked"
+            v-model:liked="liked"
             :restaurantInfo="restaurantInfo"
             @innerAction="updateActionLock($event)"
         />

@@ -3,7 +3,7 @@
     mask: linear-gradient(0deg, #000f 0%, #0000 100%);
 }
 
-.main{
+.main {
     min-height: 100vh;
     min-height: 100dvh;
 }
@@ -11,7 +11,7 @@
 
 <template>
     <div
-        class="flex items-center justify-center w-screen isolate"
+        class="relative flex items-center justify-center w-screen isolate"
         :style="`background-color: ${styles.baseColors?.bgMainColor}; color: ${styles.baseColors?.textColor};`"
     >
         <SplashScreen
@@ -23,8 +23,8 @@
         />
 
         <div
-            class="bg-pattern absolute flex items-center justify-center w-full -z-10 overflow-hidden"
-            :style="`bottom: -20%; height: 85%; background-color: ${styles.baseColors?.bgMainColor};`"
+            class="bg-pattern absolute bottom-0 flex items-center justify-center w-full -z-10 overflow-hidden"
+            :style="`height: 75%; background-color: ${styles.baseColors?.bgMainColor};`"
         >
             <div
                 class="absolute w-[120%] h-full aspect-square bg-repeat"
