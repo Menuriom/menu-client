@@ -290,7 +290,6 @@ const likeItem = async () => {
 
     if (props.liked) props.item.likes--;
     else props.item.likes++;
-
     emit("update:liked", !props.liked);
 
     await axios
@@ -299,7 +298,11 @@ const likeItem = async () => {
             emit("update:liked", response.data.likeState);
             props.item.likes = response.data.totalLikes;
         })
-        .catch((err) => {})
+        .catch((err) => {
+            if (props.liked) props.item.likes--;
+            else props.item.likes++;
+            emit("update:liked", !props.liked);
+        })
         .finally(() => {
             setTimeout(() => (liking.value = false), 2000);
         });
