@@ -2,7 +2,7 @@
     <div class="flex flex-col gap-2 w-full">
         <header class="flex items-center gap-2 w-full">
             <span
-                class="flex items-center justify-center w-8 h-8 p-1 rounded-full shadow-mr25 shrink-0"
+                class="flex items-center justify-center w-8 h-8 p-1 rounded-full shadow-nr15 shrink-0"
                 :style="`background-color: ${options.bgSecondaryColor}; border-radius: ${options.cornerRadius}px;`"
                 v-if="options.withIcon"
             >

@@ -13,7 +13,7 @@
             <p class="text-sm opacity-75 max-w-xs text-center">{{ $t("Enter your table number in order to call the waiter") }}</p>
             <div class="flex flex-wrap items-center gap-2">
                 <input
-                    class="p-3 outline-none text-center shadow-mr15 w-40"
+                    class="p-3 outline-none text-center w-40"
                     :style="`border-radius: ${styles.itemsDialogStyleOptions.cornerRadius - 10}px;
                     background-color: ${styles.mainMenuStyleOptions?.searchOptions?.bgSecondaryColor};`"
                     type="text"
@@ -22,7 +22,7 @@
                     inputmode="numeric"
                 />
                 <button
-                    class="p-3"
+                    class="p-3 shadow-nr25"
                     :style="`border-radius: ${styles.itemsDialogStyleOptions.cornerRadius - 10}px; background-color: ${styles.baseColors.primaryColor};`"
                 >
                     <Icon

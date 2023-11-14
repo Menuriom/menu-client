@@ -19,10 +19,13 @@ export default defineNuxtConfig({
     nitro: {
         compressPublicAssets: true,
         routeRules: {
-            "/flags/**": { headers: { "cache-control": `public, max-age=${cacheAge}, s-maxage=${cacheAge}` } },
-            "/icons/**": { headers: { "cache-control": `public, max-age=${cacheAge}, s-maxage=${cacheAge}` } },
-            "/patterns/**": { headers: { "cache-control": `public, max-age=${cacheAge}, s-maxage=${cacheAge}` } },
-            "/_nuxt/**": { headers: { "cache-control": `public, max-age=${cacheAge}, s-maxage=${cacheAge}` } },
+            "/**/*.js": { swr: 60 * 60 * 12, isr: true, headers: { "cache-control": `public, max-age=${cacheAge}, s-maxage=${cacheAge}` } },
+            "/**/*.css": { swr: 60 * 60 * 12, isr: true, headers: { "cache-control": `public, max-age=${cacheAge}, s-maxage=${cacheAge}` } },
+            "/**/*.png": { swr: 60 * 60 * 12, isr: true, headers: { "cache-control": `public, max-age=${cacheAge}, s-maxage=${cacheAge}` } },
+            "/**/*.svg": { swr: 60 * 60 * 12, isr: true, headers: { "cache-control": `public, max-age=${cacheAge}, s-maxage=${cacheAge}` } },
+            "/**/*.jpg": { swr: 60 * 60 * 12, isr: true, headers: { "cache-control": `public, max-age=${cacheAge}, s-maxage=${cacheAge}` } },
+            "/**/*.webp": { swr: 60 * 60 * 12, isr: true, headers: { "cache-control": `public, max-age=${cacheAge}, s-maxage=${cacheAge}` } },
+            "/_nuxt/**": { swr: 60 * 60 * 12, isr: true, headers: { "cache-control": `public, max-age=${cacheAge}, s-maxage=${cacheAge}` } },
         },
     },
 
@@ -47,11 +50,18 @@ export default defineNuxtConfig({
         vueI18n: "./i18n.config.ts",
     },
 
+    delayHydration: {
+        // enables nuxt-delay-hydration in dev mode for testing
+        debug: process.env.NODE_ENV === "development",
+        mode: "mount",
+    },
+
     modules: [
         // ...
         "@pinia/nuxt",
         "@nuxtjs/tailwindcss",
         "@nuxtjs/i18n",
         "nuxt-swiper",
+        "nuxt-delay-hydration",
     ],
 });

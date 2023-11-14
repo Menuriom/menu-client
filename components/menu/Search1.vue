@@ -1,7 +1,7 @@
 <template>
     <div class="sticky top-0 flex items-center gap-2 w-full p-2" :style="`background-color: ${baseColors.bgMainColor};`" v-if="options.active">
         <nuxt-link
-            class="flex items-center justify-center p-2.5 border border-neutral-500 border-opacity-20 rounded-lg shadow-mr25"
+            class="flex items-center justify-center p-2.5 border border-neutral-500 border-opacity-20 rounded-lg shadow-nr15"
             title="Show All Categories"
             :style="`background-color: ${options.bgMainColor};`"
             :to="localePath(`/${route.params.brand_username}/categories`)"

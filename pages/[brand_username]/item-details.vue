@@ -11,7 +11,7 @@
             :is="bodies[styles.itemsDialogStyleOptions?.bodyComponent]"
             :options="styles.itemsDialogStyleOptions"
             :item="item"
-            :liked="liked"
+            v-model:liked="liked"
             :restaurantInfo="restaurantInfo"
             @innerAction="updateActionLock($event)"
         />
@@ -27,6 +27,7 @@ import { storeToRefs } from "pinia";
 useHead({ title: `menu title here` }); // TODO : change this
 
 // TODO : items add button should have branch check on it - and only can be added if user is on that branch
+// TODO : add suspance for loading components
 
 const route = useRoute();
 

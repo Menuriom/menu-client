@@ -43,6 +43,9 @@ export const useInfoStore = defineStore("info", () => {
 
         const { data, error, pending } = await useFetch("/api/v1/getRestaurantInfo", { lazy: process.client, headers: { brand: brandId } });
 
+        if (pending.value !== null && pending.value !== undefined) loading.value = pending.value;
+        watch(pending, (pend) => (loading.value = pend));
+
         if (error.value) throw error.value;
         watch(error, (err) => {
             if (!err) return;
@@ -51,8 +54,6 @@ export const useInfoStore = defineStore("info", () => {
 
         handleData(data.value);
         watch(data, (data) => handleData(data));
-
-        watch(pending, (pend) => (loading.value = pend));
     };
 
     const handleData = (data: any) => {

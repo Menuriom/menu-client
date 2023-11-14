@@ -48,7 +48,7 @@
             </div>
             <div class="flex flex-col items-end gap-2">
                 <button
-                    class="p-2 border border-neutral-500 border-opacity-20 shadow-nr15"
+                    class="p-2 border border-neutral-500 border-opacity-20 shadow-mr35"
                     :style="`background-color: ${options.bgSecondaryColor}; border-radius: ${options.cornerRadius}px;`"
                     @click="likeItem()"
                 >
@@ -59,7 +59,7 @@
                     <!-- <Loading v-else /> -->
                 </button>
                 <nuxt-link
-                    class="flex flex-col items-center gap-1 p-2 border border-neutral-500 border-opacity-20 shadow-nr15"
+                    class="flex flex-col items-center gap-1 p-2 border border-neutral-500 border-opacity-20 shadow-mr35"
                     :style="`background-color: ${options.bgSecondaryColor}; border-radius: ${options.cornerRadius}px;`"
                     :to="localePath(`/${route.params.brand_username}/item-comments?i=${item._id}`)"
                 >
@@ -173,7 +173,7 @@
             </div>
             <div class="flex items-center gap-2" :style="`color: ${options.textColor};`" v-if="!item.soldOut">
                 <button
-                    class="flex items-center justify-center gap-2 p-2 rounded-full shadow-mr35 shrink-0"
+                    class="flex items-center justify-center gap-2 p-2 rounded-full shadow-nr25 shrink-0"
                     :style="`background-color: ${options.primaryColor}; border-radius: ${options.cornerRadius - 10}px;`"
                     @click="subItem(item)"
                     v-if="inOrders"
@@ -188,7 +188,7 @@
                 </button>
                 <span class="text-2xl w-5 text-center" v-if="inOrders">{{ Intl.NumberFormat(locale).format(inOrderCount) }}</span>
                 <button
-                    class="flex items-center justify-center gap-2 py-2 rounded-full shadow-mr35 shrink-0"
+                    class="flex items-center justify-center gap-2 py-2 rounded-full shadow-nr25 shrink-0"
                     :class="[inOrders ? 'px-2' : 'px-4']"
                     :style="`background-color: ${options.primaryColor}; border-radius: ${options.cornerRadius - 10}px;`"
                     @click="addItem(item)"
@@ -210,8 +210,8 @@
 
 <script setup>
 import { useOrdersStore } from "@/stores/orders";
-import axios from "axios";
 import { Pagination } from "swiper/modules";
+import axios from "axios";
 
 const props = defineProps({
     options: { type: Object },
@@ -219,9 +219,8 @@ const props = defineProps({
     liked: { type: Boolean },
     restaurantInfo: { type: Object },
 });
-const { liked } = toRefs(props);
 
-const emit = defineEmits(["innerAction"]);
+const emit = defineEmits(["innerAction", "update:liked"]);
 
 const { locale } = useI18n();
 const route = useRoute();
@@ -277,22 +276,23 @@ const likeItem = async () => {
     if (liking.value) return;
     liking.value = true;
 
-    if (liked.value) props.item.likes--;
+    if (props.liked) props.item.likes--;
     else props.item.likes++;
-
-    liked.value = !liked.value;
+    emit("update:liked", !props.liked);
 
     await axios
         .post(`/api/v1/menu/like/${route.query.i}`)
         .then((response) => {
-            liked.value = response.data.likeState;
+            emit("update:liked", response.data.likeState);
             props.item.likes = response.data.totalLikes;
         })
-        .catch((err) => {})
+        .catch((err) => {
+            if (props.liked) props.item.likes--;
+            else props.item.likes++;
+            emit("update:liked", !props.liked);
+        })
         .finally(() => {
-            setTimeout(() => {
-                liking.value = false;
-            }, 2000);
+            setTimeout(() => (liking.value = false), 2000);
         });
 };
 // ---------------------

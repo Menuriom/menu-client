@@ -3,11 +3,12 @@
 <template>
     <DrawerDialog :baseColors="styles.baseColors" :options="styles.itemsDialogStyleOptions">
         <div class="flex flex-col gap-4 p-6" :style="`color: ${styles.itemsDialogStyleOptions.textColor}`">
-            <small class="opacity-75">{{ $t("Select from available languages") }}</small>
+            <h1 class="text-lg font-bold">{{ $t("Select from available languages") }}</h1>
             <ul class="flex flex-wrap items-center justify-center gap-6 select-none">
                 <li
-                    class="flex flex-wrap items-center gap-2 border border-neutral-500 border-opacity-10 p-1 px-2 rounded-xl shadow-mr15"
-                    :style="`background-color: ${locale == language.code ? styles.baseColors.bgSecondaryColor : 'transparent'}`"
+                    class="flex flex-wrap items-center gap-2 border-2 p-1 px-2 rounded-xl shadow-mr15"
+                    :style="`background-color: ${locale == language.code ? styles.baseColors.bgSecondaryColor : 'transparent'};
+                    border-color: ${locale == language.code ? styles.baseColors.primaryColor : '#8883'};`"
                     v-for="language in availableLocales"
                     @click="selectOption(language.code)"
                 >
