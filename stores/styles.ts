@@ -21,6 +21,9 @@ export const useStylesStore = defineStore("styles", () => {
 
         const { data, error, pending } = await useFetch("/api/v1/getMenuStyles", { lazy: process.client, headers: { brand: brandId } });
 
+        if (pending.value !== null && pending.value !== undefined) loading.value = pending.value;
+        watch(pending, (pend) => (loading.value = pend));
+
         if (error.value) throw error.value;
         watch(error, (err) => {
             if (!err) return;
@@ -29,8 +32,6 @@ export const useStylesStore = defineStore("styles", () => {
 
         handleData(data.value);
         watch(data, (data) => handleData(data));
-
-        watch(pending, (pend) => (loading.value = pend));
     };
 
     const handleData = (data: any) => {

@@ -47,11 +47,18 @@ export default defineNuxtConfig({
         vueI18n: "./i18n.config.ts",
     },
 
+    delayHydration: {
+        // enables nuxt-delay-hydration in dev mode for testing
+        debug: process.env.NODE_ENV === "development",
+        mode: "mount",
+    },
+
     modules: [
         // ...
         "@pinia/nuxt",
         "@nuxtjs/tailwindcss",
         "@nuxtjs/i18n",
         "nuxt-swiper",
+        "nuxt-delay-hydration",
     ],
 });

@@ -16,7 +16,8 @@
     "@nuxt/devtools": "latest",
     "@nuxtjs/i18n": "^8.0.0-rc.4",
     "@nuxtjs/tailwindcss": "^6.8.0",
-    "nuxt": "^3.7.0"
+    "nuxt": "^3.7.0",
+    "nuxt-delay-hydration": "^1.2.3"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.11",
