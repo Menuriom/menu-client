@@ -44,6 +44,7 @@ export const useStylesStore = defineStore("styles", () => {
         styles,
         dataIsLoaded,
         loading,
+        handleData,
         resetInfo,
         getMenuStyles,
     };

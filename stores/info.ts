@@ -66,6 +66,7 @@ export const useInfoStore = defineStore("info", () => {
         restaurantInfo,
         dataIsLoaded,
         loading,
+        handleData,
         resetInfo,
         getRestaurantInfo,
     };

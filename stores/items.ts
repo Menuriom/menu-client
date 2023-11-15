@@ -87,6 +87,7 @@ export const useItemsStore = defineStore("items", () => {
         menuItems,
         dataIsLoaded,
         loading,
+        handleData,
         resetInfo,
         getMenuItems,
     };
