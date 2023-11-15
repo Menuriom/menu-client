@@ -29,6 +29,8 @@ export default defineNuxtConfig({
         },
     },
 
+    routeRules: {},
+
     i18n: {
         strategy: "no_prefix",
         baseUrl: process.env.BASE_URL,

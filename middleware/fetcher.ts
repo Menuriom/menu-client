@@ -13,27 +13,26 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     const nuxtApp = useNuxtApp();
     const { locale, setLocale, setLocaleCookie, defaultLocale } = nuxtApp.$i18n;
 
-    let getStyles = false,
-        getInfo = false,
-        getItems = false;
+    let results;
+    if (!stylesStore.dataIsLoaded || !infoStore.dataIsLoaded || !itemsStore.dataIsLoaded) {
+        results = await getData(to.params.brand_username.toString()).catch((e) => {
+            if (process.server) console.error({ e });
+        });
+    }
 
-    if (!stylesStore.dataIsLoaded) getStyles = true;
-    if (!infoStore.dataIsLoaded) getInfo = true;
-    if (!itemsStore.dataIsLoaded) getItems = true;
-
-    const promiseResults = await Promise.allSettled([
-        getStyles ? stylesStore.getMenuStyles(to.params.brand_username.toString()) : null,
-        getInfo ? infoStore.getRestaurantInfo(to.params.brand_username.toString()) : null,
-        getItems ? itemsStore.getMenuItems(to.params.brand_username.toString()) : null,
-    ]);
-
-    if (promiseResults[1].status == "fulfilled") itemsFilterStore.selectedBranch = infoStore.restaurantInfo?.branches?.[0] || {};
-    else if (process.server) console.error({ err: promiseResults[1].reason });
-
-    if (promiseResults[2].status == "fulfilled") itemsFilterStore.menuItemsOG = itemsStore.menuItems;
-    else if (process.server) console.error({ err: promiseResults[2].reason });
-
-    // ----
+    if (results) {
+        if (!stylesStore.dataIsLoaded) {
+            stylesStore.handleData(results.data);
+        }
+        if (!infoStore.dataIsLoaded) {
+            infoStore.handleData({ brand: results.data.brand, branches: results.data.branches, workingHours: results.data.workingHours });
+            itemsFilterStore.selectedBranch = infoStore.restaurantInfo?.branches?.[0] || {};
+        }
+        if (!itemsStore.dataIsLoaded) {
+            itemsStore.handleData(results.data.menuCategories);
+            itemsFilterStore.menuItemsOG = itemsStore.menuItems;
+        }
+    }
 
     // load order data for client
     if (!ordersStore.dataIsLoaded && process.client) {
@@ -52,3 +51,10 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         setLocaleCookie(defaultBrandLocale);
     }
 });
+
+const getData = async (brandId: string): Promise<{ data: any; pending: boolean }> => {
+    const { data, error, pending } = await useFetch("/api/v1/menu-info", { lazy: process.client, headers: { brand: brandId } });
+    if (error.value) throw error.value;
+
+    return { data: data.value, pending: pending.value };
+};
