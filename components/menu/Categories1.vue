@@ -66,7 +66,7 @@
                         :style="`background-color: ${options.bgSecondaryColor}; border-radius: ${options.cornerRadius}px;`"
                         v-if="options.withIcon"
                     >
-                        <img class="w-full aspect-square object-contain" :src="category.icon" />
+                        <img class="w-full aspect-square object-contain" width="44px" height="44px" :src="category.icon" />
                     </span>
                     <h3
                         class="flex items-center rounded-full text-xs/none text-center whitespace-nowrap"
