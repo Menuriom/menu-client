@@ -4,6 +4,7 @@ import { useItemsStore } from "@/stores/items";
 import { useItemsFilterStore } from "@/stores/itemsFilter";
 import { useOrdersStore } from "@/stores/orders";
 import { H3Event, getHeaders } from "h3";
+import axios from "axios";
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
     const stylesStore = useStylesStore();
@@ -63,10 +64,19 @@ const getData = async (h3Event: H3Event | null, brandId: string): Promise<{ data
         url = `${process.env.API_BASE_URL}${url}`.replace("/api/v1/", "/");
         headers.serversecret = process.env.SERVER_SECRET;
         headers.tt = Date.now();
+
+        let data = {};
+        await axios
+            .get(url, { headers: { ...headers, brand: brandId, serversecret: process.env.SERVER_SECRET, tt: Date.now() } })
+            .then((response) => (data = response.data))
+            .catch((err) => {
+                throw err;
+            });
+        return { data, pending: false };
+    } else {
+        const { data, error, pending } = await useFetch(url, { lazy: process.client, headers: { ...headers, brand: brandId } });
+        if (error.value) throw error.value;
+
+        return { data: data.value, pending: pending.value };
     }
-
-    const { data, error, pending } = await useFetch(url, { lazy: process.client, headers: { ...headers, brand: brandId } });
-    if (error.value) throw error.value;
-
-    return { data: data.value, pending: pending.value };
 };
