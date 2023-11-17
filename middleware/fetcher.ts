@@ -3,6 +3,7 @@ import { useInfoStore } from "@/stores/info";
 import { useItemsStore } from "@/stores/items";
 import { useItemsFilterStore } from "@/stores/itemsFilter";
 import { useOrdersStore } from "@/stores/orders";
+import { H3Event, getHeaders } from "h3";
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
     const stylesStore = useStylesStore();
@@ -15,7 +16,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
     let results;
     if (!stylesStore.dataIsLoaded || !infoStore.dataIsLoaded || !itemsStore.dataIsLoaded) {
-        results = await getData(to.params.brand_username.toString()).catch((e) => {
+        results = await getData(nuxtApp.ssrContext?.event || null, to.params.brand_username.toString()).catch((e) => {
             if (process.server) console.error({ e });
         });
     }
@@ -52,8 +53,19 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     }
 });
 
-const getData = async (brandId: string): Promise<{ data: any; pending: boolean }> => {
-    const { data, error, pending } = await useFetch("/api/v1/menu-info", { lazy: process.client, headers: { brand: brandId } });
+const getData = async (h3Event: H3Event | null, brandId: string): Promise<{ data: any; pending: boolean }> => {
+    let headers: any = {};
+    let url = `/api/v1/menu-info`;
+    if (process.server && h3Event) {
+        headers = getHeaders(h3Event);
+        delete headers["content-length"];
+        delete headers["host"];
+        url = `${process.env.API_BASE_URL}${url}`.replace("/api/v1/", "/");
+        headers.serversecret = process.env.SERVER_SECRET;
+        headers.tt = Date.now();
+    }
+
+    const { data, error, pending } = await useFetch(url, { lazy: process.client, headers: { ...headers, brand: brandId } });
     if (error.value) throw error.value;
 
     return { data: data.value, pending: pending.value };

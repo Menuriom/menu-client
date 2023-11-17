@@ -36,7 +36,7 @@
                         :style="`background-color: ${options.bgMainColor};`"
                         :to="localePath(`/${route.params.brand_username}/language-switch`)"
                     >
-                        <img class="w-4" :src="`/flags/${locale}.png`" :alt="locale" />
+                        <img class="w-4" :src="`/flags/${locale}.png`" width="16px" height="16px" :alt="locale" />
                         <span class="text-xs" :style="`color: ${options.textColor};`">{{ locale.toLocaleUpperCase() }}</span>
                     </nuxt-link>
                     <nuxt-link

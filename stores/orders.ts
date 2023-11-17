@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { FoodItemInterface, SideItemInterface, PojoItemInterface } from "./items";
+import type { FoodItemInterface, SideItemInterface, PojoItemInterface } from "./items";
 
 export interface OrderItemsInterface {
     item: FoodItemInterface;
@@ -11,8 +11,6 @@ export interface OrderItemsInterface {
 export const useOrdersStore = defineStore("orders", () => {
     const dataIsLoaded: Ref<Boolean> = ref(false);
     const orderItems: Ref<Map<String, OrderItemsInterface>> = ref(new Map());
-
-    const route = useRoute();
 
     const resetOrders = () => {
         orderItems.value.clear();
@@ -59,6 +57,7 @@ export const useOrdersStore = defineStore("orders", () => {
     };
 
     const _saveToStorage = () => {
+        const route = useRoute();
         const storedOrders: any = JSON.parse(localStorage.getItem(`orders`) || `{}`);
 
         const orders = [];
