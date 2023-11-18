@@ -11,6 +11,8 @@ export default {
     Waiter: "گارسون",
     "Store Info": "اطلاعات رستوران",
     Orders: "سفارشات",
+    User: "کاربر",
+    Login: "ورود",
     "Add To Orders": "افزودن به سفارشات",
     toppingMaxCount: "حداکثر {n} ایتم",
     Free: "رایگان",

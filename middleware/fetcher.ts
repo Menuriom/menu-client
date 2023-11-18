@@ -17,7 +17,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
     let results;
     if (!stylesStore.dataIsLoaded || !infoStore.dataIsLoaded || !itemsStore.dataIsLoaded) {
-        results = await getData(nuxtApp.ssrContext?.event || null, to.params.brand_username.toString()).catch((e) => {
+        results = await getData(to.params.brand_username.toString()).catch((e) => {
             if (process.server) console.error({ e });
         });
     }
@@ -54,29 +54,9 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     }
 });
 
-const getData = async (h3Event: H3Event | null, brandId: string): Promise<{ data: any; pending: boolean }> => {
-    let headers: any = {};
-    let url = `/api/v1/menu-info`;
-    if (process.server && h3Event) {
-        headers = getHeaders(h3Event);
-        delete headers["content-length"];
-        delete headers["host"];
-        url = `${process.env.API_BASE_URL}${url}`.replace("/api/v1/", "/");
-        headers.serversecret = process.env.SERVER_SECRET;
-        headers.tt = Date.now();
+const getData = async (brandId: string): Promise<{ data: any; pending: boolean }> => {
+    const { data, error, pending } = await useFetch(`/api/v1/menu-info`, { lazy: process.client, headers: { brand: brandId } });
+    if (error.value) throw error.value;
 
-        let data = {};
-        await axios
-            .get(url, { headers: { ...headers, brand: brandId, serversecret: process.env.SERVER_SECRET, tt: Date.now() } })
-            .then((response) => (data = response.data))
-            .catch((err) => {
-                throw err;
-            });
-        return { data, pending: false };
-    } else {
-        const { data, error, pending } = await useFetch(url, { lazy: process.client, headers: { ...headers, brand: brandId } });
-        if (error.value) throw error.value;
-
-        return { data: data.value, pending: pending.value };
-    }
+    return { data: data.value, pending: pending.value };
 };

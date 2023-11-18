@@ -91,6 +91,7 @@
                 name="navbar"
                 class="mb-4 mt-auto"
                 :is="navbars[styles.mainMenuStyleOptions?.navbarOptions?.component]"
+                :restaurantInfo="restaurantInfo"
                 :options="styles.mainMenuStyleOptions?.navbarOptions"
             />
         </section>

@@ -3,6 +3,20 @@
         <nuxt-link
             class="flex items-center justify-center w-10 h-10 rounded-full group"
             :style="`background-color: ${options.bgSecondaryColor};`"
+            :to="localePath(`/${route.params.brand_username}/login-and-register`)"
+            v-if="restaurantInfo.brand?.limitations?.userLogin"
+        >
+            <Icon
+                class="w-7 h-7 shrink-0 transition-all group-hover:scale-125 group-hover:rotate-6"
+                :style="`background-color: ${options.textColor};`"
+                name="user.svg"
+                folder="icons/tabler"
+                size="28px"
+            />
+        </nuxt-link>
+        <nuxt-link
+            class="flex items-center justify-center w-10 h-10 rounded-full group"
+            :style="`background-color: ${options.bgSecondaryColor};`"
             :to="localePath(`/${route.params.brand_username}/server-call`)"
         >
             <Icon
@@ -14,22 +28,22 @@
             />
         </nuxt-link>
         <nuxt-link
-            class="flex items-center justify-center rounded-full group"
-            :class="[border ? 'w-16 h-16 border-4' : 'w-14 h-14']"
-            :style="`background-color: ${options.bgSecondaryColor}; border-color: ${options.bgMainColor};`"
+            class="flex items-center justify-center w-10 h-10 rounded-full group"
+            :style="`background-color: ${options.bgSecondaryColor};`"
             :to="localePath(`/${route.params.brand_username}/store-info`)"
         >
             <Icon
                 class="w-7 h-7 shrink-0 transition-all group-hover:scale-125 group-hover:-rotate-6"
-                :style="`background-color: ${options.primaryColor};`"
+                :style="`background-color: ${options.textColor};`"
                 name="building-store.svg"
                 folder="icons/tabler"
                 size="28px"
             />
         </nuxt-link>
         <nuxt-link
-            class="relative flex items-center justify-center w-10 h-10 rounded-full group"
-            :style="`background-color: ${options.bgSecondaryColor};`"
+            class="relative flex items-center justify-center rounded-full -me-2 group"
+            :class="[border ? 'w-16 h-16 border-4' : 'w-14 h-14']"
+            :style="`background-color: ${options.primaryColor}; border-color: ${options.bgMainColor};`"
             :to="localePath(`/${route.params.brand_username}/orders`)"
         >
             <Icon
@@ -51,6 +65,7 @@ import { useOrdersStore } from "@/stores/orders";
 
 const props = defineProps({
     options: { type: Object },
+    restaurantInfo: { type: Object },
     border: { type: Boolean, default: true },
 });
 
