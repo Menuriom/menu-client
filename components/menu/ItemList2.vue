@@ -68,14 +68,14 @@
                     </div>
                     <button
                         class="flex items-center justify-center w-8 h-8 p-1 rounded-full shadow-nr15 transition-all hover:scale-125 shrink-0"
-                        :style="`background-color: ${options.primaryColor};`"
+                        :style="`background-color: ${options.primaryColor}; color: ${textColor(options.primaryColor)};`"
                     >
                         <span class="inline-block text-sm/none" v-if="ordersStore.orderItems.get(item._id)?.count > 0">
                             {{ Intl.NumberFormat(locale).format(ordersStore.orderItems.get(item._id)?.count) }}
                         </span>
                         <Icon
                             class="w-5 h-5 shrink-0"
-                            :style="`background-color: ${options.textColor};`"
+                            :style="`background-color: ${textColor(options.primaryColor)};`"
                             name="plus.svg"
                             folder="icons/tabler"
                             size="18px"

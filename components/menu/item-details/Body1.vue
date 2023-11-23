@@ -31,6 +31,7 @@
                 space-between="20"
                 :loop="item.images.length > 3"
                 :pagination="{ clickable: true }"
+                @swiper="getSwiperForImg"
             >
                 <SwiperSlide
                     class="shadow-nr15"
@@ -101,6 +102,7 @@
                 :auto-height="true"
                 :free-mode="true"
                 slides-per-view="auto"
+                @swiper="getSwiperForVarients"
                 v-if="item.variants.length"
             >
                 <SwiperSlide
@@ -185,13 +187,13 @@
                 <div class="flex items-center gap-2" :style="`color: ${options.textColor};`" v-if="!item.soldOut">
                     <button
                         class="flex items-center justify-center gap-2 p-2 rounded-full shadow-nr25 shrink-0"
-                        :style="`background-color: ${options.primaryColor}; border-radius: ${options.cornerRadius - 10}px;`"
+                        :style="`background-color: ${options.primaryColor}; border-radius: ${options.cornerRadius - 5}px;`"
                         @click="subItem(item)"
                         v-if="inOrders"
                     >
                         <Icon
                             class="w-5 h-5 shrink-0"
-                            :style="`background-color: ${options.bgMainColor};`"
+                            :style="`background-color: ${textColor(options.primaryColor)};`"
                             :name="`${inOrderCount > 1 ? 'minus' : 'trash'}.svg`"
                             folder="icons/tabler"
                             size="24px"
@@ -199,13 +201,19 @@
                     </button>
                     <span class="text-2xl w-5 text-center" v-if="inOrders">{{ Intl.NumberFormat(locale).format(inOrderCount) }}</span>
                     <button
-                        class="flex items-center justify-center gap-2 py-2 rounded-full shadow-nr25 shrink-0"
-                        :class="[inOrders ? 'px-2' : 'px-4']"
-                        :style="`background-color: ${options.primaryColor}; border-radius: ${options.cornerRadius - 10}px;`"
+                        class="flex items-center justify-center gap-2 py-2.5 rounded-full shadow-nr25 shrink-0"
+                        :class="[inOrders ? 'px-2.5' : 'px-4']"
+                        :style="`background-color: ${options.primaryColor}; border-radius: ${options.cornerRadius - 5}px;`"
                         @click="addItem(item)"
                     >
-                        <span class="text-sm" :style="`color: ${options.bgMainColor};`" v-if="!inOrders">{{ $t("Add To Orders") }}</span>
-                        <Icon class="w-5 h-5 shrink-0" :style="`background-color: ${options.bgMainColor};`" name="plus.svg" folder="icons/tabler" size="24px" />
+                        <span class="" :style="`color: ${textColor(options.primaryColor)};`" v-if="!inOrders">{{ $t("Add To Orders") }}</span>
+                        <Icon
+                            class="w-5 h-5 shrink-0"
+                            :style="`background-color: ${textColor(options.primaryColor)};`"
+                            name="plus.svg"
+                            folder="icons/tabler"
+                            size="24px"
+                        />
                     </button>
                 </div>
                 <div
@@ -234,10 +242,15 @@ const props = defineProps({
 
 const emit = defineEmits(["innerAction", "update:liked"]);
 
-const { locale } = useI18n();
+const { locale, localeProperties } = useI18n();
 const route = useRoute();
 const localePath = useLocalePath();
 const ordersStore = useOrdersStore();
+
+const swiperInstanceForImg = ref();
+const getSwiperForImg = (swiper) => (swiperInstanceForImg.value = swiper);
+const swiperInstanceForVarients = ref();
+const getSwiperForVarients = (swiper) => (swiperInstanceForVarients.value = swiper);
 
 const selectedType = ref({});
 const selectedTopings = ref({});
@@ -317,6 +330,9 @@ const scrolling = (e) => {
 };
 
 onMounted(() => {
+    if (swiperInstanceForImg.value) swiperInstanceForImg.value.changeLanguageDirection(localeProperties.value.dir);
+    if (swiperInstanceForVarients.value) swiperInstanceForVarients.value.changeLanguageDirection(localeProperties.value.dir);
+
     liking.value = false;
 });
 </script>

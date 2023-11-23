@@ -11,6 +11,8 @@ export default {
     Waiter: "Waiter",
     "Store Info": "Store Info",
     Orders: "Orders",
+    User: "User",
+    Login: "Login",
     "Add To Orders": "Add To Orders",
     toppingMaxCount: "{n} item maximum",
     Free: "Free",

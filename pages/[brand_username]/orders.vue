@@ -52,12 +52,6 @@
                             >
                                 {{ variant.translation?.[locale]?.name || variant.name }}
                             </small>
-                            <!-- <p
-                                class="text-xxs opacity-75 max-h-8 overflow-hidden text-ellipsis grow"
-                                :style="`color: ${styles.mainMenuStyleOptions?.itemListOptions.textColor};`"
-                            >
-                                {{ item.translation?.[locale]?.description || item.description }}
-                            </p> -->
                         </div>
                         <ul class="flex flex-wrap items-start gap-2 -mt-1.5" v-if="sideItems && sideItems.size > 0">
                             <li class="text-xs opacity-80" v-for="(sideItem, i) in sideItems">
@@ -77,7 +71,7 @@
                                 >
                                     <Icon
                                         class="w-4 h-4 shrink-0"
-                                        :style="`background-color: ${styles.mainMenuStyleOptions?.itemListOptions.textColor};`"
+                                        :style="`background-color: ${textColor(styles.mainMenuStyleOptions?.itemListOptions.primaryColor)};`"
                                         name="plus.svg"
                                         folder="icons/tabler"
                                         size="16px"
@@ -93,7 +87,7 @@
                                 >
                                     <Icon
                                         class="w-4 h-4 shrink-0"
-                                        :style="`background-color: ${styles.mainMenuStyleOptions?.itemListOptions.textColor};`"
+                                        :style="`background-color: ${textColor(styles.mainMenuStyleOptions?.itemListOptions.primaryColor)};`"
                                         :name="`${count > 1 ? 'minus' : 'trash'}.svg`"
                                         folder="icons/tabler"
                                         size="16px"

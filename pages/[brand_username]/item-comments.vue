@@ -1,7 +1,12 @@
 <style scoped></style>
 
 <template>
-    <FloatDialog :baseColors="styles.baseColors" :options="styles.itemsDialogStyleOptions" :actionLock="actionLock">
+    <component
+        :is="frames[styles.itemsDialogStyleOptions?.frameComponent]"
+        :baseColors="styles.baseColors"
+        :options="styles.itemsDialogStyleOptions"
+        :actionLock="actionLock"
+    >
         <div class="flex flex-col items-center gap-4 p-6 w-full" :style="`color: ${styles.itemsDialogStyleOptions.textColor}`">
             <h1 class="font-bold text-lg">{{ $t("Customers Comments") }}</h1>
             <!-- TODO : show a preview of menu item -->
@@ -43,7 +48,7 @@
                 </li>
             </ul>
         </div>
-    </FloatDialog>
+    </component>
 </template>
 
 <script setup>
@@ -60,6 +65,11 @@ useHead({ title: `Item comments` }); // TODO : change this
 
 const { locale } = useI18n();
 const route = useRoute();
+
+const frames = {
+    Frame1: defineAsyncComponent(() => import("@/components/FloatDialog.vue")),
+    Frame2: defineAsyncComponent(() => import("@/components/DrawerDialog.vue")),
+};
 
 const sampleComments = ref([
     {

@@ -32,6 +32,7 @@ export const hexToHSL = (hexColor: string) => {
 };
 
 export const lightnessLVL = (hexColor: string) => {
+    hexColor = hexColor.replace("#", "");
     const red = parseInt(hexColor.substring(0, 2), 16) / 255;
     const green = parseInt(hexColor.substring(2, 4), 16) / 255;
     const blue = parseInt(hexColor.substring(4, 6), 16) / 255;
@@ -41,4 +42,16 @@ export const lightnessLVL = (hexColor: string) => {
 
     const lightness = (max + min) / 2;
     return lightness;
+};
+
+export const textColor = (hexColor: string) => {
+    hexColor = hexColor.replace("#", "");
+    const red = parseInt(hexColor.substring(0, 2), 16) / 255;
+    const green = parseInt(hexColor.substring(2, 4), 16) / 255;
+    const blue = parseInt(hexColor.substring(4, 6), 16) / 255;
+
+    const brightness = Math.round((red * 299 + green * 587 + blue * 114) / 1000);
+    const textColor = brightness > 125 ? "black" : "white";
+
+    return textColor;
 };
