@@ -3,8 +3,6 @@ import { useInfoStore } from "@/stores/info";
 import { useItemsStore } from "@/stores/items";
 import { useItemsFilterStore } from "@/stores/itemsFilter";
 import { useOrdersStore } from "@/stores/orders";
-import { H3Event, getHeaders } from "h3";
-import axios from "axios";
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
     const stylesStore = useStylesStore();
