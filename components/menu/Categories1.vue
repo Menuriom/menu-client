@@ -28,7 +28,7 @@
         class="sticky flex flex-col gap-2 p-2 pt-1 w-full bg-opacity-75 backdrop-blur-sm select-none overflow-hidden shrink-0"
         :style="`background-color: ${baseColors.bgMainColor};`"
     >
-        <h2 class="flex items-center gap-2 w-full font-bold overflow-hidden transition-all" :class="[notOnTop ? 'h-0 -mt-2' : 'h-6']">
+        <h2 class="flex items-center gap-2 w-full font-bold text-sm overflow-hidden transition-all" :class="[notOnTop ? 'h-0 -mt-2' : 'h-6']">
             {{ $t("Categories") }} <span class="w-0.5 h-0.5 opacity-5 grow" :style="`background-color: ${options.textColor}`"></span>
         </h2>
         <Swiper
@@ -141,7 +141,7 @@ const _observeScroll = () => {
 onMounted(() => {
     listItems = document.querySelectorAll("section[title='menu-item']");
     window.addEventListener("scroll", () => {
-        notOnTop.value = window.scrollY > 200;
+        // notOnTop.value = window.scrollY >= 200;
         _observeScroll();
     });
 });
