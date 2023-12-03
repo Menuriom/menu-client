@@ -48,7 +48,7 @@ import { useStylesStore } from "@/stores/styles";
 import { useItemsStore } from "@/stores/items";
 import { storeToRefs } from "pinia";
 
-useHead({ title: `All Categories` }); // TODO : change this
+useHead({ title: `All Categories` });
 
 const stylesStore = useStylesStore();
 const { styles } = storeToRefs(stylesStore);

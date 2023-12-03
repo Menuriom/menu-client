@@ -11,8 +11,6 @@
     </div>
 </template>
 
-<!-- TODO : note that this menu will be a sub-domain so there will be no need for /r/ in the qr code -->
-
 <script setup>
 const localePath = useLocalePath();
 </script>

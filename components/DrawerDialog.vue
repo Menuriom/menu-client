@@ -87,8 +87,6 @@ let startingY = 0;
 let movingStartingY = 0;
 let delta = 0;
 
-// TODO : make sure that if starting point is super low then dont reset it so that a almost fully lowered box closes no matter the timing
-
 const grab = (e) => {
     if (props.actionLock) return;
     grabbed.value = true;

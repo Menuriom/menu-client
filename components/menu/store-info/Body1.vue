@@ -153,12 +153,11 @@ const emit = defineEmits(["innerAction"]);
 
 const { locale, localeProperties } = useI18n();
 
-// TODO edit these links to match/work
 const socialsBaseLinks = ref({
     instagram: "https://instagram.com/",
     twitter: "https://twitter.com/",
     telegram: "https://t.me/",
-    whatsapp: "https://whatsapp.com/",
+    whatsapp: "https://wa.me/",
 });
 
 const selectedBranch = ref(0);

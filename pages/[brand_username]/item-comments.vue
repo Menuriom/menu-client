@@ -7,9 +7,11 @@
         :options="styles.itemsDialogStyleOptions"
         :actionLock="actionLock"
     >
+        <Head>
+            <Title>{{ item.translation?.[locale]?.name || item.name }}</Title>
+        </Head>
         <div class="flex flex-col items-center gap-4 p-6 w-full" :style="`color: ${styles.itemsDialogStyleOptions.textColor}`">
             <h1 class="font-bold text-lg">{{ $t("Customers Comments") }}</h1>
-            <!-- TODO : show a preview of menu item -->
             <div
                 class="relative flex flex-wrap items-center gap-2 w-full p-4 border border-neutral-500 border-opacity-20 overflow-hidden isolate"
                 :style="`border-radius: ${styles.itemsDialogStyleOptions.cornerRadius}px;`"
@@ -56,12 +58,6 @@ import { useStylesStore } from "@/stores/styles";
 import { useInfoStore } from "@/stores/info";
 import { useItemsStore } from "@/stores/items";
 import { storeToRefs } from "pinia";
-
-useHead({ title: `Item comments` }); // TODO : change this
-
-// TODO
-// user can only comment when they actualy ordered the food
-// meaning comment section needs logins for users
 
 const { locale } = useI18n();
 const route = useRoute();

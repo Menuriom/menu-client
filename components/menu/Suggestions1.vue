@@ -108,8 +108,6 @@
                             {{ restaurantInfo.brand.currency }}
                         </span>
                     </div>
-                    <!-- TODO : add special of day tag -->
-                    <!-- TODO : add variants -->
                 </div>
             </SwiperSlide>
         </Swiper>

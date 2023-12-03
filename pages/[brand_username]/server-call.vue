@@ -43,7 +43,7 @@ import { useStylesStore } from "@/stores/styles";
 import { useInfoStore } from "@/stores/info";
 import { storeToRefs } from "pinia";
 
-useHead({ title: `Call Waiter` }); // TODO : change this
+useHead({ title: `Call Waiter` });
 
 // TODO : we need to send request so that backend send a ws request to inform the server call
 // TODO : users can only call server evey 10 minutes or so
