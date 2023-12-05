@@ -170,15 +170,12 @@ const _initialCategorySelector = (queryC) => {
 const showSplashScreen = ref(true);
 const doTheAnimation = ref(false);
 
-onBeforeMount(()=>{
+onBeforeMount(() => {
     setTimeout(() => (doTheAnimation.value = true), 100);
     setTimeout(() => (showSplashScreen.value = false), 2100);
 });
 onMounted(() => {
     _initialCategorySelector(route.query.c);
-
-    // setTimeout(() => (doTheAnimation.value = true), 100);
-    // setTimeout(() => (showSplashScreen.value = false), 2100);
 });
 onBeforeRouteUpdate((to, from, next) => {
     _initialCategorySelector(to.query.c);

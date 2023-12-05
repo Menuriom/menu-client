@@ -40,15 +40,18 @@
                 </div>
             </div>
             <ul class="flex flex-col gap-6 w-full overflow-auto select-none pe-4" style="max-height: calc(100vh - 18rem)" @scroll="scrolling($event)">
-                <li class="flex flex-col gap-2 w-full rounded-md" v-for="comment in sampleComments">
+                <!-- <li class="flex flex-col gap-2 w-full rounded-md" v-for="comment in sampleComments">
                     <div class="flex flex-wrap items-center justify-between gap-2 w-full">
                         <h4 class="text-sm p-1 px-2 rounded-md bg-white bg-opacity-10">{{ comment.name }}</h4>
                         <span class="w-0.5 h-0.5 opacity-20 grow" :style="`background-color: ${styles.baseColors.primaryColor};`"></span>
                         <span class="text-xs">{{ new Date(comment.date).toLocaleString(locale, { dateStyle: "long" }) }}</span>
                     </div>
                     <p class="text-sm opacity-75">{{ comment.text }}</p>
-                </li>
+                </li> -->
             </ul>
+            <span class="flex items-center justify-center border border-neutral-500 border-opacity-20 rounded-xl w-full h-36 text-rose-400">
+                نظری تا کنون ثبت نشده
+            </span>
         </div>
     </component>
 </template>

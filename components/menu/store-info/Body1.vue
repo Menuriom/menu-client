@@ -76,6 +76,7 @@
         <div
             class="flex flex-col items-center gap-3 w-full max-w-sm p-2 rounded-lg border border-neutral-500 border-opacity-20 backdrop-blur-sm"
             :style="`border-radius: ${options.cornerRadius > 16 ? 16 : options.cornerRadius}px;`"
+            v-if="workingHours"
         >
             <h3 class="flex items-center gap-1 w-full">
                 <span class="bg-white bg-opacity-20 w-0.5 h-0.5 grow"></span>
@@ -83,15 +84,6 @@
                 <span :style="`color: ${options.textColor};`">{{ $t("Working Hours") }}</span>
                 <span class="bg-white bg-opacity-20 w-0.5 h-0.5 grow"></span>
             </h3>
-
-            <!-- <span class="text-sm" :style="`color: ${options.textColor};`">
-                <b :style="`color: ${options.bgSecondaryColor};`">Sunday</b>
-                through
-                <b :style="`color: ${options.bgSecondaryColor};`">Friday</b>
-            </span>
-            <span class="text-sm" :style="`color: ${options.textColor};`" dir="ltr">
-                <b :style="`color: ${options.bgSecondaryColor};`">9:00</b> AM - <b :style="`color: ${options.bgSecondaryColor};`">12:00</b> PM
-            </span> -->
 
             <div
                 class="flex flex-col items-center gap-1 w-full p-2"
@@ -112,6 +104,28 @@
                 </div>
             </div>
         </div>
+
+        <Swiper
+            class="w-auto max-w-full h-auto shrink-0"
+            wrapper-tag="ul"
+            :auto-height="true"
+            slides-per-view="auto"
+            :dir="localeProperties.dir"
+            v-if="restaurantInfo.branches[selectedBranch].gallery.length"
+        >
+            <SwiperSlide
+                tag="li"
+                class="flex items-center gap-1 p-1 mx-1.5 shadow-nr15 border"
+                :style="`background-color: ${options.bgMainColor}; border-color: ${options.bgSecondaryColor}; border-radius: ${options.cornerRadius}px;`"
+                v-for="(img, i) in restaurantInfo.branches[selectedBranch].gallery"
+            >
+                <img
+                    class="w-40 max-h-24 object-cover"
+                    :style="`background-color: ${options.bgMainColor}; border-radius: ${options.cornerRadius - 5}px;`"
+                    :src="img"
+                />
+            </SwiperSlide>
+        </Swiper>
 
         <p class="text-sm -mb-4 opacity-80" :style="`color: ${options.textColor};`">{{ restaurantInfo.branches[selectedBranch].address }}</p>
 
