@@ -47,4 +47,6 @@ export default {
     Close: "بسته",
 
     "Customers Comments": "نظرات مشتریان",
+
+    generalDesc: "منوی رستوران",
 };

@@ -19,6 +19,8 @@
                 {{ restaurantInfo.brand?.translation?.[locale]?.name || restaurantInfo.brand?.name }} |
                 {{ restaurantInfo.brand?.translation?.[locale]?.slogan || restaurantInfo.brand?.slogan }}
             </Title>
+            <Meta name="description" :content="`${$t('generalDesc')} ${restaurantInfo.brand?.translation?.[locale]?.name || restaurantInfo.brand?.name}`" />
+            <Meta name="theme-color" :content="styles.baseColors?.bgMainColor || '#000'" />
         </Head>
 
         <SplashScreen

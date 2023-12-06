@@ -9,6 +9,7 @@
     >
         <Head>
             <Title>{{ item.translation?.[locale]?.name || item.name }}</Title>
+            <Meta name="description" :content="item.translation?.[locale]?.description || item.description"></Meta>
         </Head>
         <component
             :is="bodies[styles.itemsDialogStyleOptions?.bodyComponent]"
