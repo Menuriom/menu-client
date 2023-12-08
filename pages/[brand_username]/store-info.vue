@@ -8,6 +8,12 @@
         :actionLock="actionLock"
         :withX="styles.restaurantDetailsPageOptions?.frameComponent == 'Frame3'"
     >
+        <Head>
+            <Title>
+                {{ restaurantInfo.brand?.translation?.[locale]?.name || restaurantInfo.brand?.name }} |
+                {{ restaurantInfo.brand?.translation?.[locale]?.slogan || restaurantInfo.brand?.slogan }}
+            </Title>
+        </Head>
         <component
             :is="bodies[styles.restaurantDetailsPageOptions?.bodyComponent]"
             :options="styles.restaurantDetailsPageOptions"
@@ -22,7 +28,7 @@ import { useStylesStore } from "@/stores/styles";
 import { useInfoStore } from "@/stores/info";
 import { storeToRefs } from "pinia";
 
-useHead({ title: `Store Info` }); // TODO : change this
+const { locale } = useI18n();
 
 const frames = {
     Frame1: defineAsyncComponent(() => import("@/components/FloatDialog.vue")),

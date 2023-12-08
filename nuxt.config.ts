@@ -2,11 +2,14 @@ const cacheAge = 60 * 60 * 24 * 365; // 1 year
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-    devServer: { port: 3002 },
-    devtools: { enabled: false },
-
     app: {
-        head: {},
+        head: {
+            meta: [
+                { charset: "utf-8" },
+                { name: "viewport", content: "width=device-width, initial-scale=1" },
+                { name: "format-detection", content: "telephone=no" },
+            ],
+        },
         pageTransition: { name: "page", mode: "out-in", type: "transition", appear: true },
         layoutTransition: { name: "page", mode: "out-in", type: "transition", appear: true },
     },
@@ -15,6 +18,9 @@ export default defineNuxtConfig({
         // "vue-toastification/dist/index.css",
         "~/assets/css/styles.css",
     ],
+
+    devServer: { port: 3002 },
+    devtools: { enabled: false },
 
     nitro: {
         compressPublicAssets: true,
@@ -25,6 +31,9 @@ export default defineNuxtConfig({
             "/**/*.svg": { swr: 60 * 60 * 12, isr: true, headers: { "cache-control": `public, max-age=${cacheAge}, s-maxage=${cacheAge}` } },
             "/**/*.jpg": { swr: 60 * 60 * 12, isr: true, headers: { "cache-control": `public, max-age=${cacheAge}, s-maxage=${cacheAge}` } },
             "/**/*.webp": { swr: 60 * 60 * 12, isr: true, headers: { "cache-control": `public, max-age=${cacheAge}, s-maxage=${cacheAge}` } },
+            "/**/*.woff": { swr: 60 * 60 * 12, isr: true, headers: { "cache-control": `public, max-age=${cacheAge}, s-maxage=${cacheAge}` } },
+            "/**/*.woff2": { swr: 60 * 60 * 12, isr: true, headers: { "cache-control": `public, max-age=${cacheAge}, s-maxage=${cacheAge}` } },
+            "/**/*.ttf": { swr: 60 * 60 * 12, isr: true, headers: { "cache-control": `public, max-age=${cacheAge}, s-maxage=${cacheAge}` } },
             "/_nuxt/**": { swr: 60 * 60 * 12, isr: true, headers: { "cache-control": `public, max-age=${cacheAge}, s-maxage=${cacheAge}` } },
         },
     },
@@ -63,6 +72,7 @@ export default defineNuxtConfig({
         "@pinia/nuxt",
         "@nuxtjs/tailwindcss",
         "@nuxtjs/i18n",
+        "@nuxt/image",
         "nuxt-swiper",
         "nuxt-delay-hydration",
     ],

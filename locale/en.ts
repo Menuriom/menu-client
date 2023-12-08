@@ -47,4 +47,6 @@ export default {
     Close: "Close",
 
     "Customers Comments": "Customers Comments",
+
+    generalDesc: "restaurant menu",
 };

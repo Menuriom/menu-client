@@ -26,7 +26,7 @@ import { useStylesStore } from "@/stores/styles";
 import { useInfoStore } from "@/stores/info";
 import { storeToRefs } from "pinia";
 
-useHead({ title: `language switcher` }); // TODO : change this
+useHead({ title: `Language Switch` });
 
 const stylesStore = useStylesStore();
 const { styles } = storeToRefs(stylesStore);

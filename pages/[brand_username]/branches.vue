@@ -49,7 +49,7 @@ import { useInfoStore } from "@/stores/info";
 import { useItemsFilterStore } from "@/stores/itemsFilter";
 import { storeToRefs } from "pinia";
 
-useHead({ title: `All Branches` }); // TODO : change this
+useHead({ title: `All Branches` });
 
 const stylesStore = useStylesStore();
 const infoStore = useInfoStore();

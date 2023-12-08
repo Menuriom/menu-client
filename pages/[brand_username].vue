@@ -14,6 +14,15 @@
         class="relative flex items-center justify-center w-screen isolate"
         :style="`background-color: ${styles.baseColors?.bgMainColor}; color: ${styles.baseColors?.textColor};`"
     >
+        <Head>
+            <Title>
+                {{ restaurantInfo.brand?.translation?.[locale]?.name || restaurantInfo.brand?.name }} |
+                {{ restaurantInfo.brand?.translation?.[locale]?.slogan || restaurantInfo.brand?.slogan }}
+            </Title>
+            <Meta name="description" :content="`${$t('generalDesc')} ${restaurantInfo.brand?.translation?.[locale]?.name || restaurantInfo.brand?.name}`" />
+            <Meta name="theme-color" :content="styles.baseColors?.bgMainColor || '#000'" />
+        </Head>
+
         <SplashScreen
             class="z-50"
             :showSplashScreen="showSplashScreen"
@@ -107,19 +116,15 @@ import { useItemsStore } from "@/stores/items";
 import { useItemsFilterStore } from "@/stores/itemsFilter";
 import { storeToRefs } from "pinia";
 
+definePageMeta({ middleware: ["fetcher"] });
+
+const { locale } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const stylesStore = useStylesStore();
 const infoStore = useInfoStore();
 const itemsStore = useItemsStore();
 const itemsFilterStore = useItemsFilterStore();
-
-useHead({ title: `${infoStore.restaurantInfo?.brand?.name}` }); // TODO : change this
-definePageMeta({ middleware: ["fetcher"] });
-
-// TODO : add limitation of the brand into the menu
-// TODO : add user like and comment functinality
-// TODO : any user must get a id as cookie when they open any menu... so that we know who they are
 
 const headers = {
     Header1: defineAsyncComponent(() => import("@/components/menu/Header1.vue")),
@@ -167,11 +172,12 @@ const _initialCategorySelector = (queryC) => {
 const showSplashScreen = ref(true);
 const doTheAnimation = ref(false);
 
-onMounted(() => {
-    _initialCategorySelector(route.query.c);
-
+onBeforeMount(() => {
     setTimeout(() => (doTheAnimation.value = true), 100);
     setTimeout(() => (showSplashScreen.value = false), 2100);
+});
+onMounted(() => {
+    _initialCategorySelector(route.query.c);
 });
 onBeforeRouteUpdate((to, from, next) => {
     _initialCategorySelector(to.query.c);

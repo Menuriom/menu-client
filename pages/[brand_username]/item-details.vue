@@ -7,6 +7,10 @@
         :options="styles.itemsDialogStyleOptions"
         :actionLock="actionLock"
     >
+        <Head>
+            <Title>{{ item.translation?.[locale]?.name || item.name }}</Title>
+            <Meta name="description" :content="item.translation?.[locale]?.description || item.description"></Meta>
+        </Head>
         <component
             :is="bodies[styles.itemsDialogStyleOptions?.bodyComponent]"
             :options="styles.itemsDialogStyleOptions"
@@ -19,21 +23,23 @@
 </template>
 
 <script setup>
+import FloatDialog from "@/components/FloatDialog.vue";
+import DrawerDialog from "@/components/DrawerDialog.vue";
 import { useStylesStore } from "@/stores/styles";
 import { useInfoStore } from "@/stores/info";
 import { useItemsStore } from "@/stores/items";
 import { storeToRefs } from "pinia";
 
-useHead({ title: `menu title here` }); // TODO : change this
-
 // TODO : items add button should have branch check on it - and only can be added if user is on that branch
-// TODO : add suspance for loading components
 
+const { locale } = useI18n();
 const route = useRoute();
 
 const frames = {
-    Frame1: defineAsyncComponent(() => import("@/components/FloatDialog.vue")),
-    Frame2: defineAsyncComponent(() => import("@/components/DrawerDialog.vue")),
+    Frame1: FloatDialog,
+    Frame2: DrawerDialog,
+    // Frame1: defineAsyncComponent(() => import("@/components/FloatDialog.vue")),
+    // Frame2: defineAsyncComponent(() => import("@/components/DrawerDialog.vue")),
 };
 const bodies = {
     Body1: defineAsyncComponent(() => import("@/components/menu/item-details/Body1.vue")),
