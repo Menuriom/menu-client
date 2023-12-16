@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800;900&display=swap'); */
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap'); */
 
 @tailwind base;
 @tailwind components;
@@ -28,7 +28,7 @@
 
 body {
     background-color: theme("colors.bgPrimary");
-    font-family: "Poppins", "Shabnam", sans-serif;
+    font-family: "Poppins", "Shabnam", system-ui, sans-serif;
     display: flex; flex-direction: column;
     margin: 0; padding: 0;
     overflow-x: hidden;
@@ -38,7 +38,7 @@ body {
 nav, nav ul, .scroll-thin { scrollbar-width: thin; }
 nav::-webkit-scrollbar, nav ul::-webkit-scrollbar, .scroll-thin::-webkit-scrollbar { width: 4px; height: 4px; }
 
-*:is(h1, h2, h3, h4, h5, h6) { font-family: "Inter", "Estedad"; }
+*:is(h1, h2, h3, h4, h5, h6) { font-family: "Inter", "Estedad", system-ui; }
 
 .f-inter { font-family: "Inter", "Estedad" !important; }
 .f-poppins { font-family: "Poppins", "Shabnam" !important; }
