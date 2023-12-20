@@ -17,18 +17,18 @@
 }
 
 /* good for text */
-@font-face { font-family: "Shabnam"; src: url("../fonts/Shabnam-FD.woff2") format('woff2'); font-display: swap; }
+@font-face { font-family: "Shabnam"; src: url("../fonts/Shabnam-FD.woff2") format('woff2'); font-display: swap; unicode-range: U+0600-060FF; }
 
 /* good for text & title */
-@font-face { font-family: "Estedad"; src: url("../fonts/Estedad-Regular.woff2") format('woff2'); font-weight: 400; font-display: swap; }
-@font-face { font-family: "Estedad"; src: url("../fonts/Estedad-Bold.woff2") format('woff2'); font-weight: 700; font-display: swap; }
-@font-face { font-family: "Estedad"; src: url("../fonts/Estedad-ExtraBold.woff2") format('woff2'); font-weight: 800; font-display: swap; }
+@font-face { font-family: "Estedad"; src: url("../fonts/Estedad-Regular.woff2") format('woff2'); font-weight: 400; font-display: swap; unicode-range: U+0600-060FF; }
+@font-face { font-family: "Estedad"; src: url("../fonts/Estedad-Bold.woff2") format('woff2'); font-weight: 700; font-display: swap; unicode-range: U+0600-060FF; }
+@font-face { font-family: "Estedad"; src: url("../fonts/Estedad-ExtraBold.woff2") format('woff2'); font-weight: 800; font-display: swap; unicode-range: U+0600-060FF; }
 
 *, html { scroll-behavior: smooth; }
 
 body {
     background-color: theme("colors.bgPrimary");
-    font-family: "Poppins", "Shabnam", system-ui, sans-serif;
+    font-family: "Poppins", "Shabnam", system-ui;
     display: flex; flex-direction: column;
     margin: 0; padding: 0;
     overflow-x: hidden;
@@ -40,8 +40,8 @@ nav::-webkit-scrollbar, nav ul::-webkit-scrollbar, .scroll-thin::-webkit-scrollb
 
 *:is(h1, h2, h3, h4, h5, h6) { font-family: "Inter", "Estedad", system-ui; }
 
-.f-inter { font-family: "Inter", "Estedad" !important; }
-.f-poppins { font-family: "Poppins", "Shabnam" !important; }
+.f-inter { font-family: "Inter", "Estedad", system-ui !important; }
+.f-poppins { font-family: "Poppins", "Shabnam", system-ui !important; }
 
 .z-1 { z-index: 1; }
 .z-2 { z-index: 2; }
