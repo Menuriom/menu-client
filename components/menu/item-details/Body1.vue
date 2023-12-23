@@ -137,7 +137,11 @@
                     ></span>
                 </div>
                 <ul id="toppings" class="flex flex-col items-start gap-2 w-full">
-                    <li class="flex items-center gap-2 w-full cursor-pointer" v-for="(topping, j) in sideItem.items" @click="selectTopping(topping)">
+                    <li
+                        class="flex items-center gap-2 w-full cursor-pointer"
+                        v-for="(topping, j) in sideItem.items"
+                        @click="selectTopping(topping, sideItem.maxNumberUserCanChoose, i)"
+                    >
                         <span
                             class="rounded opacity-80 border-2"
                             :style="`
@@ -262,9 +266,20 @@ const selectType = (variant) => {
     selectedType.value = selectedType.value._id === variant._id ? {} : variant;
     ordersStore.updateOrderItem({ item: props.item, variant: selectedType.value, sideItems: new Set(Object.values(selectedTopings.value)) });
 };
-const selectTopping = (topping) => {
-    if (selectedTopings.value[topping._id]) delete selectedTopings.value[topping._id];
-    else selectedTopings.value[topping._id] = topping;
+const selectTopping = (topping, maxAllowed, sideItemIndex) => {
+    if (selectedTopings.value[topping._id]) {
+        delete selectedTopings.value[topping._id];
+        topping.selected = false;
+    } else {
+        let selectedCount = 0;
+        for (const item of props.item.sideItems[sideItemIndex].items) {
+            if (selectedTopings.value?.[item._id]?.selected) selectedCount++;
+        }
+        if (selectedCount >= maxAllowed) return;
+
+        topping.selected = true;
+        selectedTopings.value[topping._id] = topping;
+    }
     ordersStore.updateOrderItem({ item: props.item, variant: selectedType.value, sideItems: new Set(Object.values(selectedTopings.value)) });
 };
 

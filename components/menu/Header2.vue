@@ -22,7 +22,7 @@
                 <img class="w-full h-full object-cover" :style="`border-radius: ${options.logoRadius - 6}px;`" :src="restaurantInfo.brand?.logo" alt="" />
             </div>
             <div class="flex items-center justify-between w-full -mt-5">
-                <div class="flex flex-col gap-1">
+                <div class="flex flex-col gap-0.5">
                     <h2 class="font-bold text-lg/none" :style="`color: ${options.textColor};`">
                         {{ restaurantInfo.brand?.translation?.[locale]?.name || restaurantInfo.brand?.name }}
                     </h2>

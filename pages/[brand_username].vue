@@ -7,6 +7,13 @@
     min-height: 100vh;
     min-height: 100dvh;
 }
+
+.cp {
+    background: linear-gradient(90deg, theme("colors.primary") 0%, theme("colors.secondary") 100%);
+    mask: url("/logo-text-en-light2.png");
+    mask-size: 100%;
+    mask-repeat: no-repeat;
+}
 </style>
 
 <template>
@@ -98,11 +105,21 @@
             </section>
             <component
                 name="navbar"
-                class="mb-4 mt-auto"
+                class="mb-2 mt-auto"
                 :is="navbars[styles.mainMenuStyleOptions?.navbarOptions?.component]"
                 :restaurantInfo="restaurantInfo"
                 :options="styles.mainMenuStyleOptions?.navbarOptions"
             />
+
+            <footer class="flex flex-col items-center gap-1.5 w-full py-2.5 bg-bgAccent text-white" dir="ltr">
+                <div class="flex flex-wrap items-center gap-1 text-sm">
+                    <span class="opacity-90"> Created & Designed by </span>
+                    <nuxt-link class="flex items-center gap-0.5" to="https://menuriom.com" title="menuriom">
+                        <img class="w-6 h-6 border border-neutral-500 rounded-full p-0.5" src="https://menuriom.com/logos/logo9-dark.svg" alt="menuriom" />
+                        <span class="cp flex items-center gap-1 w-24 h-4.5"> </span>
+                    </nuxt-link>
+                </div>
+            </footer>
         </section>
 
         <NuxtPage></NuxtPage>
